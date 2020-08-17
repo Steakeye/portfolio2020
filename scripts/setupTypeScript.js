@@ -13,11 +13,11 @@
   rm -rf test-template template && git clone sveltejs/template test-template && node scripts/setupTypeScript.js test-template
 */
 
-const fs = require("fs")
-const path = require("path")
-const { argv } = require("process")
+const fs = require("fs");
+const path = require("path");
+const { argv } = require("process");
 
-const projectRoot = argv[2] || path.join(__dirname, "..")
+const projectRoot = argv[2] || path.join(__dirname, "..");
 
 // Add deps to pkg.json
 const packageJSON = JSON.parse(fs.readFileSync(path.join(projectRoot, "package.json"), "utf8"))
@@ -28,27 +28,53 @@ packageJSON.devDependencies = Object.assign(packageJSON.devDependencies, {
   "typescript": "^3.9.3",
   "tslib": "^2.0.0",
   "@tsconfig/svelte": "^1.0.0"
-})
+});
 
 // Add script for checking
 packageJSON.scripts = Object.assign(packageJSON.scripts, {
   "validate": "svelte-check"
-})
+});
 
 // Write the package JSON
-fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify(packageJSON, null, "  "))
+fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify(packageJSON, null, "  "));
 
-// mv src/main.js to main.ts - note, we need to edit rollup.config.js for this too
-const beforeMainJSPath = path.join(projectRoot, "src", "main.js")
-const afterMainTSPath = path.join(projectRoot, "src", "main.ts")
-fs.renameSync(beforeMainJSPath, afterMainTSPath)
+// mv src/*.js to *.ts - note, we need to edit rollup.config.js for this too
+['client', 'server', 'service-worker'].forEach((fileName) => {
+  const beforeJSPath = path.join(projectRoot, "src", `${fileName}.js`)
+  const afterTSPath = path.join(projectRoot, "src", `${fileName}.ts`)
+  fs.renameSync(beforeJSPath, afterTSPath)
+});
 
-// Switch the app.svelte file to use TS
-const appSveltePath = path.join(projectRoot, "src", "App.svelte")
-let appFile = fs.readFileSync(appSveltePath, "utf8")
-appFile = appFile.replace("<script>", '<script lang="ts">')
-appFile = appFile.replace("export let name;", 'export let name: string;')
-fs.writeFileSync(appSveltePath, appFile)
+// Switch the *.svelte file to use TS
+[{
+  view: 'index',
+},{
+  view: 'about',
+},{
+  view: '_layout',
+  vars: [{ name:  'segment', type: 'string' }]
+},{
+  view: '_error',
+  vars: [{ name:  'status', type: 'number' }, { name:  'error', type: 'Error' }]
+},{
+  view: 'blog/index',
+  vars: [{ name:  'posts', type: 'any[]' }]
+},{
+  view: 'blog/[slug]]',
+  vars: [{ name:  'post', type: 'any' }]
+}].forEach(({ view, vars }) => {
+  const svelteFilePath = path.join(projectRoot, "src", `${view}.svelte`)
+  let file = fs.readFileSync(svelteFilePath, "utf8")
+
+  file = file.replace(/(?:<script)(( .*?)*)/g, '<script$1 lang="ts">')
+
+  if (vars) {
+    vars.forEach(({ name, type }) => {
+      file = file.replace(`export let ${name};`, `export let ${name}: ${type};`)
+    });
+  }
+  fs.writeFileSync(svelteFilePath, file)
+});
 
 // Edit rollup config
 const rollupConfigPath = path.join(projectRoot, "rollup.config.js")
