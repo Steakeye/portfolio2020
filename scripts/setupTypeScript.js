@@ -66,13 +66,14 @@ fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify(packageJ
   const svelteFilePath = path.join(projectRoot, "src", `${view}.svelte`)
   let file = fs.readFileSync(svelteFilePath, "utf8")
 
-  file = file.replace(/(?:<script)(( .*?)*)/g, '<script$1 lang="ts">')
+  file = file.replace(/(?:<script)(( .*?)*)/gm, '<script$1 lang="ts">')
 
   if (vars) {
     vars.forEach(({ name, type }) => {
       file = file.replace(`export let ${name};`, `export let ${name}: ${type};`)
     });
   }
+
   fs.writeFileSync(svelteFilePath, file)
 });
 
@@ -85,25 +86,13 @@ rollupConfig = rollupConfig.replace(`'rollup-plugin-terser';`, `'rollup-plugin-t
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';`)
 
-// Replace name of entry point
+// Replace name of entry points
 rollupConfig = rollupConfig.replace(`'src/main.js'`, `'src/main.ts'`)
 
-// Add preprocess to the svelte config, this is tricky because there's no easy signifier.
-// Instead we look for `css:` then the next `}` and add the preprocessor to that
-let foundCSS = false
-let match
-
-// https://regex101.com/r/OtNjwo/1
-const configEditor = new RegExp(/css:.|\n*}/gmi)
-while (( match = configEditor.exec(rollupConfig)) != null) {
-  if (foundCSS) {
-    const endOfCSSIndex = match.index + 1
-    rollupConfig = rollupConfig.slice(0, endOfCSSIndex) + ",\n			preprocess: sveltePreprocess()," + rollupConfig.slice(endOfCSSIndex);
-    break
-  }
-  if (match[0].includes("css:")) foundCSS = true
-}
-
+// Add preprocess to the svelte config,
+// /(\n)([ t]*)(svelte\({[\s\w\W]*?)(\})\W*\)/gm
+// $1$2$3,\n$2\tpreprocess: sveltePreprocess(),\n$2$4)
+rollupConfig = rollupConfig.replace(/(\n)([ t]*)(svelte\({[\s\w\W]*?)(})\W*\)/gm, '$1$2$3,\\n$2\\tpreprocess: sveltePreprocess(),\\n$2$4)')
 
 // Add TypeScript
 rollupConfig = rollupConfig.replace("commonjs(),", 'commonjs(),\n\t\ttypescript({ sourceMap: !production }),')
