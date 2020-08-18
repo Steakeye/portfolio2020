@@ -24,7 +24,7 @@ const packageJSON = JSON.parse(fs.readFileSync(path.join(projectRoot, "package.j
 packageJSON.devDependencies = Object.assign(packageJSON.devDependencies, {
   "svelte-check": "^1.0.0",
   "svelte-preprocess": "^4.0.0",
-  "@rollup/plugin-typescript": "^4.0.0",
+  "rollup-plugin-typescript2": "^0.27.2",
   "typescript": "^3.9.3",
   "tslib": "^2.0.0",
   "@tsconfig/svelte": "^1.0.0"
@@ -84,11 +84,11 @@ let rollupConfig = fs.readFileSync(rollupConfigPath, "utf8")
 // Edit imports
 rollupConfig = rollupConfig.replace(`'rollup-plugin-terser';`, `'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
-import typescript from '@rollup/plugin-typescript';`)
+import typescript from 'rollup-plugin-typescript2';`)
 
 // Replace name of entry points, client and server
-rollupConfig = rollupConfig.replace(/input: config.(?:client|serviceworker).input\(\)/gm, `$&.replace('js', 'ts')`)
-rollupConfig = rollupConfig.replace(/input: config.server.input\(\)/gm, `$&.server.replace('js', 'ts')`)
+rollupConfig = rollupConfig.replace(/input: config.(?:client|serviceworker).input\(\)/gm, `$&.replace(/\.js$/, '.ts')`)
+rollupConfig = rollupConfig.replace(/input: config.server.input\(\)/gm, `$&.server.replace(/\.js$/, '.ts')`)
 
 // Add preprocess to the svelte config,
 rollupConfig = rollupConfig.replace(/(\n)([ \t]*)(svelte\({[\s\w\W]*?)(})\W*\)/gm, '$1$2$3,\n$2\tpreprocess: sveltePreprocess(),\n$2$4)')
@@ -101,15 +101,30 @@ fs.writeFileSync(rollupConfigPath, rollupConfig)
 // Add TSConfig
 const tsconfig = `{
   "extends": "@tsconfig/svelte/tsconfig.json",
-
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "types": ["svelte", "node", "@sapper"],
+    "typeRoots": ["typings"],
+  },
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
 }`
 const tsconfigPath =  path.join(projectRoot, "tsconfig.json")
 fs.writeFileSync(tsconfigPath, tsconfig)
 
+// Adds typings folder and sapper typings
+const typingsFolderPath = path.join(projectRoot, "typings");
+const sapperTypingsFolderPath = path.join(typingsFolderPath, "@sapper");
+fs.mkdirSync(typingsFolderPath)
+fs.mkdirSync(sapperTypingsFolderPath)
+fs.writeFileSync(path.join(sapperTypingsFolderPath, "index.d.ts"), `declare module '@sapper/app';
+declare module '@sapper/server';
+declare module '@sapper/service-worker';
+`)
+
 // Delete this script, but not during testing
-if (!argv[2]) {
+/*if (!argv[2]) {
   // Remove the script
   fs.unlinkSync(path.join(__filename))
 
@@ -124,7 +139,7 @@ if (!argv[2]) {
     // Remove the scripts folder
     fs.rmdirSync(path.join(__dirname))
   }
-}
+}*/
 
 // Adds the extension recommendation
 fs.mkdirSync(path.join(projectRoot, ".vscode"))
