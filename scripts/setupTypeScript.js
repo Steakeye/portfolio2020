@@ -87,13 +87,15 @@ import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';`)
 
 // Replace name of entry points, client and server
-rollupConfig = rollupConfig.replace(/input: config.\w+.input\(\)/gm, `$&.replace('js', 'ts')`)
+rollupConfig = rollupConfig.replace(/input: config.(?:client|serviceworker).input\(\)/gm, `$&.replace('js', 'ts')`)
+rollupConfig = rollupConfig.replace(/input: config.server.input\(\)/gm, `$&.server.replace('js', 'ts')`)
 
 // Add preprocess to the svelte config,
 rollupConfig = rollupConfig.replace(/(\n)([ \t]*)(svelte\({[\s\w\W]*?)(})\W*\)/gm, '$1$2$3,\n$2\tpreprocess: sveltePreprocess(),\n$2$4)')
 
 // Add TypeScript
-rollupConfig = rollupConfig.replace(/commonjs\(\),?/gm, 'commonjs(),\n\t\ttypescript({ sourceMap: !production }),')
+rollupConfig = rollupConfig.replace(/commonjs\(\),?/gm, 'commonjs(),\n\t\ttypescript({ sourceMap: dev }),')
+
 fs.writeFileSync(rollupConfigPath, rollupConfig)
 
 // Add TSConfig
