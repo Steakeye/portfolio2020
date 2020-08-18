@@ -86,12 +86,10 @@ rollupConfig = rollupConfig.replace(`'rollup-plugin-terser';`, `'rollup-plugin-t
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';`)
 
-// Replace name of entry points
-rollupConfig = rollupConfig.replace(`'src/main.js'`, `'src/main.ts'`)
+// Replace name of entry points, client and server
+rollupConfig = rollupConfig.replace(/input: config.\\w+.input\\(\\)/gm, `$&.replace('js', 'ts')`)
 
 // Add preprocess to the svelte config,
-// /(\n)([ t]*)(svelte\({[\s\w\W]*?)(\})\W*\)/gm
-// $1$2$3,\n$2\tpreprocess: sveltePreprocess(),\n$2$4)
 rollupConfig = rollupConfig.replace(/(\n)([ t]*)(svelte\({[\s\w\W]*?)(})\W*\)/gm, '$1$2$3,\\n$2\\tpreprocess: sveltePreprocess(),\\n$2$4)')
 
 // Add TypeScript
