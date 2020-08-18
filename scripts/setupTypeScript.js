@@ -60,13 +60,13 @@ fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify(packageJ
   view: 'blog/index',
   vars: [{ name:  'posts', type: 'any[]' }]
 },{
-  view: 'blog/[slug]]',
+  view: 'blog/[slug]',
   vars: [{ name:  'post', type: 'any' }]
 }].forEach(({ view, vars }) => {
-  const svelteFilePath = path.join(projectRoot, "src", `${view}.svelte`)
+  const svelteFilePath = path.join(projectRoot, "src/routes", `${view}.svelte`)
   let file = fs.readFileSync(svelteFilePath, "utf8")
 
-  file = file.replace(/(?:<script)(( .*?)*)/gm, '<script$1 lang="ts">')
+  file = file.replace(/(?:<script)(( .*?)*?)>/gm, '<script$1 lang="ts">')
 
   if (vars) {
     vars.forEach(({ name, type }) => {
@@ -87,13 +87,13 @@ import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';`)
 
 // Replace name of entry points, client and server
-rollupConfig = rollupConfig.replace(/input: config.\\w+.input\\(\\)/gm, `$&.replace('js', 'ts')`)
+rollupConfig = rollupConfig.replace(/input: config.\w+.input\(\)/gm, `$&.replace('js', 'ts')`)
 
 // Add preprocess to the svelte config,
-rollupConfig = rollupConfig.replace(/(\n)([ t]*)(svelte\({[\s\w\W]*?)(})\W*\)/gm, '$1$2$3,\\n$2\\tpreprocess: sveltePreprocess(),\\n$2$4)')
+rollupConfig = rollupConfig.replace(/(\n)([ \t]*)(svelte\({[\s\w\W]*?)(})\W*\)/gm, '$1$2$3,\n$2\tpreprocess: sveltePreprocess(),\n$2$4)')
 
 // Add TypeScript
-rollupConfig = rollupConfig.replace("commonjs(),", 'commonjs(),\n\t\ttypescript({ sourceMap: !production }),')
+rollupConfig = rollupConfig.replace(/commonjs\(\),?/gm, 'commonjs(),\n\t\ttypescript({ sourceMap: !production }),')
 fs.writeFileSync(rollupConfigPath, rollupConfig)
 
 // Add TSConfig
