@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "types": ["svelte", "node", "@sapper"],
+    "typeRoots": ["typings"],
+    "lib": ["ES2015","DOM", "WebWorker"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
+}

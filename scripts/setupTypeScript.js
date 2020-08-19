@@ -45,8 +45,7 @@ fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify(packageJ
   fs.renameSync(beforeJSPath, afterTSPath)
 });
 
-//TODO: update service worker ts with self declaration
-//declare let self: ServiceWorkerGlobalScope
+//Update service worker ts with `self` declaration
 const serviceWorkerPath = path.join(projectRoot, "src", 'service-worker.ts');
 let serviceWorker = fs.readFileSync(serviceWorkerPath, "utf8");
 fs.writeFileSync(serviceWorkerPath, 'declare let self: ServiceWorkerGlobalScope\n' + serviceWorker);

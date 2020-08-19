@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
 	export function preload({ params, query }) {
 		return this.fetch(`blog.json`).then(r => r.json()).then(posts => {
 			return { posts };
@@ -6,8 +6,8 @@
 	}
 </script>
 
-<script>
-	export let posts;
+<script lang="ts">
+	export let posts: any[];
 </script>
 
 <style>

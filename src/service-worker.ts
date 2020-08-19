@@ -1,3 +1,4 @@
+declare let self: ServiceWorkerGlobalScope
 import { timestamp, files, shell, routes } from '@sapper/service-worker';
 
 const ASSETS = `cache${timestamp}`;
