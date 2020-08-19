@@ -45,6 +45,12 @@ fs.writeFileSync(path.join(projectRoot, "package.json"), JSON.stringify(packageJ
   fs.renameSync(beforeJSPath, afterTSPath)
 });
 
+//TODO: update service worker ts with self declaration
+//declare let self: ServiceWorkerGlobalScope
+const serviceWorkerPath = path.join(projectRoot, "src", 'service-worker.ts');
+let serviceWorker = fs.readFileSync(serviceWorkerPath, "utf8");
+fs.writeFileSync(serviceWorkerPath, 'declare let self: ServiceWorkerGlobalScope\n' + serviceWorker);
+
 // Switch the *.svelte file to use TS
 [{
   view: 'index',
@@ -106,9 +112,10 @@ const tsconfig = `{
     "module": "es2015",
     "types": ["svelte", "node", "@sapper"],
     "typeRoots": ["typings"],
+    "lib": ["ES2015","DOM", "WebWorker"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
+  "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }`
 const tsconfigPath =  path.join(projectRoot, "tsconfig.json")
 fs.writeFileSync(tsconfigPath, tsconfig)
@@ -124,7 +131,7 @@ declare module '@sapper/service-worker';
 `)
 
 // Delete this script, but not during testing
-/*if (!argv[2]) {
+if (!argv[2]) {
   // Remove the script
   fs.unlinkSync(path.join(__filename))
 
@@ -139,7 +146,7 @@ declare module '@sapper/service-worker';
     // Remove the scripts folder
     fs.rmdirSync(path.join(__dirname))
   }
-}*/
+}
 
 // Adds the extension recommendation
 fs.mkdirSync(path.join(projectRoot, ".vscode"))
