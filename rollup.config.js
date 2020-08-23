@@ -9,6 +9,7 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';
+import copy from 'rollup-plugin-copy';
 import pkg from './package.json';
 
 const mode = process.env.NODE_ENV;
@@ -119,6 +120,10 @@ export default {
         && terser({
           module: true,
         }),
+
+      copy({
+        targets: [{ src: 'static/*', dest: 'public' }],
+      }),
     ],
 
     preserveEntrySignatures: false,
