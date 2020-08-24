@@ -1,4 +1,3 @@
-<link lang="scss" href="index.scss">
 <style lang="scss">
   h1,
   figure,
@@ -35,18 +34,13 @@
   }
 </style>
 
-<script>
-  import styles from "index.scss";
-  export let css = styles;
-</script>
-
 <svelte:head>
-  <title>Steakeye - Senior Front End Developer</title>
+  <title>Sapper project template</title>
 </svelte:head>
 
 <h1>Great success!</h1>
 
-<figure class={css.background}>
+<figure>
   <img alt="Success Kid" src="successkid.jpg" />
   <figcaption>Have fun with Sapper!</figcaption>
 </figure>
