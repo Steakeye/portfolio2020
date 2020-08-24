@@ -4,7 +4,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import scss from 'rollup-plugin-scss';
 import babel from '@rollup/plugin-babel';
-// import postcss from 'rollup-plugin-postcss'
+import postcss from 'rollup-plugin-postcss'
+import modularCSS from "@modular-css/svelte"
+import modularCSSRollup from "@modular-css/rollup"
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
@@ -16,6 +18,10 @@ const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
+const { preprocess, processor } = modularCSS({
+  // Processor options
+});
+
 const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message))
   || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
   || onWarnFn(warning);
@@ -23,10 +29,10 @@ const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'pr
 /* const scssConfiguration = (postfix) => ({
 	output: `public/assets/css/global-${postfix}.css`, */
 const scssConfiguration = () => ({
-  output: 'public/assets/css/global.css',
+  output: 'public/assets/css/steakeye.css',
   sourceMap: dev,
   // prefix: '@import \'src/styles/variables.scss\';',
-  watch: 'src/styles/!*.scss',
+  watch: 'src/styles/*.scss',
 });
 
 const preProcessOptions = {
@@ -57,9 +63,9 @@ const preProcessOptions = {
 
 const preProcessConfig = sveltePreprocess(preProcessOptions);
 
-const cssOutputFunc = (css) => {
+/*const cssOutputFunc = (css) => {
   css.write('public/assets/css/bundle.css', dev);
-};
+};*/
 
 export default {
   client: {
@@ -70,6 +76,10 @@ export default {
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
+/*      modularCSSRollup({
+        processor,
+        commonjs: 'common.css',
+      }),*/
       scss(scssConfiguration()),
       svelte({
         dev,
@@ -78,13 +88,15 @@ export default {
         preprocess: preProcessConfig,
         // we'll extract any component CSS out into
         // a separate file — better for performance
-        css: cssOutputFunc,
+        //css: cssOutputFunc,
       }),
-      /* (postcss({
+      postcss({
 				extract: 'assets/css/global.scss',
 				sourceMap: true,
 				minimize: true,
-			}), */
+        modules:true,
+        use: ['sass'],
+			}),
       resolve({
         browser: true,
         dedupe: ['svelte'],
@@ -146,7 +158,7 @@ export default {
         preprocess: preProcessConfig,
         // we'll extract any component CSS out into
         // a separate file — better for performance
-        css: cssOutputFunc,
+        //css: cssOutputFunc,
       }),
       resolve({
         dedupe: ['svelte'],
