@@ -8,6 +8,7 @@ import scss from 'rollup-plugin-scss';
 import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser';
+import favicons from 'rollup-plugin-favicons'
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';

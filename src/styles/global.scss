@@ -1,5 +1,7 @@
 @import 'node_modules/destyle.css/destyle';
 
+@import 'type';
+
 /*
 * Begin global styles
 */
@@ -7,6 +9,7 @@
 body {
   margin: 0;
   font-family:
+    Farsan,
     Roboto,
     -apple-system,
     BlinkMacSystemFont,

@@ -1,7 +1,3 @@
-<style>
-  //@import "_layout.scss";
-</style>
-
 <script lang="ts">
   import styles from "./_layout.scss";
 
