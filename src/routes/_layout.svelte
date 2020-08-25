@@ -1,15 +1,10 @@
 <style>
-  main {
-    position: relative;
-    max-width: 56em;
-    background-color: white;
-    padding: 2em;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
+  //@import "_layout.scss";
 </style>
 
 <script lang="ts">
+  import styles from "./_layout.scss";
+
   import Nav from '../components/Nav.svelte'
 
   export let segment: string
@@ -17,6 +12,6 @@
 
 <Nav {segment} />
 
-<main>
+<main class={styles.content}>
   <slot />
 </main>

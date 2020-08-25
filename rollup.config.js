@@ -1,16 +1,20 @@
+import fs from 'fs';
+import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import scss from 'rollup-plugin-scss';
 import babel from '@rollup/plugin-babel';
-// import postcss from 'rollup-plugin-postcss'
+import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';
 import copy from 'rollup-plugin-copy';
 import pkg from './package.json';
+
+const cssFolderPath = 'public/assets/css/';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -26,7 +30,7 @@ const scssConfiguration = () => ({
   output: 'public/assets/css/global.css',
   sourceMap: dev,
   // prefix: '@import \'src/styles/variables.scss\';',
-  watch: 'src/styles/!*.scss',
+  watch: 'src/styles/*.scss',
 });
 
 const preProcessOptions = {
@@ -61,6 +65,29 @@ const cssOutputFunc = (css) => {
   css.write('public/assets/css/bundle.css', dev);
 };
 
+const postCssPluginConfig = (client = true) => postcss({
+      //extract: 'public/assets/css/steakeye.css',
+      //extract: false,
+      extract: client ? 'steakeye.css': false,
+  onExtract: (obj) => {
+        const result = obj();
+    console.log('onExtract!');
+/*    console.log(obj.codeFileName);
+    console.log(obj.code);
+    console.log(obj.toString());
+    console.log('result');
+    console.log(result);*/
+    fs.mkdirSync(cssFolderPath, { recursive: true })
+    fs.writeFileSync(path.join(cssFolderPath, result.codeFileName), result.code);
+    fs.writeFileSync(path.join(cssFolderPath, result.mapFileName), result.map);
+    return false;
+  },
+      sourceMap: dev,
+      minimize: !dev,
+      modules: true,
+      extensions: ['.css', '.scss']
+    })
+
 export default {
   client: {
     input: config.client.input().replace(/.js$/, '.ts'),
@@ -70,21 +97,18 @@ export default {
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
-      scss(scssConfiguration()),
+      //scss(scssConfiguration()),
       svelte({
         dev,
         hydratable: true,
-        emitCss: true,
+        //emitCss: true,
+        emitCss: false,
         preprocess: preProcessConfig,
         // we'll extract any component CSS out into
         // a separate file — better for performance
         css: cssOutputFunc,
       }),
-      /* (postcss({
-				extract: 'assets/css/global.scss',
-				sourceMap: true,
-				minimize: true,
-			}), */
+        postCssPluginConfig(),
       resolve({
         browser: true,
         dedupe: ['svelte'],
@@ -138,7 +162,7 @@ export default {
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
-      scss(scssConfiguration()),
+      //scss(scssConfiguration()),
       svelte({
         generate: 'ssr',
         hydratable: true,
@@ -148,6 +172,7 @@ export default {
         // a separate file — better for performance
         css: cssOutputFunc,
       }),
+      postCssPluginConfig(false),
       resolve({
         dedupe: ['svelte'],
       }),
