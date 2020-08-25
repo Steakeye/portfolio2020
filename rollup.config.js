@@ -24,15 +24,6 @@ const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'pr
   || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
   || onWarnFn(warning);
 
-/* const scssConfiguration = (postfix) => ({
-	output: `public/assets/css/global-${postfix}.css`, */
-const scssConfiguration = () => ({
-  output: 'public/assets/css/global.css',
-  sourceMap: dev,
-  // prefix: '@import \'src/styles/variables.scss\';',
-  watch: 'src/styles/*.scss',
-});
-
 const preProcessOptions = {
   babel: {
     presets: [
@@ -61,27 +52,17 @@ const preProcessOptions = {
 
 const preProcessConfig = sveltePreprocess(preProcessOptions);
 
-const cssOutputFunc = (css) => {
-  css.write('public/assets/css/bundle.css', dev);
-};
-
 const postCssPluginConfig = (client = true) => postcss({
-      //extract: 'public/assets/css/steakeye.css',
-      //extract: false,
       extract: client ? 'steakeye.css': false,
-  onExtract: (obj) => {
-        const result = obj();
-    console.log('onExtract!');
-/*    console.log(obj.codeFileName);
-    console.log(obj.code);
-    console.log(obj.toString());
-    console.log('result');
-    console.log(result);*/
-    fs.mkdirSync(cssFolderPath, { recursive: true })
-    fs.writeFileSync(path.join(cssFolderPath, result.codeFileName), result.code);
-    fs.writeFileSync(path.join(cssFolderPath, result.mapFileName), result.map);
-    return false;
-  },
+      onExtract: (processedCSSWrapper) => {
+        const result = processedCSSWrapper();
+        fs.mkdirSync(cssFolderPath, { recursive: true })
+        fs.writeFileSync(path.join(cssFolderPath, result.codeFileName), result.code);
+        if (result.map) {
+          fs.writeFileSync(path.join(cssFolderPath, result.mapFileName), result.map);
+        }
+        return false;
+      },
       sourceMap: dev,
       minimize: !dev,
       modules: true,
@@ -97,18 +78,15 @@ export default {
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
-      //scss(scssConfiguration()),
       svelte({
         dev,
         hydratable: true,
-        //emitCss: true,
         emitCss: false,
         preprocess: preProcessConfig,
-        // we'll extract any component CSS out into
-        // a separate file — better for performance
-        css: cssOutputFunc,
       }),
-        postCssPluginConfig(),
+      // we'll extract any component CSS out into
+      // a separate file — better for performance
+      postCssPluginConfig(),
       resolve({
         browser: true,
         dedupe: ['svelte'],
@@ -162,16 +140,14 @@ export default {
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
-      //scss(scssConfiguration()),
       svelte({
         generate: 'ssr',
         hydratable: true,
         dev,
         preprocess: preProcessConfig,
-        // we'll extract any component CSS out into
-        // a separate file — better for performance
-        css: cssOutputFunc,
       }),
+      // we'll extract any component CSS out into
+      // a separate file — better for performance
       postCssPluginConfig(false),
       resolve({
         dedupe: ['svelte'],
