@@ -4,11 +4,12 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
-import scss from 'rollup-plugin-scss';
+//import scss from 'rollup-plugin-scss';
 import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser';
 import favicons from 'rollup-plugin-favicons'
+import customSvelteHtmlTemplate from './scripts/rollup/rollup-custom-sapper-html-template'
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';
@@ -73,6 +74,7 @@ const postCssPluginConfig = (client = true) => postcss({
 export default {
   client: {
     input: config.client.input().replace(/.js$/, '.ts'),
+    //output: { ...config.client.output(), assetFileNames: 'public/assets/[name]-[hash][extname]', },
     output: config.client.output(),
     plugins: [
       replace({
@@ -123,7 +125,29 @@ export default {
         && terser({
           module: true,
         }),
-
+      favicons({
+        source: 'src/assets/images/steakeye-roundel.svg',
+        assetFileNames: 'public',
+        configuration: {
+          appName: pkg.name, // process.env.npm_package_displayName,
+          appDescription: pkg.description,
+          path: '/public/assets/img',
+        },
+        cache: false, // TODO remove this after debugging
+        callback(error, response) {
+          if (error) {
+            console.log(error.message); // Error description e.g. "An unknown error has occurred"
+            return;
+          }
+          console.log('response.images');   // Array of { name: string, contents: <buffer> }
+          console.log(response.images);   // Array of { name: string, contents: <buffer> }
+          console.log('response.files');    // Array of { name: string, contents: <string> }
+          console.log(response.files);    // Array of { name: string, contents: <string> }
+          console.log('response.html');     // Array of strings (html elements)
+          console.log(response.html);     // Array of strings (html elements)
+        },
+      }),
+      customSvelteHtmlTemplate(),
       copy({
         targets: [{ src: 'static/*', dest: 'public' }],
       }),

@@ -1,6 +1,6 @@
 {
   "name": "steakeye-2020",
-  "description": "Steakeye 2020 portfolio site",
+  "description": "Steakeye portfolio site",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
@@ -34,7 +34,7 @@
     "compression": "^1.7.1",
     "destyle.css": "^1.0.15",
     "polka": "next",
-    "rollup-plugin-scss": "^2.6.0",
+    "rollup-plugin-favicons": "github:steakeye/rollup-plugin-favicons",
     "sirv": "^1.0.0"
   },
   "devDependencies": {
@@ -65,8 +65,8 @@
     "prettier-plugin-svelte": "^1.1.0",
     "rollup": "^2.3.4",
     "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-favicons": "^0.2.0",
     "rollup-plugin-postcss": "^3.1.5",
+    "rollup-plugin-scss": "^2.6.0",
     "rollup-plugin-svelte": "^5.0.1",
     "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-typescript2": "^0.27.2",
