@@ -20,8 +20,8 @@ function transformTemplate(template, replacePairs, rollupConfig) {
 }
 
 export default function (options = {}) {
-    console.log('creating rollup-custom-sapper-html-template option')
-    console.log('options', options)
+    /*console.log('creating rollup-custom-sapper-html-template option')
+    console.log('options', options)*/
     const { source = defaultSourcePath, target = defaultTargetPath, replacePairs = [],  } = options
 
     let resolvedSourcePath;

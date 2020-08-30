@@ -29,10 +29,7 @@ function faviconCallback(error, response) {
     console.log(error.message); // Error description e.g. "An unknown error has occurred"
     return;
   }
-  console.log('response.files');    // Array of { name: string, contents: <string> }
-  console.log(response.files);    // Array of { name: string, contents: <string> }
-  //console.log('response.html');     // Array of strings (html elements)
-  //console.log(response.html);     // Array of strings (html elements)
+
   fs.mkdirSync(faviconOutputPath, { recursive: true });
 
   response.images.forEach(({ name, contents }) => {
@@ -163,7 +160,15 @@ export default {
         emitAssets: false,
         callback: faviconCallback,
       }),
-      customSvelteHtmlTemplate(),
+      customSvelteHtmlTemplate({
+        replacePairs: [{
+          templateKey: 'faviconLinks',
+          contentPath: ['__favicons_output'],
+          contentTransformer(links) {
+            return links.join('\n    ');
+          }
+        }],
+      }),
       copy({
         targets: [{ src: 'static/*', dest: 'public' }],
       }),
