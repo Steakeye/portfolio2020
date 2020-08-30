@@ -7,7 +7,7 @@ const defaultTargetPath = 'src/template.html';
 
 function transformTemplate(template, replacePairs, rollupConfig) {
     replacePairs.forEach(({ templateKey, content, contentPath, contentTransformer } = {}) => {
-        let replacementContent = content || (contentPath ? getter(contentPath) || '': '');
+        let replacementContent = content || (contentPath ? getter(contentPath, rollupConfig) || '': '');
 
         if (contentTransformer) {
             replacementContent = contentTransformer(replacementContent);
