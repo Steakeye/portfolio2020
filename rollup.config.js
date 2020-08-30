@@ -17,10 +17,34 @@ import copy from 'rollup-plugin-copy';
 import pkg from './package.json';
 
 const cssFolderPath = 'public/assets/css/';
+const faviconAssetPath = '/favicon/';
+const faviconOutputPath = `public${faviconAssetPath}`;
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
+
+function faviconCallback(error, response) {
+  if (error) {
+    console.log(error.message); // Error description e.g. "An unknown error has occurred"
+    return;
+  }
+  console.log('response.files');    // Array of { name: string, contents: <string> }
+  console.log(response.files);    // Array of { name: string, contents: <string> }
+  //console.log('response.html');     // Array of strings (html elements)
+  //console.log(response.html);     // Array of strings (html elements)
+  fs.mkdirSync(faviconOutputPath, { recursive: true });
+
+  response.images.forEach(({ name, contents }) => {
+    //noop callback just to avoid using the sync version
+    fs.writeFile(path.resolve(path.join(faviconOutputPath, name)), contents, () => {})
+  })
+
+  response.files.forEach(({ name, contents }) => {
+    //noop callback just to avoid using the sync version
+    fs.writeFile(path.resolve(path.join(faviconOutputPath, name)), contents, () => {})
+  })
+}
 
 const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message))
   || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
@@ -74,8 +98,11 @@ const postCssPluginConfig = (client = true) => postcss({
 export default {
   client: {
     input: config.client.input().replace(/.js$/, '.ts'),
-    //output: { ...config.client.output(), assetFileNames: 'public/assets/[name]-[hash][extname]', },
-    output: config.client.output(),
+    output: {
+      ...config.client.output(),
+      //`assetFileNames` has to be a function in order to workaround the favicon plugin overriding the path when it's a string
+      assetFileNames: () => '[name]-[hash][extname]',
+    },
     plugins: [
       replace({
         'process.browser': true,
@@ -127,25 +154,14 @@ export default {
         }),
       favicons({
         source: 'src/assets/images/steakeye-roundel.svg',
-        assetFileNames: 'public',
         configuration: {
           appName: pkg.name, // process.env.npm_package_displayName,
           appDescription: pkg.description,
-          path: '/public/assets/img',
+          path: faviconAssetPath,
         },
         cache: false, // TODO remove this after debugging
-        callback(error, response) {
-          if (error) {
-            console.log(error.message); // Error description e.g. "An unknown error has occurred"
-            return;
-          }
-          console.log('response.images');   // Array of { name: string, contents: <buffer> }
-          console.log(response.images);   // Array of { name: string, contents: <buffer> }
-          console.log('response.files');    // Array of { name: string, contents: <string> }
-          console.log(response.files);    // Array of { name: string, contents: <string> }
-          console.log('response.html');     // Array of strings (html elements)
-          console.log(response.html);     // Array of strings (html elements)
-        },
+        emitAssets: false,
+        callback: faviconCallback,
       }),
       customSvelteHtmlTemplate(),
       copy({

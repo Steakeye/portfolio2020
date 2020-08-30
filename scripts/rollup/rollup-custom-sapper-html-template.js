@@ -37,10 +37,10 @@ export default function (options = {}) {
         /*load(...loadArgs) { //Gets called for every asset in the bundle
             console.log('loadArgs', loadArgs)
         },*/
-        resolveId(...resolveIdArgs) {
-            /* ... */
+        /*resolveId(...resolveIdArgs) {
+            /* ... *\/
             console.log('resolveIdArgs', resolveIdArgs)
-        },
+        },*/
         generateBundle(rollupConfig) {
             /* ... */
             console.log('generateBundleArgs'); //, generateBundleArgs)
@@ -48,7 +48,7 @@ export default function (options = {}) {
 
             const updatedHTMLTemplate = transformTemplate(htmlTemplate, replacePairs, rollupConfig);
 
-            fs.readFileSync(path.resolve(source), { encoding: 'utf8'});
+            fs.writeFileSync(path.resolve(target), updatedHTMLTemplate, { encoding: 'utf8'});
         },
         /*buildEnd(error) {
             if (!error) {
