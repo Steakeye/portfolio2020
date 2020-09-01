@@ -33,8 +33,10 @@
     "autoprefixer": "^9.8.6",
     "compression": "^1.7.1",
     "destyle.css": "^1.0.15",
+    "phaser": "^3.24.1",
     "polka": "next",
-    "sirv": "^1.0.0"
+    "sirv": "^1.0.0",
+    "svelte-phaser": "0.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
