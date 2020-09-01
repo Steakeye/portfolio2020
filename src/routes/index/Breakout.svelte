@@ -8,12 +8,13 @@
     let Text;
 
     onMount(async () => {
+        console.log('Breakout onMount');
         //import { Game, Scene, Text } from 'svelte-phaser'
-        const sveltePhaser = await  import('svelte-phaser');
+        //const sveltePhaser = await  import('svelte-phaser');
 
-        Game = sveltePhaser.Game;
+        /*Game = sveltePhaser.Game;
         Scene = sveltePhaser.Scene;
-        Text = sveltePhaser.Text;
+        Text = sveltePhaser.Text;*/
 
         beforeMount = false;
     });
@@ -23,9 +24,10 @@
 {#if beforeMount}
     <div>Loading...</div>
 {:else}
-    <svelte:component this={Game} width={400} height={400}>
+    <!--svelte:component this={Game} width={400} height={400}>
         <svelte:component this={Scene} key="main">
             <svelte:component this={Text} x={140} y={180} text="hello world" />
         </svelte:component>
-    </svelte:component>
+    </svelte:component-->
+    <div>Loaded!</div>
 {/if}
