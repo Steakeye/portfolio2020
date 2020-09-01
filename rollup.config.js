@@ -41,6 +41,8 @@ function faviconCallback(error, response) {
     //noop callback just to avoid using the sync version
     fs.writeFile(path.resolve(path.join(faviconOutputPath, name)), contents, () => {})
   })
+
+  return response; //Have yo return a valid response to process and cache
 }
 
 const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message))
@@ -156,7 +158,6 @@ export default {
           appDescription: pkg.description,
           path: faviconAssetPath,
         },
-        cache: false, // TODO remove this after debugging
         emitAssets: false,
         callback: faviconCallback,
       }),
