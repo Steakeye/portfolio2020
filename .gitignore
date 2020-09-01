@@ -6,3 +6,5 @@ yarn-error.log
 /__sapper__/
 public
 .eslintcache
+.yarn/cache
+.yarn/unplugged
