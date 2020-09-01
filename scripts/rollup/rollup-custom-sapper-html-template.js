@@ -20,8 +20,6 @@ function transformTemplate(template, replacePairs, rollupConfig) {
 }
 
 export default function (options = {}) {
-    /*console.log('creating rollup-custom-sapper-html-template option')
-    console.log('options', options)*/
     const { source = defaultSourcePath, target = defaultTargetPath, replacePairs = [],  } = options
 
     let resolvedSourcePath;
@@ -30,7 +28,6 @@ export default function (options = {}) {
         name: 'rollup-plugin-custom-sapper-html-template',
         buildStart(options) {
             console.info(this.name)
-            console.log('path.resolve(source)', path.resolve(source))
             resolvedSourcePath = path.resolve(source);
             this.addWatchFile(resolvedSourcePath);
         },
@@ -42,8 +39,6 @@ export default function (options = {}) {
             console.log('resolveIdArgs', resolveIdArgs)
         },*/
         generateBundle(rollupConfig) {
-            /* ... */
-            console.log('generateBundleArgs'); //, generateBundleArgs)
             const htmlTemplate = fs.readFileSync(resolvedSourcePath, { encoding: 'utf8'});
 
             const updatedHTMLTemplate = transformTemplate(htmlTemplate, replacePairs, rollupConfig);
@@ -55,6 +50,5 @@ export default function (options = {}) {
                 //this.addWatchFile(path.resolve(source));
             }
         },*/
-        // ...
     }
 }
