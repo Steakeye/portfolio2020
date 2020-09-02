@@ -104,8 +104,10 @@ export default {
     },
     plugins: [
       replace({
-        'process.browser': true,
+        //'process.browser': (id, ...args) => { console.log('replace id: ', id, args); return true },
+        //'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
+        //exclude: ['node_modules/phaser/**/*'], // Phaser tries to assign a value to `process.browser` which would fail
       }),
       svelte({
         dev,
