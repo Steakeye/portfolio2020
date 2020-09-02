@@ -45,16 +45,17 @@
 </style>
 
 <script lang="ts">
-  export let segment: string
+  import content from '../resources/content.json'
+
+  const { global: { partials: { nav: { links } } } } = content;
 </script>
 
 <nav>
   <ul>
+    {#each links as { href, text }}
     <li>
-      <a aria-current="{segment === undefined ? 'page' : undefined}" href=".">home</a>
+      <a href={href}>{text}</a>
     </li>
-    <li>
-      <a aria-current="{segment === 'about' ? 'page' : undefined}" href="about">about</a>
-    </li>
+    {/each}
   </ul>
 </nav>

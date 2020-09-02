@@ -1,4 +1,30 @@
 {
+  "global": {
+    "partials": {
+      "nav": {
+        "links": [{
+          "name": "github",
+          "text": "GitHub",
+          "href": "https://github.com/steakeye"
+        },
+          {
+          "name": "linkedIn",
+          "text": "LinkedIn",
+          "href": "https://www.linkedin.com/in/steakeye"
+        },
+          {
+          "name": "twitter",
+          "text": "Twitter",
+          "href": "https://twitter.com/steakeye"
+        },
+          {
+          "name": "email",
+          "text": "Email",
+          "href": "mailto:andrew%20at%20steayeye.com?subject=Hi%20Steakeye&body=Dear%20Steakeye"
+        }]
+      }
+    }
+  },
   "pages": {
     "error": {
       "backHomeLink": {
