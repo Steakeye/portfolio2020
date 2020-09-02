@@ -1,4 +1,8 @@
 <style>
+  //@import '~@coreui';
+  @import 'node_modules/@coreui/icons/scss/free/free-icons.scss';
+
+
   nav {
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);
     font-weight: 300;
