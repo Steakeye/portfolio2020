@@ -1,4 +1,9 @@
 {
+  "api": {
+    "email": {
+      "redirect": ":andrew%20at%20steayeye.com?subject=Hi%20Steakeye&body=Dear%20Steakeye"
+    }
+  },
   "global": {
     "partials": {
       "nav": {
@@ -20,7 +25,7 @@
           {
           "name": "email",
           "text": "Email",
-          "href": "mailto:andrew%20at%20steayeye.com?subject=Hi%20Steakeye&body=Dear%20Steakeye"
+          "href": "mailto:andrew@steakeye.com"
         }]
       }
     }
