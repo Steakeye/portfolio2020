@@ -56,7 +56,7 @@ fs.writeFileSync(serviceWorkerPath, `declare let self: ServiceWorkerGlobalScope\
     vars: [{ name: 'segment', type: 'string' }],
   },
   {
-    view: 'routes/index',
+    view: 'routes/_index',
   },
   {
     view: 'routes/about',
@@ -73,7 +73,7 @@ fs.writeFileSync(serviceWorkerPath, `declare let self: ServiceWorkerGlobalScope\
     ],
   },
   {
-    view: 'routes/blog/index',
+    view: 'routes/blog/_index',
     vars: [{ name: 'posts', type: 'any[]' }],
   },
   {
@@ -154,7 +154,7 @@ const sapperTypingsFolderPath = path.join(typingsFolderPath, '@sapper');
 fs.mkdirSync(typingsFolderPath);
 fs.mkdirSync(sapperTypingsFolderPath);
 fs.writeFileSync(
-  path.join(sapperTypingsFolderPath, 'index.d.ts'),
+  path.join(sapperTypingsFolderPath, '_index.d.ts'),
   `declare module '@sapper/app';
 declare module '@sapper/server';
 declare module '@sapper/service-worker';

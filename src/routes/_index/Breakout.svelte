@@ -8,8 +8,6 @@
     let Text;
 
     onMount(async () => {
-        console.log('Breakout onMount');
-        //import { Game, Scene, Text } from 'svelte-phaser'
         const sveltePhaser = await  import('svelte-phaser');
 
         Game = sveltePhaser.Game;

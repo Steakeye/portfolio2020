@@ -22,10 +22,14 @@
 </style>
 
 <script lang="ts">
+  import content from '../resources/content.json'
+
   export let status: number
   export let error: Error
 
   const dev = process.env.NODE_ENV === 'development'
+
+  const { pages: { error: { backHomeLink: { text: homeText } } } } = content;
 </script>
 
 <svelte:head>
@@ -35,6 +39,7 @@
 <h1>{status}</h1>
 
 <p>{error.message}</p>
+<p><a href="/">{homeText}</a></p>
 
 {#if dev && error.stack}
   <pre>{error.stack}</pre>

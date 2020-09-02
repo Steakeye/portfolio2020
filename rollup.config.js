@@ -14,6 +14,7 @@ import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';
 import copy from 'rollup-plugin-copy';
+import json from '@rollup/plugin-json';
 import pkg from './package.json';
 
 const cssFolderPath = 'public/assets/css/';
@@ -109,6 +110,7 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
         //exclude: ['node_modules/phaser/**/*'], // Phaser tries to assign a value to `process.browser` which would fail
       }),
+      json(),
       svelte({
         dev,
         hydratable: true,
@@ -189,6 +191,7 @@ export default {
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
+      json(),
       svelte({
         generate: 'ssr',
         hydratable: true,
