@@ -1,10 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
+import alias from 'rollup-plugin-alias';
+import replacement from "rollup-plugin-module-replacement";
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
-//import scss from 'rollup-plugin-scss';
 import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser';
@@ -92,23 +93,41 @@ const postCssPluginConfig = (client = true) => postcss({
       sourceMap: dev,
       minimize: !dev,
       modules: true,
-      extensions: ['.css', '.scss']
-    })
+      extensions: ['.css', '.scss'],
+      });
 
-export default {
-  client: {
-    input: config.client.input().replace(/.js$/, '.ts'),
-    output: {
-      ...config.client.output(),
-      //`assetFileNames` has to be a function in order to workaround the favicon plugin overriding the path when it's a string
-      assetFileNames: () => '[name]-[hash][extname]',
-    },
-    plugins: [
-      replace({
-        //'process.browser': (id, ...args) => { console.log('replace id: ', id, args); return true },
-        //'process.browser': true,
-        'process.env.NODE_ENV': JSON.stringify(mode),
-        //exclude: ['node_modules/phaser/**/*'], // Phaser tries to assign a value to `process.browser` which would fail
+  export default {
+    client: {
+      input: config.client.input().replace(/.js$/, '.ts'),
+      output: {
+        ...config.client.output(),
+        //`assetFileNames` has to be a function in order to workaround the favicon plugin overriding the path when it's a string
+        assetFileNames: () => '[name]-[hash][extname]',
+      },
+      plugins: [
+        /*alias({
+          entries: [{
+            find: '~',
+            replacement: 'node_modules/',
+          }],
+          resolve: ['.svelte', '.ts', '.js', '.scss', '.css']
+        }),*/
+        replacement(
+  {
+            entries: [{
+              find: '~',
+              replacement: 'node_modules/',
+            }],
+            customResolver: resolve({
+              extensions: [".mjs", ".js", ".jsx", ".json", ".sass", ".scss", ".svelte"]
+            })
+          }
+        ),
+        replace({
+          //'process.browser': (id, ...args) => { console.log('replace id: ', id, args); return true },
+          //'process.browser': true,
+          'process.env.NODE_ENV': JSON.stringify(mode),
+          //exclude: ['node_modules/phaser/**/*'], // Phaser tries to assign a value to `process.browser` which would fail
       }),
       json(),
       svelte({
@@ -123,13 +142,14 @@ export default {
       resolve({
         browser: true,
         dedupe: ['svelte'],
+        //extensions: [".ts", ".js", ".json", ".scss", ".css"],
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
 
       legacy
         && babel({
-          extensions: ['.js', '.mjs', '.html', '.svelte'],
+          extensions: ['.ts','.js', '.mjs', '.html', '.svelte', '.scss'],
           babelHelpers: 'runtime',
           exclude: ['node_modules/@babel/**'],
           presets: [
@@ -148,6 +168,16 @@ export default {
                 useESModules: true,
               },
             ],
+/*              [
+                  "module-resolver",
+                {
+                  root: ["./src/"],
+                  alias: {
+                    "~": "node_modules/"
+                  },
+                  "extensions": [".ts", ".svelte", ".scss", ".mjs"]
+                }
+              ],*/
           ],
         }),
 
@@ -187,6 +217,13 @@ export default {
     input: config.server.input().server.replace(/.js$/, '.ts'),
     output: config.server.output(),
     plugins: [
+      alias({
+        entries: [{
+          find: '~',
+          replacement: 'node_modules/',
+        }],
+        resolve: ['.svelte', '.ts', '.js', '.scss', '.css']
+      }),
       replace({
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),
@@ -203,6 +240,7 @@ export default {
       postCssPluginConfig(false),
       resolve({
         dedupe: ['svelte'],
+        extensions: [".mjs", ".js", ".jsx", ".json", ".sass", ".scss"]
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
