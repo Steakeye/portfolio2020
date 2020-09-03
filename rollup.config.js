@@ -4,7 +4,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
-//import scss from 'rollup-plugin-scss';
 import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser';
@@ -92,7 +91,8 @@ const postCssPluginConfig = (client = true) => postcss({
       sourceMap: dev,
       minimize: !dev,
       modules: true,
-      extensions: ['.css', '.scss']
+      extensions: ['.css', '.scss'],
+      use: ['sass'],
     })
 
 export default {

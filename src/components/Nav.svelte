@@ -1,7 +1,7 @@
 <style>
   //@import '~@coreui';
   //@import 'node_modules/@coreui/icons/scss/free/free-icons.scss';
-  @import '../styles/type.scss';
+  //@import '../styles/type.scss';
 
   nav {
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);

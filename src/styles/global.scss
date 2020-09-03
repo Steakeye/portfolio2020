@@ -1,7 +1,7 @@
-@import 'node_modules/destyle.css/destyle';
+@import '~destyle.css/destyle';
 
-@use 'type';
-@use 'layout';
+@import 'type';
+@import 'layout';
 
 /*
 * Begin global styles
