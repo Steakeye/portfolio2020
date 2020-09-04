@@ -1,0 +1,21 @@
+@use 'test';
+@use '~@coreui/icons/scss/free/_core';
+//@use '~@coreui/icons/scss/free/_variables' as *;
+
+/* Add fonts */
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital@0;1&family=BioRhyme&family=Bungee&family=Bungee+Shade&family=Copse&family=Farsan&family=Pacifico&family=Shrikhand&family=Space+Mono:ital@1&display=swap');
+
+/*
+Fonts:
+font-family: 'Arvo', serif;
+font-family: 'BioRhyme', serif;
+font-family: 'Bungee', cursive;
+font-family: 'Bungee Shade', cursive;
+font-family: 'Copse', serif;
+font-family: 'Farsan', sans-serif; //cursive;
+font-family: 'Pacifico', cursive;
+font-family: 'Shrikhand', cursive;
+font-family: 'Space Mono', monospace;
+*/
+
+/*Icons*/
