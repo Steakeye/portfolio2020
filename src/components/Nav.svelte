@@ -1,4 +1,5 @@
 <style>
+  @use 'src/styles/fonts';
   //@import '~@coreui';
   //@import 'node_modules/@coreui/icons/scss/free/free-icons.scss';
   //@import '../styles/type.scss';
@@ -26,7 +27,9 @@
     float: left;
 
     a {
-
+      &.github:after {
+        @include fonts.coreUIIcon(github);
+      }
     }
   }
 
@@ -60,9 +63,9 @@
 
 <nav>
   <ul>
-    {#each links as { href, text }}
+    {#each links as { name, href, text }}
     <li>
-      <a href={href}>{text}</a>
+      <a class={name} href={href}>{text}</a>
     </li>
     {/each}
   </ul>

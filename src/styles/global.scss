@@ -1,8 +1,6 @@
+@use '~destyle.css/destyle';
 @use 'fonts';
-
-@import '~destyle.css/destyle';
-
-@import 'layout';
+@use 'layout';
 
 /*
 * Begin global styles

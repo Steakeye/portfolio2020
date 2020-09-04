@@ -111,10 +111,8 @@ export default {
     },
     plugins: [
       replace({
-        //'process.browser': (id, ...args) => { console.log('replace id: ', id, args); return true },
-        //'process.browser': true,
+        //'process.browser': true, // Phaser tries to assign a value to `process.browser` which would fail
         'process.env.NODE_ENV': JSON.stringify(mode),
-        //exclude: ['node_modules/phaser/**/*'], // Phaser tries to assign a value to `process.browser` which would fail
       }),
       json(),
       svelte({
@@ -181,7 +179,10 @@ export default {
         }],
       }),
       copy({
-        targets: [{ src: 'static/*', dest: 'public' }],
+        targets: [
+            { src: 'static/*', dest: 'public' },
+            { src: 'node_modules/@coreui/icons/fonts', dest: 'public' },
+            ],
       }),
     ],
 
