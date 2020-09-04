@@ -1,0 +1,4 @@
+@use "sass:string";
+@function unicode($str) {
+  @return string.unquote("\"") + $str + string.unquote("\"");
+}
