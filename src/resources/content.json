@@ -7,25 +7,36 @@
   "global": {
     "partials": {
       "nav": {
-        "links": [{
-          "name": "github",
-          "text": "GitHub",
-          "href": "https://github.com/steakeye"
-        },
+        "links": [
           {
-          "name": "linkedIn",
-          "text": "LinkedIn",
-          "href": "https://www.linkedin.com/in/steakeye"
-        },
+            "name": "about",
+            "text": "About Me",
+            "href": "#about"
+          },
           {
-          "name": "twitter",
-          "text": "Twitter",
-          "href": "https://twitter.com/steakeye"
-        },
+            "name": "cv",
+            "text": "CV/Resumé",
+            "href": "/media/cv.pdf"
+          },
           {
-          "name": "email",
-          "text": "Email",
-          "href": "mailto:andrew@steakeye.com"
+            "name": "github",
+            "text": "GitHub",
+            "href": "https://github.com/steakeye"
+          },
+          {
+            "name": "linkedIn",
+            "text": "LinkedIn",
+            "href": "https://www.linkedin.com/in/steakeye"
+          },
+          {
+            "name": "twitter",
+            "text": "Twitter",
+            "href": "https://twitter.com/steakeye"
+          },
+          {
+            "name": "email",
+            "text": "Email",
+            "href": "mailto:andrew@steakeye.com"
         }]
       }
     }

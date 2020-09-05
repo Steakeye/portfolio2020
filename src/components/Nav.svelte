@@ -1,8 +1,7 @@
 <style>
+  @use 'src/styles/layout';
   @use 'src/styles/fonts';
-  //@import '~@coreui';
-  //@import 'node_modules/@coreui/icons/scss/free/free-icons.scss';
-  //@import '../styles/type.scss';
+  //@use 'src/styles/type.scss';
 
   nav {
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);
@@ -27,31 +26,21 @@
     float: left;
 
     a {
-      &.github:after {
-        @include fonts.coreUIIcon(github);
+      //cv options: read-the-docs, short-text
+      $icons: (about: info, cv: short-text, github: github, linkedIn: linkedin, twitter: twitter, email: envelope-closed);
+
+      @each $name, $icon in $icons {
+        &.#{$name} {
+          &:after {
+          @include fonts.coreUIIcon($icon);
+          }
+
+          .linkText {
+            @include layout.extendVisuallyHidden;
+          }
+        }
       }
     }
-  }
-
-  [aria-current] {
-    position: relative;
-    display: inline-block;
-  }
-
-  [aria-current]::after {
-    position: absolute;
-    content: '';
-    width: calc(100% - 1em);
-    height: 2px;
-    background-color: rgb(255, 62, 0);
-    display: block;
-    bottom: -1px;
-  }
-
-  a {
-    text-decoration: none;
-    padding: 1em 0.5em;
-    display: block;
   }
 </style>
 
@@ -65,7 +54,9 @@
   <ul>
     {#each links as { name, href, text }}
     <li>
-      <a class={name} href={href}>{text}</a>
+      <a class={name} href={href}>
+        <strong class='linkText'>{text}</strong>
+      </a>
     </li>
     {/each}
   </ul>

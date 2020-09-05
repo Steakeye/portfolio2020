@@ -47,10 +47,10 @@ $coreui-icon-font-family-prefix: 'CoreUI-Icons-';
 @mixin coreUIIcon($iconName) {
   @if map.has-key(free-icons.$icons, $iconName) {
     @extend %coreUIIconFree;
-    content: free-icons.unicode($iconName);
+    content: free-icons.unicode(map.get(free-icons.$icons, $iconName));
   } @else if map.has-key(brand-icons.$icons, $iconName) {
     @extend %coreUIIconBrand;
-    content: free-icons.unicode($iconName);
+    content: free-icons.unicode(map.get(brand-icons.$icons, $iconName));
   } @else {
     @error "Icon '#{$iconName}' not found.";
   }
