@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte';
+    import roundelPath from 'src/assets/images/game/steakeye-roundel.svg';
 
     function loadAssets(scene: Phaser.Scene) {
         scene.load.image('ball', 'images/game/steakeye-roundel.svg');

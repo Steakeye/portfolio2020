@@ -3,6 +3,7 @@ import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
+import importUrl from '@rollup/plugin-url';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss'
@@ -101,6 +102,13 @@ const postCssPluginConfig = (client = true) => postcss({
       })],
     })
 
+const urlImportConfig = (client = false) => importUrl({
+  //emitFiles:client,
+  sourceDir: path.join(__dirname, 'src'), //'src',
+  destDir: 'public',
+  limit: 0,
+});
+
 export default {
   client: {
     input: config.client.input().replace(/.js$/, '.ts'),
@@ -115,6 +123,7 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       json(),
+      urlImportConfig(),
       svelte({
         dev,
         hydratable: true,
@@ -199,6 +208,7 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       json(),
+      urlImportConfig(false),
       svelte({
         generate: 'ssr',
         hydratable: true,
