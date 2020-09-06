@@ -1,15 +1,9 @@
 <script>
-    //import roundelPath from './steakeye-roundel.svg'; //<-- this is the only way that works
-    //import roundelPath from 'steakeye-roundel.svg';//<-- this partly works, outputs file but resource not loaded
-    import roundelPath from 'src/assets/images/game/steakeye-roundel.svg';
-    //import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
-    //import roundelPath from './src/assets/images/game/steakeye-roundel.svg';
-    //import roundelPath from './assets/images/game/steakeye-roundel.svg';
+    import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
     import { onMount } from 'svelte';
 
     function loadAssets(scene: Phaser.Scene) {
-        //scene.load.image('ball', 'images/game/steakeye-roundel.svg');
-        scene.load.image('ball2', roundelPath);
+        scene.load.image('ball', roundelPath);
     }
 
     let beforeMount = true;

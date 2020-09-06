@@ -3,9 +3,8 @@ import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
-import includePaths from 'rollup-plugin-includepaths';
+import includePaths from 'rollup-plugin-root-import';
 import importUrl from '@rollup/plugin-url';
-import smartAsset from "rollup-plugin-smart-asset"
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import cleaner from 'rollup-plugin-cleaner';
@@ -103,26 +102,21 @@ const postCssPluginConfig = (client = true) => postcss({
         includePaths: ['node_modules', 'src'],
         importer: tildeSassImporter,
       })],
-    })
-
-const publicPath = '/client/assets/'
+    });
 
 const urlImportConfig = (client = true) => importUrl({
-  //emitFiles:client,
+  emitFiles:client,
   sourceDir: path.join(__dirname, 'src'), //'src',
-  //sourceDir: __dirname, //'src',
-  //destDir: path.join(config.client.output().dir, 'assets'), //'public',
   destDir: 'public',
-  publicPath, //: 'test',
   fileName: '[dirname][name][extname]',
   limit: 0,
 });
 
-const includePathOptions = {
-  //paths: ['src'],
-}
-
-const includePathPlugin = includePaths(includePathOptions);
+const includePathPlugin = includePaths(
+    {
+      root: __dirname,
+    }
+);
 
 export default {
   client: {
@@ -254,11 +248,13 @@ export default {
     input: config.serviceworker.input().replace(/.js$/, '.ts'),
     output: config.serviceworker.output(),
     plugins: [
+      includePathPlugin,
       resolve(),
       replace({
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
+      json(),
       commonjs(),
       typescript({ sourceMap: dev }),
       !dev && terser(),
