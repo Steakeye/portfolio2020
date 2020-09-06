@@ -3,7 +3,9 @@ import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
+import includePaths from 'rollup-plugin-includepaths';
 import importUrl from '@rollup/plugin-url';
+import smartAsset from "rollup-plugin-smart-asset"
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import cleaner from 'rollup-plugin-cleaner';
@@ -103,12 +105,24 @@ const postCssPluginConfig = (client = true) => postcss({
       })],
     })
 
-const urlImportConfig = (client = false) => importUrl({
+const publicPath = '/client/assets/'
+
+const urlImportConfig = (client = true) => importUrl({
   //emitFiles:client,
   sourceDir: path.join(__dirname, 'src'), //'src',
+  //sourceDir: __dirname, //'src',
+  //destDir: path.join(config.client.output().dir, 'assets'), //'public',
   destDir: 'public',
+  publicPath, //: 'test',
+  fileName: '[dirname][name][extname]',
   limit: 0,
 });
+
+const includePathOptions = {
+  //paths: ['src'],
+}
+
+const includePathPlugin = includePaths(includePathOptions);
 
 export default {
   client: {
@@ -122,6 +136,7 @@ export default {
       cleaner({
         targets: ['public']
       }),
+      includePathPlugin,
       replace({
         //'process.browser': true, // Phaser tries to assign a value to `process.browser` which would fail
         'process.env.NODE_ENV': JSON.stringify(mode),
@@ -207,6 +222,7 @@ export default {
     input: config.server.input().server.replace(/.js$/, '.ts'),
     output: config.server.output(),
     plugins: [
+      includePathPlugin,
       replace({
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),
