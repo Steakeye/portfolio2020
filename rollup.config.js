@@ -6,6 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import importUrl from '@rollup/plugin-url';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
+import cleaner from 'rollup-plugin-cleaner';
 import postcss from 'rollup-plugin-postcss'
 import postcssSass from '@csstools/postcss-sass';
 import tildeSassImporter from "node-sass-tilde-importer";
@@ -118,6 +119,9 @@ export default {
       assetFileNames: () => '[name]-[hash][extname]',
     },
     plugins: [
+      cleaner({
+        targets: ['public']
+      }),
       replace({
         //'process.browser': true, // Phaser tries to assign a value to `process.browser` which would fail
         'process.env.NODE_ENV': JSON.stringify(mode),
