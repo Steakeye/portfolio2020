@@ -35,6 +35,7 @@
     "phaser": "^3.24.1",
     "polka": "next",
     "sirv": "^1.0.0",
+    "svelte-fragment": "^1.0.1",
     "svelte-phaser": "0.0.6"
   },
   "devDependencies": {
