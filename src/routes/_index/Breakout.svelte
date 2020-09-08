@@ -1,7 +1,6 @@
 <script>
     import {SvelteComponent} from 'svelte';
     import {onMount} from 'svelte';
-    //import fragment from 'svelte-fragment';
 
     import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
 
@@ -22,6 +21,9 @@
     let LoadingBar: SvelteComponent;
     let Arena: SvelteComponent;
 
+    let exposedProgress;
+    let sceneInstance;
+
     onMount(async () => {
         const sveltePhaser = await import('svelte-phaser');
         fragment = (await import('svelte-fragment')).default;
@@ -39,6 +41,11 @@
 
         beforeMount = false;
     });
+
+    $: if (sceneInstance) {
+        console.log('sceneInstance', sceneInstance)
+        console.log('exposedProgress', exposedProgress)
+    }
 </script>
 
 {#if beforeMount}
@@ -54,8 +61,10 @@
         <Scene
             key="main"
             preload={loadAssets}
+            bind:this={sceneInstance}
         >
-            <template use:bullshit use:fragment slot="loading" let:progress>
+            <p use:bullshit slot="loading" let:progress>Oh loadio! {console.log('progress', progress), progress}</p>
+            <template>
                 <LoadingBar x={400} y={400} /> <!--{progress} /-->
             </template>
             <Arena />

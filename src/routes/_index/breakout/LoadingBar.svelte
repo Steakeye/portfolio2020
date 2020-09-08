@@ -6,12 +6,14 @@
     const barWidth = 400
     export let x
     export let y
-    /*export let progress
-    const tweenedProgress = tweened(progress, {
+    export let progress
+    /*const tweenedProgress = tweened(progress, {
         duration: 200,
         easing: cubicOut,
     })
     $: $tweenedProgress = progress*/
+    console.log('$$props', $$props)
+    console.log('$$restProps', $$restProps)
 </script>
 
 <Container {x} {y} width={barWidth} height={50}>
