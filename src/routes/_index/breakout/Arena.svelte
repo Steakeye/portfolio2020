@@ -1,5 +1,72 @@
 <script>
-    import { Text } from 'svelte-phaser'
+    import { onGameEvent, onInputEvent, getScene } from 'svelte-phaser'
+    import Bat from './Bat.svelte'
+    import Ball from './Ball.svelte'
+    import Brick from './Brick.svelte'
+    const scene = getScene()
+    // set collisions on all edges of world except bottom
+    scene.physics.world.setBoundsCollision(true, true, true, false)
+    let isBallLaunched = false
+    let bat
+    let ball
+    let bricks = []
+    setup()
+    onGameEvent('step', () => {
+        // snap ball to bat
+        if (!isBallLaunched) {
+            ball.setPosition(bat.x, bat.y - 48)
+        }
+        // reset ball after it hits bottom of screen
+        if (ball.y > 800) {
+            ball.body.setVelocity(0)
+            isBallLaunched = false
+        }
+        // you win!
+        if (bricks.length === 0) {
+            ball.body.setVelocity(0)
+            setup()
+        }
+    })
+    // launch ball on click
+    onInputEvent('pointerdown', () => {
+        if (!isBallLaunched) {
+            isBallLaunched = true
+            ball.body.setVelocity(-75, -600)
+        }
+    })
+    // setup game
+    function setup() {
+        isBallLaunched = false
+        // create an array of 60 bricks
+        bricks = Array.from({ length: 60 }).map((_, index) => {
+            // possible sprites to use for block
+            const blockFrames = [
+                'blue1',
+                'red1',
+                'green1',
+                'yellow1',
+                'silver1',
+                'purple1',
+            ]
+            return {
+                x: (index % 10) * 64,
+                y: 10 * Math.floor(index / 10) * 3.2,
+                // each row uses same sprite
+                frame: blockFrames[Math.floor(index / 10)],
+                key: index,
+            }
+        })
+    }
 </script>
 
-<Text x=0 y=0 text="Loaded"/>
+<Bat bind:instance={bat} x={400} y={700} />
+<Ball bind:instance={ball} />
+{#each bricks as block (block.key)}
+    <Brick
+            x={block.x + 116}
+            y={block.y + 200}
+            frame={block.frame}
+            onBallHit={() => {
+      bricks = bricks.filter(b => b !== block)
+    }} />
+{/each}>
