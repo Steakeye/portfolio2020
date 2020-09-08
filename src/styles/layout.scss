@@ -3,7 +3,6 @@
   &:after { content: ''; display: table; clear: both; }
 }
 
-
 %visuallyHidden {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -15,9 +14,9 @@
 }
 
 .visually-hidden {
-  @extend  %visuallyHidden
+  @extend %visuallyHidden
 }
 
 @mixin extendVisuallyHidden {
-  @extend  %visuallyHidden
+  @extend %visuallyHidden
 }

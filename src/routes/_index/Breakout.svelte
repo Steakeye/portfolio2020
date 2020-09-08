@@ -1,3 +1,10 @@
+<style>
+    @use 'src/styles/layout';
+
+    .loading-node {
+        @include layout.extendVisuallyHidden;
+    }
+</style>
 <script>
     import {SvelteComponent} from 'svelte';
     import {onMount} from 'svelte';
@@ -18,9 +25,7 @@
 
     let beforeMount = true;
 
-    let bullshit = (...args) => {
-        console.log('bs args', args)
-    };
+    let removeFromParent;
     let fragment;
     let Phaser: SvelteComponent;
     let Game: SvelteComponent;
@@ -36,9 +41,6 @@
         const sveltePhaser = await import('svelte-phaser');
         fragment = (await import('svelte-fragment')).default;
         Phaser = await import('phaser');
-
-        /*console.log('sveltePhaser', sveltePhaser)
-        console.log('Phaser', Phaser)*/
 
         Game = sveltePhaser.Game;
         Scene = sveltePhaser.Scene;
@@ -72,10 +74,10 @@
             preload={loadAssets}
             bind:this={sceneInstance}
         >
-            <p use:bullshit slot="loading" let:progress >Oh loadio! {console.log('progress', progress), assignExposedProgress(progress)}</p>
-            <template>
-                <LoadingBar x={400} y={400} progress={exposedProgress}/> <!--{progress} /-->
-            </template>
+            <div class="loading-node" slot="loading" let:progress>{assignExposedProgress(progress), ''}</div>
+            {#if exposedProgress !== 1}
+                <LoadingBar x={400} y={400} progress={exposedProgress}/>
+            {/if}
             <Arena />
         </Scene>
     </Game>
