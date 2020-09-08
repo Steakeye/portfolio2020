@@ -2,10 +2,18 @@
     import {SvelteComponent} from 'svelte';
     import {onMount} from 'svelte';
 
+    import testModule from './breakout/test.ts'
+
     import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
+
+    console.log(testModule())
 
     function loadAssets(scene: Phaser.Scene) {
         scene.load.image('ball', roundelPath);
+    }
+
+    function assignExposedProgress(updatedValue: number) {
+        exposedProgress = updatedValue;
     }
 
     let beforeMount = true;
@@ -46,6 +54,7 @@
         console.log('sceneInstance', sceneInstance)
         console.log('exposedProgress', exposedProgress)
     }
+    $: console.log('exposedProgress', exposedProgress)
 </script>
 
 {#if beforeMount}
@@ -63,9 +72,9 @@
             preload={loadAssets}
             bind:this={sceneInstance}
         >
-            <p use:bullshit slot="loading" let:progress>Oh loadio! {console.log('progress', progress), progress}</p>
+            <p use:bullshit slot="loading" let:progress >Oh loadio! {console.log('progress', progress), assignExposedProgress(progress)}</p>
             <template>
-                <LoadingBar x={400} y={400} /> <!--{progress} /-->
+                <LoadingBar x={400} y={400} progress={exposedProgress}/> <!--{progress} /-->
             </template>
             <Arena />
         </Scene>
