@@ -6,10 +6,10 @@
         name: "ball",
         texture: "ball",
         //scale: .5,
-        width: "50",
-        height: "50",
-        displayWidth: "50",
-        displayHeight: "50",
+        width: "25",
+        height: "25",
+        displayWidth: "25",
+        displayHeight: "25",
     }
 
     function handlePaddleCollide(event) {

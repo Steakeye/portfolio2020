@@ -1,3 +1,9 @@
+<script context="module">
+    import config from '/src/resources/config.json';
+    import getter from "ramda/src/path";
+
+    const gameUnit = getter('breakout.sizeUnit'.split('.'), config)
+</script>
 <script>
     import { onGameEvent, onInputEvent, getScene } from 'svelte-phaser';
     import Bat from './Bat.svelte';
@@ -61,7 +67,7 @@
     onInputEvent('pointerdown', () => {
         if (!isBallLaunched) {
             isBallLaunched = true
-            ball.body.setVelocity(-75, -600)
+            ball.body.setVelocity(-gameUnit*2, -400)
         }
     })
 </script>

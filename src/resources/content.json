@@ -42,6 +42,13 @@
     }
   },
   "pages": {
+    "index": {
+      "breakout": {
+        "game": {
+          "title": "Steakeye Breakout!"
+        }
+      }
+      },
     "error": {
       "backHomeLink": {
         "text": "Back to home page"

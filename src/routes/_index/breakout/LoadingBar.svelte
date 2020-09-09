@@ -12,8 +12,6 @@
         easing: cubicOut,
     })
     $: $tweenedProgress = progress
-    console.log('$$props', $$props)
-    console.log('$$restProps', $$restProps)
 </script>
 
 <Container {x} {y} width={barWidth} height={50}>

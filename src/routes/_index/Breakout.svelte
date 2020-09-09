@@ -5,9 +5,16 @@
         @include layout.extendVisuallyHidden;
     }
 </style>
+<script context="module">
+    import textContent from '/src/resources/content.json';
+    import getter from "ramda/src/path";
+
+    const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
+</script>
 <script>
     import type { SvelteComponent } from 'svelte';
     import {onMount} from 'svelte';
+    //import getter from 'ramda/src/path'
 
     import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
 
@@ -53,9 +60,15 @@
     <div>Loading...</div>
 {:else}
     <Game
+        title={gameTitle}
         width={400}
         height={400}
-        physics={{ default: 'arcade' }}
+        physics={{
+            default: 'arcade',
+            arcade: {
+                debug: true,
+            },
+        }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH }}
         noop-transparent="true"
     >
