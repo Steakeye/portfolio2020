@@ -78,7 +78,6 @@
     <Brick
         x={block.x + 116}
         y={block.y + 200}
-        frame={block.frame}
         onBallHit={() => {
             bricks = bricks.filter(b => b !== block)
     }} />
