@@ -1,6 +1,17 @@
 <script>
     import { Sprite, ArcadePhysics, ArcadeCollider } from 'svelte-phaser'
     export let instance = undefined
+
+    const ballProps = {
+        name: "ball",
+        texture: "ball",
+        //scale: .5,
+        width: "50",
+        height: "50",
+        displayWidth: "50",
+        displayHeight: "50",
+    }
+
     function handlePaddleCollide(event) {
         const { self, other: paddle } = event.detail
         if (self.x < paddle.x) {
@@ -15,7 +26,7 @@
     }
 </script>
 
-<Sprite bind:instance name="ball" texture="assets" frame="ball1">
+<Sprite bind:instance {...ballProps}>
     <ArcadePhysics collideWorldBounds bounce={1} />
     <ArcadeCollider with="bat" on:collide={handlePaddleCollide} />
 </Sprite>

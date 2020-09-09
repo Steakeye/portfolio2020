@@ -1,39 +1,11 @@
 <script>
-    import { onGameEvent, onInputEvent, getScene } from 'svelte-phaser'
-    import Bat from './Bat.svelte'
-    import Ball from './Ball.svelte'
-    import Brick from './Brick.svelte'
-    const scene = getScene()
-    // set collisions on all edges of world except bottom
-    scene.physics.world.setBoundsCollision(true, true, true, false)
-    let isBallLaunched = false
-    let bat
-    let ball
-    let bricks = []
-    setup()
-    onGameEvent('step', () => {
-        // snap ball to bat
-        if (!isBallLaunched) {
-            ball.setPosition(bat.x, bat.y - 48)
-        }
-        // reset ball after it hits bottom of screen
-        if (ball.y > 800) {
-            ball.body.setVelocity(0)
-            isBallLaunched = false
-        }
-        // you win!
-        if (bricks.length === 0) {
-            ball.body.setVelocity(0)
-            setup()
-        }
-    })
-    // launch ball on click
-    onInputEvent('pointerdown', () => {
-        if (!isBallLaunched) {
-            isBallLaunched = true
-            ball.body.setVelocity(-75, -600)
-        }
-    })
+    import { onGameEvent, onInputEvent, getScene } from 'svelte-phaser';
+    import Bat from './Bat.svelte';
+    import Ball from './Ball.svelte';
+    import Brick from './Brick.svelte';
+
+    const spacingUnit = 50;
+
     // setup game
     function setup() {
         isBallLaunched = false
@@ -57,16 +29,51 @@
             }
         })
     }
+
+    const scene = getScene();
+    const sceneSize = scene.sys.game.scale.gameSize
+    const { height: sceneHeight, width: sceneWidth } = sceneSize;
+    // set collisions on all edges of world except bottom
+    scene.physics.world.setBoundsCollision(true, true, true, false);
+    let isBallLaunched = false;
+    let bat;
+    let ball;
+    let bricks = [];
+
+    setup()
+    onGameEvent('step', () => {
+        // snap ball to bat
+        if (!isBallLaunched) {
+            ball.setPosition(bat.x, bat.y - spacingUnit)
+        }
+        // reset ball after it hits bottom of screen
+        if (ball.y > sceneHeight) {
+            ball.body.setVelocity(0)
+            isBallLaunched = false
+        }
+        // you win!
+        if (bricks.length === 0) {
+            ball.body.setVelocity(0)
+            setup()
+        }
+    })
+    // launch ball on click
+    onInputEvent('pointerdown', () => {
+        if (!isBallLaunched) {
+            isBallLaunched = true
+            ball.body.setVelocity(-75, -600)
+        }
+    })
 </script>
 
-<Bat bind:instance={bat} x={400} y={700} />
+<Bat bind:instance={bat} x={sceneWidth} y={sceneHeight - spacingUnit} />
 <Ball bind:instance={ball} />
 {#each bricks as block (block.key)}
     <Brick
-            x={block.x + 116}
-            y={block.y + 200}
-            frame={block.frame}
-            onBallHit={() => {
-      bricks = bricks.filter(b => b !== block)
+        x={block.x + 116}
+        y={block.y + 200}
+        frame={block.frame}
+        onBallHit={() => {
+            bricks = bricks.filter(b => b !== block)
     }} />
-{/each}>
+{/each}
