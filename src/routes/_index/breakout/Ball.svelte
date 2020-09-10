@@ -12,8 +12,7 @@
         displayHeight: "25",
     }
 
-    function handlePaddleCollide(event) {
-        const { self, other: paddle } = event.detail
+    function handlePaddleCollide({ detail: { self, other: paddle } }) {
         if (self.x < paddle.x) {
             const diff = paddle.x - self.x
             self.body.setVelocityX(-10 * diff)

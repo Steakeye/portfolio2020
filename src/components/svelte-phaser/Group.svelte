@@ -1,43 +1,38 @@
 <script>
-    import { onDestroy, onMount, afterUpdate /*setContext *\/ SvelteComponent*/ } from 'svelte';
+    import { onDestroy, onMount, afterUpdate } from 'svelte';
     import type { Phaser } from 'phaser';
-    import {getScene} from 'svelte-phaser';
+    import { getScene } from 'svelte-phaser';
 
     const currentScene: Phaser.Scene = getScene();
 
     export let options = undefined;
 
-    export const items: unknown[] = [];
+    export const items: Phaser.GameObjects.GameObject[] = [];
 
-    $: console.log('items', items);
-
-    export const instance: Phaser.Group = currentScene.add.group(options);
-
-    function addItem(item) {
-        console.log('Group.addItem', node, item)
-    }
+    export const instance: Phaser.GameObjects.Group = currentScene.add.group(options);
 
     //setContext('phaser/group', instance);
 
-    //export let
+    function addItems() {
+        if (items.length) {
+            instance.addMultiple(items);
+        }
+    }
+
     onMount(() => {
         console.log('Group.onMount()');
-        console.log('arguments', arguments);
-        console.log('slotInstance', slotInstance);
+        console.log('items', items);
+        addItems()
     })
 
     afterUpdate(() => {
         console.log('Group.afterUpdate()');
-        console.log('arguments', arguments);
-        console.log('slotInstance', slotInstance);
+        console.log('items', items);
+        addItems()
     })
 
     onDestroy(() => {
         console.log('Group.destroy()');
         instance.destroy(true);
     })
-
-    console.log('Group arguments', arguments);
-
-    let slotInstance;
 </script>
