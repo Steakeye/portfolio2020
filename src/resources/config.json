@@ -4,6 +4,12 @@
     "ball": {
       "diameterSize": 1
     },
+    "bat": {
+      "defaultColor": "0xE06D72",
+      "defaultStroke": "0x943A3E",
+      "widthSize": 3,
+      "heightSize": 0.5
+    },
     "bricks": {
       "rows": 3,
       "columns": 6,

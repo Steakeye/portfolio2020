@@ -19,5 +19,4 @@
 
 <Rectangle bind:instance name="brick" {x} {y} {fillColor} {strokeColor} {width} {height}>
     <ArcadePhysics immovable bodyType="static" />
-    <!--ArcadeCollider with="ball" on:collide={onBallHit} comment="This is somehow causing a memory leak when used with plain old rects!"/-->
 </Rectangle>

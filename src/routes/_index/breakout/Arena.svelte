@@ -77,14 +77,14 @@
 
 <Group items={bricks} />
 {#each bricksConfig as brickConfig, index (brickConfig.key)}
-    <Brick
+    <!--Brick
         x={brickConfig.x}
         y={brickConfig.y}
         onBallHit={() => {
             bricksConfig = bricksConfig.filter(b => b !== brickConfig)
         }}
         bind:instance={bricks[index]}
-    />
+    /-->
 {/each}
 <Bat bind:instance={bat} x={sceneWidth} y={sceneHeight - spacingUnit} />
 <Ball bind:instance={ball} />
