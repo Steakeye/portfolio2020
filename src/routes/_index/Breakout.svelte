@@ -13,6 +13,7 @@
 </script>
 <script>
     import type { SvelteComponent } from 'svelte';
+    import type { Phaser } from 'phaser';
     import {onMount} from 'svelte';
     //import getter from 'ramda/src/path'
 

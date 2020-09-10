@@ -6,6 +6,7 @@
 </script>
 <script>
     import { onGameEvent, onInputEvent, getScene } from 'svelte-phaser';
+    import Group from '/src/components/svelte-phaser/Group.svelte';
     import Bat from './Bat.svelte';
     import Ball from './Ball.svelte';
     import Brick from './Brick.svelte';
@@ -15,8 +16,8 @@
     // setup game
     function setup() {
         isBallLaunched = false
-        // create an array of 60 bricks
-        bricks = Array.from({ length: 60 }).map((_, index) => {
+        // create an array of 60 bricksConfig
+        bricksConfig = Array.from({ length: 60 }).map((_, index) => {
             // possible sprites to use for block
             const blockFrames = [
                 'blue1',
@@ -30,7 +31,7 @@
                 x: (index % 10) * 64,
                 y: 10 * Math.floor(index / 10) * 3.2,
                 // each row uses same sprite
-                frame: blockFrames[Math.floor(index / 10)],
+                //frame: blockFrames[Math.floor(index / 10)],
                 key: index,
             }
         })
@@ -44,7 +45,7 @@
     let isBallLaunched = false;
     let bat;
     let ball;
-    let bricks = [];
+    let bricksConfig = [];
 
     setup()
     onGameEvent('step', () => {
@@ -58,7 +59,7 @@
             isBallLaunched = false
         }
         // you win!
-        if (bricks.length === 0) {
+        if (bricksConfig.length === 0) {
             ball.body.setVelocity(0)
             setup()
         }
@@ -70,15 +71,20 @@
             ball.body.setVelocity(-gameUnit*2, -400)
         }
     })
+
+    const bricks = [];
 </script>
 
+<Group items={bricks} />
+{#each bricksConfig as brickConfig, index (brickConfig.key)}
+    <Brick
+        x={brickConfig.x}
+        y={brickConfig.y}
+        onBallHit={() => {
+            bricksConfig = bricksConfig.filter(b => b !== brickConfig)
+        }}
+        bind:instance={bricks[index]}
+    />
+{/each}
 <Bat bind:instance={bat} x={sceneWidth} y={sceneHeight - spacingUnit} />
 <Ball bind:instance={ball} />
-{#each bricks as block (block.key)}
-    <Brick
-        x={block.x + 116}
-        y={block.y + 200}
-        onBallHit={() => {
-            bricks = bricks.filter(b => b !== block)
-    }} />
-{/each}

@@ -5,7 +5,7 @@
       "diameterSize": 1
     },
     "bricks": {
-      "row": 3,
+      "rows": 3,
       "columns": 6,
       "defaultColor": "0xE06D72",
       "defaultStroke": "0x943A3E",

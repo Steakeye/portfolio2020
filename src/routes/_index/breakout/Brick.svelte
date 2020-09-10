@@ -9,6 +9,7 @@
 </script>
 <script>
     import { Sprite, Rectangle, ArcadePhysics, ArcadeCollider } from 'svelte-phaser'
+    export let instance = undefined;
     export let x;
     export let y;
     export let fillColor = parseInt(defaultColor, 16);
@@ -16,7 +17,7 @@
     export let onBallHit;
 </script>
 
-<Rectangle name="brick" {x} {y} {fillColor} {strokeColor} {width} {height}>
+<Rectangle bind:instance name="brick" {x} {y} {fillColor} {strokeColor} {width} {height}>
     <ArcadePhysics immovable bodyType="static" />
-    <ArcadeCollider with="ball" on:collide={onBallHit} />
+    <!--ArcadeCollider with="ball" on:collide={onBallHit} comment="This is somehow causing a memory leak when used with plain old rects!"/-->
 </Rectangle>
