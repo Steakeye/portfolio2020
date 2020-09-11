@@ -11,7 +11,7 @@
     import type { Phaser } from 'phaser'
     import Phaser from 'phaser'
     import { onMount } from 'svelte'
-    import { Rectangle, ArcadePhysics, onInputEvent, getScene } from 'svelte-phaser'
+    import { Rectangle, onInputEvent, getScene } from 'svelte-phaser'
     export let x
     export let y
     export let fillColor = parseInt(defaultColor, 16);
@@ -32,5 +32,4 @@
     })
 
 </script>
-<Rectangle bind:instance name="bat" bind:x {y} {fillColor} {strokeColor} {width} {height}>
-</Rectangle>
+<Rectangle bind:instance name="bat" bind:x {y} {fillColor} {strokeColor} {width} {height} />
