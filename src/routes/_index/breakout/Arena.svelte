@@ -18,10 +18,11 @@
     import Ball from './Ball.svelte';
     import Brick from './Brick.svelte';
 
+    let isBallLaunched = false;
+    let resetting = false;
+
     // setup game
     function setup() {
-        isBallLaunched = false
-
         const brickWidthPlusSpacer = brickWidth + spacerUnit;
         const brickHeightPlusSpacer = brickHeight + spacerUnit;
 
@@ -35,9 +36,29 @@
         })
     }
 
-    function reset() {
-        isBallLaunched = false
+    function setBallPosition() {
+        ball.setPosition(bat.x, bat.y - sizeUnit)
+    }
 
+
+    function resetBatAndBall() {
+        ball.body.setVelocity(0);
+        setBallPosition();
+        isBallLaunched = false
+    }
+
+    function resetBricks() {
+        bricksGroup.setVisible(true);
+        bricks.forEach((brick: Phaser.GameObjects.GameObject) => brick.setActive(true));
+        scene.physics.world.enable(bricks);
+        resetting = false;
+    }
+
+    function resetGame() {
+        resetBatAndBall();
+        resetting = true;
+        //We can't reset everything in the same tick/frame, because the ball is still in its last position when the
+        // bricks are reactivated, meaning we inadvertently hit that last ball again!
     }
 
     function onBallHitBrick(ball: Phaser.GameObjects.Sprite, brick: Phaser.GameObjects.Rectangle) {
@@ -47,13 +68,12 @@
 
     const game: Phaser.Game = getGame();
     const scene = getScene();
-    const sceneSize = scene.sys.game.scale.gameSize
+    const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
 
     // set collisions on all edges of world except bottom
     scene.physics.world.setBoundsCollision(true, true, true, false);
 
-    let isBallLaunched = false;
     let bat;
     let ball;
     let bricksGroup: Phaser.GameObjects.Group;
@@ -65,20 +85,17 @@
         scene.physics.add.collider(ball, bricksGroup, onBallHitBrick)
     });
 
+    const gameReady = () => !isBallLaunched;
+    const gameBallLost = () => ball.y > sceneHeight;
+    const gameWon = () => bricksGroup.countActive() === 0;
+    const gameResetting = () => resetting;
+
     onGameEvent('step', () => {
-        // snap ball to bat
-        if (!isBallLaunched) {
-            ball.setPosition(bat.x, bat.y - sizeUnit)
-        }
-        // reset ball after it hits bottom of screen
-        if (ball.y > sceneHeight) {
-            ball.body.setVelocity(0)
-            isBallLaunched = false
-        }
-        // you win!
-        if (bricksGroup.countActive() === 0) {
-            ball.body.setVelocity(0)
-            reset()
+        switch (true) {
+            case gameResetting(): resetBricks(); break;
+            case gameWon(): resetGame(); break;
+            case gameBallLost(): resetBatAndBall(); break;
+            case gameReady(): setBallPosition(); break;
         }
     })
 
@@ -86,7 +103,7 @@
     onInputEvent('pointerdown', () => {
         if (!isBallLaunched) {
             isBallLaunched = true
-            ball.body.setVelocity(-sizeUnit*2, -400)
+            ball.body.setVelocity(-sizeUnit*2, -sceneHeight)
         }
     })
 
@@ -101,5 +118,5 @@
         bind:instance={bricks[index]}
     />
 {/each}
-<Bat bind:instance={bat} x={sceneWidth/2} y={sceneHeight - sizeUnit} />
+<Bat bind:instance={bat} x={sceneWidth/2} y={sceneHeight - sizeUnit} xMin={sizeUnit * 1.5} xMax={sceneWidth - (sizeUnit * 1.5)}/>
 <Ball bind:instance={ball} />

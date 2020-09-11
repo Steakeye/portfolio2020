@@ -17,11 +17,23 @@
     export let fillColor = parseInt(defaultColor, 16);
     export let strokeColor = parseInt(defaultStroke, 16);
     export let instance = undefined
+    export let xMin = undefined
+    export let xMax = undefined
 
     let scene: Phaser.Scene;
 
     onInputEvent('pointermove', pointer => {
-        x = pointer.x
+        const pointerX = pointer.x;
+
+        let updatedX = pointerX;
+
+        if (pointerX < xMin) {
+            updatedX = xMin;
+        } else if (pointerX > xMax) {
+            updatedX = xMax;
+        }
+
+        x = updatedX
     })
 
     onMount(() => {

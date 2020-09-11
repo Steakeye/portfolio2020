@@ -17,7 +17,7 @@
     export let y;
     export let fillColor = parseInt(defaultColor, 16);
     export let strokeColor = parseInt(defaultStroke, 16);
-    export let onBallHit;
+    export let onBallHit = undefined;
 
     onMount(() => {
         const scene = getScene();

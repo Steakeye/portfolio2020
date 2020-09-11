@@ -80,7 +80,7 @@
         >
             <div class="loading-node" slot="loading" let:progress>{assignExposedProgress(progress), ''}</div>
             {#if exposedProgress !== 1}
-                <LoadingBar x={400} y={0} progress={exposedProgress}/>
+                <LoadingBar x={200} y={0} progress={exposedProgress}/>
             {/if}
             <Arena />
         </Scene>
