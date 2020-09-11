@@ -35,9 +35,12 @@
         })
     }
 
+    function reset() {
+        isBallLaunched = false
+
+    }
+
     function onBallHitBrick(ball: Phaser.GameObjects.Sprite, brick: Phaser.GameObjects.Rectangle) {
-        //bricksConfig = bricksConfig.filter(b => b !== brickConfig)
-        console.log('onBallHitBrick', arguments);
         bricksGroup.killAndHide(brick as Phaser.GameObjects.GameObject);
         scene.physics.world.disable(brick);
     }
@@ -59,7 +62,6 @@
     setup()
 
     onMount(() => {
-        console.log('Arena.onMount');
         scene.physics.add.collider(ball, bricksGroup, onBallHitBrick)
     });
 
@@ -74,11 +76,12 @@
             isBallLaunched = false
         }
         // you win!
-        if (bricksConfig.length === 0) {
+        if (bricksGroup.countActive() === 0) {
             ball.body.setVelocity(0)
-            setup()
+            reset()
         }
     })
+
     // launch ball on click
     onInputEvent('pointerdown', () => {
         if (!isBallLaunched) {
@@ -95,9 +98,6 @@
     <Brick
         x={brickConfig.x + bricksXOffset}
         y={brickConfig.y + bricksYOffset}
-        onBallHit={() => {
-            bricksConfig = bricksConfig.filter(b => b !== brickConfig)
-        }}
         bind:instance={bricks[index]}
     />
 {/each}

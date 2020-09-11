@@ -20,19 +20,14 @@
     }
 
     onMount(() => {
-        console.log('Group.onMount()');
-        console.log('items', items);
         addItems()
     })
 
     afterUpdate(() => {
-        console.log('Group.afterUpdate()');
-        console.log('items', items);
         addItems()
     })
 
     onDestroy(() => {
-        console.log('Group.destroy()');
         instance.destroy(true);
     })
 </script>

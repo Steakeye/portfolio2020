@@ -13,7 +13,6 @@
     }
 
     function handlePaddleCollide({ detail: { self, other: paddle } }) {
-        console.log('handlePaddleCollide');
         if (self.x < paddle.x) {
             const diff = paddle.x - self.x
             self.body.setVelocityX(-10 * diff)
@@ -24,14 +23,9 @@
             self.body.setVelocityX(2 + Math.random() * 8)
         }
     }
-
-    function handleBrickollide({ detail: { self, other: paddle } }) {
-        console.log('handleBrickollide')
-    }
 </script>
 
 <Sprite bind:instance {...ballProps}>
     <ArcadePhysics collideWorldBounds bounce={1} />
     <ArcadeCollider with="bat" on:collide={handlePaddleCollide} />
-    <!--ArcadeCollider with="bricks" on:collide={handleBrickollide} /-->
 </Sprite>

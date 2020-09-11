@@ -31,13 +31,6 @@ export default function (options = {}) {
             resolvedSourcePath = path.resolve(source);
             this.addWatchFile(resolvedSourcePath);
         },
-        /*load(...loadArgs) { //Gets called for every asset in the bundle
-            console.log('loadArgs', loadArgs)
-        },*/
-        /*resolveId(...resolveIdArgs) {
-            /* ... *\/
-            console.log('resolveIdArgs', resolveIdArgs)
-        },*/
         generateBundle(rollupConfig) {
             const htmlTemplate = fs.readFileSync(resolvedSourcePath, { encoding: 'utf8'});
 
@@ -45,10 +38,5 @@ export default function (options = {}) {
 
             fs.writeFileSync(path.resolve(target), updatedHTMLTemplate, { encoding: 'utf8'});
         },
-        /*buildEnd(error) {
-            if (!error) {
-                //this.addWatchFile(path.resolve(source));
-            }
-        },*/
     }
 }
