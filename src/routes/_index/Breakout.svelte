@@ -15,9 +15,12 @@
     import type { SvelteComponent } from 'svelte';
     import type { Phaser } from 'phaser';
     import {onMount} from 'svelte';
-    //import getter from 'ramda/src/path'
 
     import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
+
+    function hasWebGLSupport(canvas: HTMLCanvasElement) {
+        return !!window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+    }
 
     function loadAssets(scene: Phaser.Scene) {
         scene.load.image('ball', roundelPath);
@@ -28,9 +31,7 @@
     }
 
     let beforeMount = true;
-
-    let removeFromParent;
-    let fragment;
+    let breakoutContainer: HTMLCanvasElement;
     let Phaser: SvelteComponent;
     let Game: SvelteComponent;
     let Scene: SvelteComponent;
@@ -43,7 +44,6 @@
 
     onMount(async () => {
         const sveltePhaser = await import('svelte-phaser');
-        fragment = (await import('svelte-fragment')).default;
         Phaser = await import('phaser');
 
         Game = sveltePhaser.Game;
@@ -57,11 +57,15 @@
     });
 </script>
 
+<div class="breakout-wrapper">
 {#if beforeMount}
-    <div>Loading...</div>
+    <p class="loading-message">Loading...</p>
 {:else}
+    <canvas bind:this={breakoutContainer}></canvas>
+    {#if breakoutContainer}
     <Game
         title={gameTitle}
+        version="0.0.1a"
         width={400}
         height={400}
         physics={{
@@ -72,6 +76,9 @@
         }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH }}
         noop-transparent="true"
+        disableContextMenu="true"
+        canvas={breakoutContainer}
+        type={ hasWebGLSupport(breakoutContainer) ? Phaser.WEBGL: Phaser.CANVAS }
     >
         <Scene
             key="main"
@@ -85,4 +92,6 @@
             <Arena />
         </Scene>
     </Game>
+    {/if}
 {/if}
+</div>
