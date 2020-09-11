@@ -9,8 +9,9 @@
 </script>
 <script>
     import { onMount } from 'svelte'
-    import {Sprite, Rectangle, ArcadePhysics, ArcadeCollider, getScene} from 'svelte-phaser'
+    import { Rectangle, ArcadePhysics, ArcadeCollider, getScene} from 'svelte-phaser'
     import Phaser from "phaser";
+
     export let instance = undefined;
     export let x;
     export let y;
@@ -33,5 +34,3 @@
 </script>
 
 <Rectangle bind:instance name="brick" {x} {y} {fillColor} {strokeColor} {width} {height} />
-    <!--ArcadePhysics immovable bodyType="static" />
-</Rectangle-->

@@ -29,7 +29,13 @@
 
         scene.physics.world.enable(instance, Phaser.Physics.Arcade.DYNAMIC_BODY);
         instance.body.immovable = true;
+
+        return () => {
+            if (scene.children.exists(instance)) {
+                scene.physics.world.disable(instance)
+            }
+        }
     })
 
 </script>
-<Rectangle bind:instance name="bat" bind:x {y} {fillColor} {strokeColor} {width} {height} />
+<Rectangle bind:instance name="bat" bind:x {y} {fillColor} {strokeColor} strokeWidth="1" {width} {height} />

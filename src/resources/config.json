@@ -1,5 +1,7 @@
 {
   "breakout": {
+    "gameHeight": 400,
+    "gameWidth": 400,
     "sizeUnit": 25,
     "ball": {
       "diameterSize": 1

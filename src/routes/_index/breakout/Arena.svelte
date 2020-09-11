@@ -6,6 +6,8 @@
     const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
+    const bricksXOffset = brickWidth/2 + sizeUnit/2;
+    const bricksYOffset = brickHeight/2 + sizeUnit;
 </script>
 <script>
     import type { Phaser } from 'phaser'
@@ -35,8 +37,9 @@
 
     function onBallHitBrick(ball: Phaser.GameObjects.Sprite, brick: Phaser.GameObjects.Rectangle) {
         //bricksConfig = bricksConfig.filter(b => b !== brickConfig)
-        console.log('onBallHitBrick', arguments)
-        group.killAndHide(brick as Phaser.GameObjects.GameObject);
+        console.log('onBallHitBrick', arguments);
+        bricksGroup.killAndHide(brick as Phaser.GameObjects.GameObject);
+        scene.physics.world.disable(brick);
     }
 
     const game: Phaser.Game = getGame();
@@ -50,21 +53,14 @@
     let isBallLaunched = false;
     let bat;
     let ball;
-    let group: Phaser.GameObjects.Group;
+    let bricksGroup: Phaser.GameObjects.Group;
     let bricksConfig = [];
 
     setup()
 
     onMount(() => {
         console.log('Arena.onMount');
-        console.log('group', group);
-        console.log('bricks', bricks);
-        group.setOrigin(0);
-        group.incXY(sizeUnit/2, sizeUnit);
-        //scene.physics.add.overlap(bat, bricks, onBallHitBrick) // <-- TODO: start here, memory leak? Why is the event always firing?
-        //scene.physics.add.overlap(ball, group, onBallHitBrick) // <-- TODO: start here, memory leak? Why is the event always firing?
-        //scene.physics.add.overlap(ball, bricks[bricks.length - 1], onBallHitBrick) // <-- TODO: start here, memory leak? Why is the event always firing?
-        //scene.physics.add.collider(ball, bricks[bricks.length - 1], onBallHitBrick) // <-- TODO: start here, memory leak? Why is the event always firing?
+        scene.physics.add.collider(ball, bricksGroup, onBallHitBrick)
     });
 
     onGameEvent('step', () => {
@@ -94,11 +90,11 @@
     const bricks = [];
 </script>
 
-<Group options={{ name: 'bricks' }} bind:instance={group} items={bricks} />
+<Group options={{ name: 'bricks' }} bind:instance={bricksGroup} items={bricks} />
 {#each bricksConfig as brickConfig, index (brickConfig.key)}
     <Brick
-        x={brickConfig.x}
-        y={brickConfig.y}
+        x={brickConfig.x + bricksXOffset}
+        y={brickConfig.y + bricksYOffset}
         onBallHit={() => {
             bricksConfig = bricksConfig.filter(b => b !== brickConfig)
         }}
