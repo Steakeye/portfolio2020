@@ -1,4 +1,5 @@
 @use '~destyle.css/destyle';
+@import 'colour';
 @use 'fonts';
 @use 'layout';
 
@@ -24,6 +25,7 @@ body {
   font-size: 14px;
   line-height: 1.5;
   color: #333;
+  background-color: $brand-pink-dark;
 }
 
 h1,

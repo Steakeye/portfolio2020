@@ -4,6 +4,14 @@
     .loading-node {
         @include layout.extendVisuallyHidden;
     }
+
+    .breakout-wrapper {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+    }
 </style>
 <script context="module">
     import textContent from '/src/resources/content.json';
@@ -75,8 +83,8 @@
             },
         }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH }}
-        noop-transparent="true"
-        disableContextMenu="true"
+        transparent="true"
+        noop-disableContextMenu="true"
         canvas={breakoutContainer}
         type={ hasWebGLSupport(breakoutContainer) ? Phaser.WEBGL: Phaser.CANVAS }
     >

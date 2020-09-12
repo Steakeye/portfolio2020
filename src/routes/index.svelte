@@ -1,4 +1,7 @@
 <style lang="scss">
+  %renderOver {
+    z-index: 5;
+  }
   h1,
   figure,
   p {
@@ -7,6 +10,7 @@
   }
 
   h1 {
+    @extend %renderOver;
     font-size: 2.8em;
     text-transform: uppercase;
     font-weight: 700;
@@ -24,6 +28,7 @@
   }
 
   p {
+    @extend %renderOver;
     margin: 1em auto;
   }
 
