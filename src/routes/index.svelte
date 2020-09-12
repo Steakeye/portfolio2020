@@ -2,6 +2,7 @@
   %renderOver {
     z-index: 5;
   }
+
   h1,
   figure,
   p {
@@ -41,9 +42,10 @@
 
 <script>
   import Breakout from "./_index/Breakout.svelte";
+  import styles from "./index.scss";
 </script>
 
 <h1>Steakeye</h1>
 <p><strong>Senior Front-end Development Services</strong></p>
 
-<Breakout />
+<Breakout className="{styles.breakoutWrapper}"/>

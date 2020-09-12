@@ -33,4 +33,4 @@
     })
 </script>
 
-<Rectangle bind:instance name="brick" {x} {y} {fillColor} {strokeColor} {width} {height} />
+<Rectangle bind:instance name="brick" {x} {y} {fillColor} {strokeColor} strokeWidth="1" {width} {height} />

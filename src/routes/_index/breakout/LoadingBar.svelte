@@ -1,3 +1,11 @@
+<script context="module">
+    import config from '/src/resources/config.json';
+
+    const { breakout: { sizeUnit, loadingBar: { heightSize, progressColor, backgroundColor } } } = config;
+    const height = sizeUnit * heightSize;
+    const progressFill = parseInt(progressColor, 16);
+    const backgroundFill = parseInt(backgroundColor, 16);
+</script>
 <script>
     import Phaser from 'phaser'
     import { Rectangle, Container } from 'svelte-phaser'
@@ -18,8 +26,8 @@
     <!-- outer bar -->
     <Rectangle
             width={barWidth}
-            height={50}
-            fillColor={0x777777}
+            {height}
+            fillColor={backgroundFill}
             {...$$restProps} />
     <!-- inner bar -->
     <Rectangle
@@ -27,6 +35,6 @@
             originX={0}
             originY={0.5}
             width={Phaser.Math.Clamp(barWidth * $tweenedProgress, 10, barWidth)}
-            height={50}
-            fillColor={0xbbbbbb} />
+            {height}
+            fillColor={progressFill} />
 </Container>

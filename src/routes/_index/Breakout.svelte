@@ -38,6 +38,8 @@
         exposedProgress = updatedValue;
     }
 
+    export let className = '';
+
     let beforeMount = true;
     let breakoutContainer: HTMLCanvasElement;
     let Phaser: SvelteComponent;
@@ -65,7 +67,7 @@
     });
 </script>
 
-<div class="breakout-wrapper">
+<div class="breakout-wrapper {className}">
 {#if beforeMount}
     <p class="loading-message">Loading...</p>
 {:else}
@@ -79,7 +81,7 @@
         physics={{
             default: 'arcade',
             arcade: {
-                debug: true,
+                //debug: true, //TODO: Remove after debug complete
             },
         }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH }}
