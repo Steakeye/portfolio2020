@@ -14,9 +14,11 @@
     }
 </style>
 <script context="module">
+    import config from '/src/resources/config.json';
     import textContent from '/src/resources/content.json';
     import getter from "ramda/src/path";
 
+    const { breakout: { gameHeight, gameWidth } } = config
     const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
 </script>
 <script>
@@ -76,8 +78,8 @@
     <Game
         title={gameTitle}
         version="0.0.1a"
-        width={400}
-        height={400}
+        width={gameWidth}
+        height={gameHeight}
         physics={{
             default: 'arcade',
             arcade: {
@@ -97,7 +99,7 @@
         >
             <div class="loading-node" slot="loading" let:progress>{assignExposedProgress(progress), ''}</div>
             {#if exposedProgress !== 1}
-                <LoadingBar x={200} y={0} progress={exposedProgress}/>
+                <LoadingBar x={0} y={0} progress={exposedProgress}/>
             {/if}
             <Arena />
         </Scene>

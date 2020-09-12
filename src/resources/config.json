@@ -1,6 +1,6 @@
 {
   "breakout": {
-    "gameHeight": 400,
+    "gameHeight": 647,
     "gameWidth": 400,
     "sizeUnit": 25,
     "ball": {
