@@ -4,39 +4,47 @@
   //@use 'src/styles/type.scss';
 
   nav {
-    border-bottom: 1px solid rgba(255, 62, 0, 0.1);
-    font-weight: 300;
-    padding: 0 1em;
-  }
+    position: sticky;
+    margin-top: 12rem;
 
-  ul {
-    margin: 0;
-    padding: 0;
-  }
+    ul {
+      /*margin: 0;
+      padding: 0;*/
+      display: flex;
+      justify-content: center;
 
-  /* clearfix */
-  ul::after {
-    content: '';
-    display: block;
-    clear: both;
-  }
+      li {
+        display: block;
+        float: left;
 
-  li {
-    display: block;
-    float: left;
+        a {
+        $icons: (
+          about: info,
+          cv: short-text,
+          github: github,
+          linkedIn: linkedin,
+          twitter: twitter,
+          email: envelope-closed
+        );
 
-    a {
-      //cv options: read-the-docs, short-text
-      $icons: (about: info, cv: short-text, github: github, linkedIn: linkedin, twitter: twitter, email: envelope-closed);
+          display: block;
+          padding: .5rem .75rem;
+          line-height: 0;
 
-      @each $name, $icon in $icons {
-        &.#{$name} {
           &:after {
-          @include fonts.coreUIIcon($icon);
+            font-size: 1.8rem;
           }
 
-          .linkText {
-            @include layout.extendVisuallyHidden;
+          @each $name, $icon in $icons {
+            &.#{$name} {
+              &:after {
+                @include fonts.coreUIIcon($icon);
+              }
+
+              .linkText {
+                @include layout.extendVisuallyHidden;
+              }
+            }
           }
         }
       }

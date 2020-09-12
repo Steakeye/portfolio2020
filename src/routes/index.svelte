@@ -12,15 +12,25 @@
   }
 
   h1 {
+    position: fixed;
+    width: 100vw;
+    margin-left: -2rem;
+    top: 50vh;
     font-size: 2.8em;
     text-transform: uppercase;
     font-weight: 700;
-    margin: 0 0 0.5em 0;
   }
 
   p {
+    font-size: 1.6rem;
     margin: 1em auto;
+    position: fixed;
+    top: 50vh;
+    margin-left: -2rem;
+    padding: 0 25vw;
+    width: 100vw;
   }
+
 
   /*@media (min-width: 480px) {
     h1 {
