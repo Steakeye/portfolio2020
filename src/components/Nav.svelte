@@ -1,4 +1,5 @@
 <style>
+  @use 'src/styles/colour';
   @use 'src/styles/layout';
   @use 'src/styles/fonts';
   //@use 'src/styles/type.scss';
@@ -6,16 +7,14 @@
   nav {
     position: sticky;
     margin-top: 12rem;
+    z-index: 5;
 
     ul {
-      /*margin: 0;
-      padding: 0;*/
       display: flex;
       justify-content: center;
 
       li {
         display: block;
-        float: left;
 
         a {
         $icons: (
@@ -27,9 +26,22 @@
           email: envelope-closed
         );
 
-          display: block;
-          padding: .5rem .75rem;
+          display: flex;
+          padding: .5rem 1.2rem;
           line-height: 0;
+          justify-content: center;
+
+          .linkText {
+            @include layout.extendVisuallyHidden;
+          }
+
+          &:hover .linkText {
+            @include layout.extendOverrideVisuallyHidden;
+            background-color: colour.$brand-black;
+            color: colour.$brand-white;
+            position: absolute;
+            bottom: -1rem;
+          }
 
           &:after {
             font-size: 1.8rem;
@@ -41,9 +53,6 @@
                 @include fonts.coreUIIcon($icon);
               }
 
-              .linkText {
-                @include layout.extendVisuallyHidden;
-              }
             }
           }
         }

@@ -14,12 +14,31 @@
 }
 
 .visually-hidden {
-  @extend %visuallyHidden
+  @extend %visuallyHidden;
 }
 
 @mixin extendVisuallyHidden {
-  @extend %visuallyHidden
+  @extend %visuallyHidden;
 }
+
+%overrideVisuallyHidden {
+  height: initial;
+  width: initial;
+  clip: initial;
+  overflow: initial;
+  clip-path: initial;
+  white-space: initial;
+  position: initial;
+}
+
+.override-visually-hidden {
+  @extend %overrideVisuallyHidden;
+}
+
+@mixin extendOverrideVisuallyHidden {
+  @extend %overrideVisuallyHidden;
+}
+
 
 $phone: 'phone';
 $tablet--portrait: 'tablet--portrait';

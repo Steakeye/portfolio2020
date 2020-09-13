@@ -38,6 +38,9 @@
             "text": "Email",
             "href": "mailto:andrew@steakeye.com"
         }]
+      },
+      "footer": {
+        "copyright": "&copy; Steakeye Ltd."
       }
     }
   },

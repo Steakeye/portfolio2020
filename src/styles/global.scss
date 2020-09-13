@@ -7,7 +7,14 @@
 * Begin global styles
 */
 
+html {
+  font-size: 10px;
+}
+
 body {
+  position: fixed;
+  height: 100%;
+  width: 100%;
   margin: 0;
   font-family:
     Farsan,
@@ -22,9 +29,8 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
-  font-size: 10px;
   line-height: 1.5;
-  color: #333;
+  color: $brand-black;
   background-color: $brand-pink-dark;
 }
 
