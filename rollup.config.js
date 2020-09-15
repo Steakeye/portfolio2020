@@ -79,7 +79,11 @@ const preProcessOptions = {
   },
   postcss: {
     plugins: [require('autoprefixer')()],
-  },
+  }, //TODO..? Add scss config here?!
+  scss: {
+    'test': 'options go here!',
+    importer: [jsonImporter()],
+  }
 };
 
 const preProcessConfig = sveltePreprocess(preProcessOptions);
@@ -101,13 +105,13 @@ const postCssPluginConfig = (client = true) => postcss({
       extensions: ['.css', '.scss'],
       use: [
           ['sass', {
-          importer: jsonImporter(),
-          loaders: [customPostcssSassLoader]
+          importer: jsonImporter(), //TODO: Check if we actually need this by removing it it when we've succeeded!
         },]
       ],
+      loaders: [customPostcssSassLoader],
       plugins: [postcssSass({
         includePaths: ['node_modules', 'src'],
-        importer: tildeSassImporter,
+        importer: [jsonImporter(), tildeSassImporter,],
       })],
     });
 
