@@ -11,9 +11,11 @@ import cleaner from 'rollup-plugin-cleaner';
 import postcss from 'rollup-plugin-postcss'
 import postcssSass from '@csstools/postcss-sass';
 import tildeSassImporter from "node-sass-tilde-importer";
+import jsonImporter from 'node-sass-json-importer';
 import { terser } from 'rollup-plugin-terser';
 import favicons from 'rollup-plugin-favicons'
 import customSvelteHtmlTemplate from './scripts/rollup/rollup-custom-sapper-html-template'
+import customPostcssSassLoader from './scripts/rollup/rollup-custom-postcss-sass-loader'
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';
@@ -97,7 +99,12 @@ const postCssPluginConfig = (client = true) => postcss({
       minimize: !dev,
       modules: true,
       extensions: ['.css', '.scss'],
-      use: ['sass'],
+      use: [
+          ['sass', {
+          importer: jsonImporter(),
+          loaders: [customPostcssSassLoader]
+        },]
+      ],
       plugins: [postcssSass({
         includePaths: ['node_modules', 'src'],
         importer: tildeSassImporter,

@@ -1,4 +1,8 @@
-$brand-black: #473839;
+//@use "../resources/config.json" as config;
+@import "../resources/config.json";
+
+//$brand-black:  ui.colors.$brandBlack; //#473839;
+$brand-black:  #473839;
 $brand-white: #ECE0D0;
 $brand-yellow: #E8BF87;
 $brand-pink: #E06D72;

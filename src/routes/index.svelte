@@ -30,13 +30,6 @@
     padding: 0 25vw;
     width: 100vw;
   }
-
-
-  /*@media (min-width: 480px) {
-    h1 {
-      font-size: 4em;
-    }
-  }*/
 </style>
 
 <script>

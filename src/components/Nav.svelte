@@ -40,7 +40,10 @@
             background-color: colour.$brand-black;
             color: colour.$brand-white;
             position: absolute;
-            bottom: -1rem;
+            bottom: -2rem;
+            line-height: 1.2rem;
+            padding: .3rem .5rem;
+            border-radius: .5rem;
           }
 
           &:after {
