@@ -6,34 +6,25 @@
     const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
-    const bricksXOffset = (gameWidth - (brickWidth * rows))/2 - brickWidth/2;
+    //const bricksXOffset = (gameWidth - (brickWidth * rows))/2 - brickWidth/2;
 </script>
 <script>
-    import type { Phaser } from 'phaser'
-    import { onMount } from 'svelte'
+    import type Phaser from 'phaser';
+    import { onMount } from 'svelte';
     import { onGameEvent, onInputEvent, getGame, getScene } from 'svelte-phaser';
     import Group from '/src/components/svelte-phaser/Group.svelte';
     import Bat from './Bat.svelte';
     import Ball from './Ball.svelte';
     import Brick from './Brick.svelte';
+    import { getSceneToCanvasRatio } from "./LayoutUtils.ts";
+
+    const game: Phaser.Game = getGame();
+    const sceneToCanvasRatio = getSceneToCanvasRatio(game);
+    const scaledBrickWidth = sceneToCanvasRatio * brickWidth;
+    const bricksXOffset = (gameWidth - (scaledBrickWidth * rows))/2 - scaledBrickWidth/2;
 
     let isBallLaunched = false;
     let resetting = false;
-
-    // setup game
-    function setup() {
-        //const brickWidthPlusSpacer = brickWidth + spacerUnit;
-        const brickHeightPlusSpacer = brickHeight + spacerUnit;
-
-        // create an array of 60 bricksConfig
-        bricksConfig = Array.from({ length: maxBricks }).map((_, index) => {
-            return {
-                x: (index % columns) * brickWidth,
-                y: Math.floor(index / columns) * brickHeightPlusSpacer,
-                key: index,
-            }
-        })
-    }
 
     function setBallPosition() {
         ball.setPosition(bat.x, bat.y - bat.height)
@@ -64,13 +55,11 @@
         scene.physics.world.disable(brick);
     }
 
-    const game: Phaser.Game = getGame();
     const scene = getScene();
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
 
-    const sceneToCanvasRatio = sceneWidth/game.canvas.clientWidth;
-    const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2)
+    const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2);
 
     // set collisions on all edges of world except bottom
     scene.physics.world.setBoundsCollision(true, true, true, false);
@@ -78,12 +67,25 @@
     let bat;
     let ball;
     let bricksGroup: Phaser.GameObjects.Group;
-    let bricksConfig = [];
+    let bricksConfig;
+    const bricks = [];
 
-    setup()
+    // setup game
+    {
+        const brickHeightPlusSpacer = brickHeight + spacerUnit;
+
+        // create an array of 60 bricksConfig
+        bricksConfig = Array.from({ length: maxBricks }).map((_, index) => {
+            return {
+                x: (index % columns) * scaledBrickWidth,
+                y: Math.floor(index / columns) * brickHeightPlusSpacer,
+                key: index,
+            }
+        })
+    }
 
     onMount(() => {
-        scene.physics.add.collider(ball, bricksGroup, onBallHitBrick)
+        scene.physics.add.collider(ball, bricksGroup, onBallHitBrick);
     });
 
     const gameReady = () => !isBallLaunched;
@@ -104,11 +106,10 @@
     onInputEvent('pointerdown', () => {
         if (!isBallLaunched) {
             isBallLaunched = true
-            ball.body.setVelocity(-sizeUnit*2, -sceneHeight)
+            ball.body.setVelocity(-sizeUnit*2, -sceneHeight);
         }
     })
 
-    const bricks = [];
 </script>
 
 <Group options={{ name: 'bricks' }} bind:instance={bricksGroup} items={bricks} />
@@ -117,6 +118,7 @@
         x={brickConfig.x + bricksXOffset}
         y={brickConfig.y + actualBricksYOffset}
         bind:instance={bricks[index]}
+        scale={sceneToCanvasRatio}
     />
 {/each}
 <Bat bind:instance={bat} x={sceneWidth/2} y={sceneHeight - sizeUnit} xMin={sizeUnit * 1.5} xMax={sceneWidth - (sizeUnit * 1.5)}/>

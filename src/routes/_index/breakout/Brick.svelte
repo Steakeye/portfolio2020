@@ -2,14 +2,14 @@
     import config from '/src/resources/config.json';
     import getter from "ramda/src/path";
 
-    const { breakout: { sizeUnit } } = config
-    const { defaultColor, defaultStroke, widthSize, heightSize } = getter('breakout.bricks'.split('.'), config)
+    const { breakout: { sizeUnit } } = config;
+    const { defaultColor, defaultStroke, widthSize, heightSize } = getter('breakout.bricks'.split('.'), config);
     const width = sizeUnit * widthSize;
     const height = sizeUnit * heightSize;
 </script>
 <script>
     import { onMount } from 'svelte'
-    import { Rectangle, ArcadePhysics, ArcadeCollider, getScene} from 'svelte-phaser'
+    import { Rectangle, ArcadePhysics, ArcadeCollider, getScene, getGame } from 'svelte-phaser'
     import Phaser from "phaser";
 
     export let instance = undefined;
@@ -17,6 +17,9 @@
     export let y;
     export let fillColor = parseInt(defaultColor, 16);
     export let strokeColor = parseInt(defaultStroke, 16);
+    export let scale = 1
+    const scaledWidth = scale * width;
+    const scaledHeight = scale * height;
 
     onMount(() => {
         const scene = getScene();
@@ -32,4 +35,4 @@
     })
 </script>
 
-<Rectangle bind:instance name="brick" {x} {y} {fillColor} {strokeColor} strokeWidth="1" {width} {height} />
+<Rectangle bind:instance name="brick" {x} {y} {fillColor} {strokeColor} strokeWidth="1" width={scaledWidth} height={scaledHeight} />
