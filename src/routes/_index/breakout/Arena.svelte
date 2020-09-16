@@ -1,12 +1,12 @@
 <script context="module">
     import config from '/src/resources/config.json';
 
-    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { gameWidth, sizeUnit, bricks: { columns, rows, widthSize, heightSize } } } = config;
+    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { gameWidth, sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
     const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
-    //const bricksXOffset = (gameWidth - (brickWidth * rows))/2 - brickWidth/2;
+    const batMargin = sizeUnit * brickWidthSize / 2;
 </script>
 <script>
     import type Phaser from 'phaser';
@@ -21,13 +21,18 @@
     const game: Phaser.Game = getGame();
     const sceneToCanvasRatio = getSceneToCanvasRatio(game);
     const scaledBrickWidth = sceneToCanvasRatio * brickWidth;
-    const bricksXOffset = (gameWidth - (scaledBrickWidth * rows))/2 - scaledBrickWidth/2;
+    const bricksXOffset = ((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;
 
+    let bat;
+    let ball;
+    let ballProps;
+    let bricksGroup: Phaser.GameObjects.Group;
+    let bricksConfig;
     let isBallLaunched = false;
     let resetting = false;
 
     function setBallPosition() {
-        ball.setPosition(bat.x, bat.y - bat.height)
+        ball.setPosition(bat.x, bat.y - bat.height/2 - ballProps.height/2)
     }
 
     function resetBatAndBall() {
@@ -64,10 +69,7 @@
     // set collisions on all edges of world except bottom
     scene.physics.world.setBoundsCollision(true, true, true, false);
 
-    let bat;
-    let ball;
-    let bricksGroup: Phaser.GameObjects.Group;
-    let bricksConfig;
+
     const bricks = [];
 
     // setup game
@@ -121,5 +123,5 @@
         scale={sceneToCanvasRatio}
     />
 {/each}
-<Bat bind:instance={bat} x={sceneWidth/2} y={sceneHeight - sizeUnit} xMin={sizeUnit * 1.5} xMax={sceneWidth - (sizeUnit * 1.5)}/>
-<Ball bind:instance={ball} />
+<Bat bind:instance={bat} x={sceneWidth/2} y={sceneHeight - sizeUnit} xMin={batMargin} xMax={sceneWidth - batMargin}/>
+<Ball bind:instance={ball} bind:props={ballProps}/>
