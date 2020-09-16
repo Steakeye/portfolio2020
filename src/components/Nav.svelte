@@ -44,10 +44,24 @@
             background-color: colour.$brand-black;
             color: colour.$brand-white;
             position: absolute;
-            bottom: -2rem;
+            bottom: -2.4rem;
             line-height: 1.2rem;
-            padding: .3rem .5rem;
+            padding: 0.5rem 0.5rem .3rem;
             border-radius: .5rem;
+            font-size: 1.2rem;
+
+            $pointerSquareSize: .8rem;
+
+            &:after {
+              content: '';
+              position: absolute;
+              height: $pointerSquareSize;
+              width: $pointerSquareSize;
+              background-color: inherit;
+              top: -#{$pointerSquareSize/2};
+              left: calc(50% - #{$pointerSquareSize/2});
+              transform: rotateZ(45deg);
+            }
           }
 
           &:after {
