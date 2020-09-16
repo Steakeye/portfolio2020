@@ -1,12 +1,15 @@
-//@use "../resources/config.json" as config;
 @import "../resources/config.json";
-//@import "src/resources/config.json";
 
-//$brand-black:  ui.colors.$brandBlack; //#473839;
-$brand-black:  #473839;
-$brand-white: #ECE0D0;
-$brand-yellow: #E8BF87;
-$brand-pink: #E06D72;
-$brand-pink-dark: #943A3E;
-$brand-blue: #58AFE0;
-$brand-blue-dark: #417694;
+$brandColours: map-get($ui, colors);
+
+@function brandColor($key) {
+  @return #{'#' + map-get($brandColours, $key)}
+}
+
+$brand-black: brandColor(brandBlack); //#473839;
+$brand-white: brandColor(brandWhite); //#ECE0D0;
+$brand-yellow: brandColor(brandYellow); //#E8BF87;
+$brand-pink: brandColor(brandPink); //#E06D72;
+$brand-pink-dark: brandColor(brandPinkDark); //#943A3E;
+$brand-blue: brandColor(brandBlue); //#58AFE0;
+$brand-blue-dark: brandColor(brandBlueDark); //#417694;
