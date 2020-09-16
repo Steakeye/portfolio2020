@@ -19,23 +19,23 @@
   "breakout": {
     "gameHeight": 647,
     "gameWidth": 400,
-    "sizeUnit": 25,
+    "sizeUnit": 14,
     "ball": {
       "diameterSize": 1
     },
     "bat": {
       "defaultColor": "0xE06D72",
       "defaultStroke": "0x943A3E",
-      "widthSize": 3,
-      "heightSize": 0.5
+      "widthSize": 5,
+      "heightSize": 1
     },
     "bricks": {
       "rows": 3,
       "columns": 6,
       "defaultColor": "0xE06D72",
       "defaultStroke": "0x943A3E",
-      "widthSize": 2,
-      "heightSize": 1
+      "widthSize": 3,
+      "heightSize": 2
     },
     "loadingBar": {
       "heightSize" : 0.6,

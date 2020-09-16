@@ -90,7 +90,6 @@
         }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_HORIZONTALLY }}
         transparent="true"
-        noop-disableContextMenu="true"
         canvas={breakoutContainer}
         type={ hasWebGLSupport(breakoutContainer) ? Phaser.WEBGL: Phaser.CANVAS }
     >

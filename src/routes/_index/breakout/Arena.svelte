@@ -1,12 +1,12 @@
 <script context="module">
     import config from '/src/resources/config.json';
 
-    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { sizeUnit, bricks: { columns, rows, widthSize, heightSize } } } = config;
+    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { gameWidth, sizeUnit, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
     const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
-    const bricksXOffset = brickWidth/2 + sizeUnit/2;
+    const bricksXOffset = (gameWidth - (brickWidth * rows))/2 - brickWidth/2;
 </script>
 <script>
     import type { Phaser } from 'phaser'
@@ -22,13 +22,13 @@
 
     // setup game
     function setup() {
-        const brickWidthPlusSpacer = brickWidth + spacerUnit;
+        //const brickWidthPlusSpacer = brickWidth + spacerUnit;
         const brickHeightPlusSpacer = brickHeight + spacerUnit;
 
         // create an array of 60 bricksConfig
         bricksConfig = Array.from({ length: maxBricks }).map((_, index) => {
             return {
-                x: (index % columns) * brickWidthPlusSpacer,
+                x: (index % columns) * brickWidth,
                 y: Math.floor(index / columns) * brickHeightPlusSpacer,
                 key: index,
             }
@@ -36,7 +36,7 @@
     }
 
     function setBallPosition() {
-        ball.setPosition(bat.x, bat.y - sizeUnit)
+        ball.setPosition(bat.x, bat.y - bat.height)
     }
 
     function resetBatAndBall() {
@@ -69,13 +69,8 @@
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
 
-    console.log('game', game)
-    console.log('scene', scene)
-
     const sceneToCanvasRatio = sceneWidth/game.canvas.clientWidth;
     const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2)
-    console.log('sceneToCanvasRatio', sceneToCanvasRatio)
-    console.log('actualBricksYOffset', actualBricksYOffset)
 
     // set collisions on all edges of world except bottom
     scene.physics.world.setBoundsCollision(true, true, true, false);
