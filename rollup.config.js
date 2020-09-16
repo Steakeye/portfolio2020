@@ -88,15 +88,17 @@ const preProcessOptions = {
 const preProcessConfig = sveltePreprocess(preProcessOptions);
 
 const postCssPluginConfig = (client = true) => postcss({
-      extract: client ? 'steakeye.css': false,
+      extract: client ? 'base.css': false,
       onExtract: (processedCSSWrapper) => {
         const result = processedCSSWrapper();
         fs.mkdirSync(cssFolderPath, { recursive: true })
         fs.writeFileSync(path.join(cssFolderPath, result.codeFileName), result.code);
+
         if (result.map) {
           fs.writeFileSync(path.join(cssFolderPath, result.mapFileName), result.map);
         }
-        return false;
+
+        return false; //Returning false prevents the emission of css files
       },
       sourceMap: dev,
       minimize: !dev,
@@ -128,6 +130,10 @@ const includePathPlugin = includePaths(
     }
 );
 
+const cssOutputFunc = (css) => {
+  css.write(`${cssFolderPath}/steakeye.css`, dev);
+};
+
 export default {
   client: {
     input: config.client.input().replace(/.js$/, '.ts'),
@@ -152,6 +158,7 @@ export default {
         hydratable: true,
         emitCss: false,
         preprocess: preProcessConfig,
+        css: cssOutputFunc,
       }),
       // we'll extract any component CSS out into
       // a separate file — better for performance
