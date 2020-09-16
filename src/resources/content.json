@@ -5,6 +5,7 @@
     }
   },
   "global": {
+    "title": "Steakeye - Front End Development Services",
     "partials": {
       "nav": {
         "links": [

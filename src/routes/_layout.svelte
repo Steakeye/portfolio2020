@@ -1,12 +1,11 @@
 <script context="module">
   import content from '../resources/content.json'
 
+  const siteTitle = content.global.title;
   const copyRightMessage = content.global.partials.footer.copyright;
   const year = new Date().getFullYear();
 </script>
 <script>
-  import styles from "./_layout.scss";
-
   import Nav from '../components/Nav.svelte'
 </script>
 
@@ -15,7 +14,6 @@
 
   .content {
     position: relative;
-  //max-width: 56em;
     padding: 2rem;
     margin: 0 auto;
   }
@@ -32,7 +30,7 @@
 </style>
 
 <svelte:head>
-  <title>Steakeye - Front End Development Services</title>
+  <title>{siteTitle}</title>
 </svelte:head>
 
 <header>
