@@ -79,9 +79,8 @@ const preProcessOptions = {
   },
   postcss: {
     plugins: [require('autoprefixer')()],
-  }, //TODO..? Add scss config here?!
+  },
   scss: {
-    'test': 'options go here!',
     importer: [jsonImporter()],
   }
 };
@@ -105,7 +104,7 @@ const postCssPluginConfig = (client = true) => postcss({
       extensions: ['.css', '.scss'],
       use: [
           ['sass', {
-          importer: jsonImporter(), //TODO: Check if we actually need this by removing it it when we've succeeded!
+          importer: jsonImporter(),
         },]
       ],
       loaders: [customPostcssSassLoader],

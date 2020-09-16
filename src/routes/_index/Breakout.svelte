@@ -1,4 +1,5 @@
 <style>
+    @use 'src/styles/colour';
     @use 'src/styles/layout';
 
     .loading-node {
@@ -11,6 +12,7 @@
         top: 0;
         width: 100vw;
         height: 100vh;
+        background-image: linear-gradient(0deg, colour.$brand-black, transparent);
     }
 </style>
 <script context="module">
