@@ -220,7 +220,7 @@ export default {
       copy({
         targets: [
             { src: 'static/*', dest: 'public' },
-            { src: 'node_modules/@coreui/icons/fonts', dest: 'public' },
+            { src: 'node_modules/@coreui/icons/fonts', dest: 'public/assets' },
             ],
       }),
     ],
