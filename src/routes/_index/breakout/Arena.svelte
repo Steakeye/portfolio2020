@@ -1,13 +1,12 @@
 <script context="module">
     import config from '/src/resources/config.json';
 
-    const { breakout: { sizeUnit, bricks: { columns, rows, widthSize, heightSize } } } = config;
+    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { sizeUnit, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
     const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
     const bricksXOffset = brickWidth/2 + sizeUnit/2;
-    const bricksYOffset = brickHeight/2 + sizeUnit;
 </script>
 <script>
     import type { Phaser } from 'phaser'
@@ -40,7 +39,6 @@
         ball.setPosition(bat.x, bat.y - sizeUnit)
     }
 
-
     function resetBatAndBall() {
         ball.body.setVelocity(0);
         setBallPosition();
@@ -70,6 +68,14 @@
     const scene = getScene();
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
+
+    console.log('game', game)
+    console.log('scene', scene)
+
+    const sceneToCanvasRatio = sceneWidth/game.canvas.clientWidth;
+    const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2)
+    console.log('sceneToCanvasRatio', sceneToCanvasRatio)
+    console.log('actualBricksYOffset', actualBricksYOffset)
 
     // set collisions on all edges of world except bottom
     scene.physics.world.setBoundsCollision(true, true, true, false);
@@ -114,7 +120,7 @@
 {#each bricksConfig as brickConfig, index (brickConfig.key)}
     <Brick
         x={brickConfig.x + bricksXOffset}
-        y={brickConfig.y + bricksYOffset}
+        y={brickConfig.y + actualBricksYOffset}
         bind:instance={bricks[index]}
     />
 {/each}

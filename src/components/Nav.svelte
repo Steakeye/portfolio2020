@@ -1,12 +1,16 @@
 <style>
+  @use 'sass:map' as sassMap;
   @use 'src/styles/colour';
   @use 'src/styles/layout';
   @use 'src/styles/fonts';
-  //@use 'src/styles/type.scss';
+
+  $navLayoutConfig: sassMap.get(layout.$layoutConfig, nav);
+  $baseUnit: sassMap.get(layout.$layoutConfig, baseUnit);
+  $navMarginTop: sassMap.get($navLayoutConfig, marginTop);
 
   nav {
     position: sticky;
-    margin-top: 12rem;
+    margin-top: #{$navMarginTop/$baseUnit}rem;
     z-index: 5;
 
     ul {

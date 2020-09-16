@@ -6,10 +6,10 @@ $brandColours: map-get($ui, colors);
   @return #{'#' + map-get($brandColours, $key)}
 }
 
-$brand-black: brandColor(brandBlack); //#473839;
-$brand-white: brandColor(brandWhite); //#ECE0D0;
-$brand-yellow: brandColor(brandYellow); //#E8BF87;
-$brand-pink: brandColor(brandPink); //#E06D72;
-$brand-pink-dark: brandColor(brandPinkDark); //#943A3E;
-$brand-blue: brandColor(brandBlue); //#58AFE0;
-$brand-blue-dark: brandColor(brandBlueDark); //#417694;
+$brand-black: brandColor(brandBlack);
+$brand-white: brandColor(brandWhite);
+$brand-yellow: brandColor(brandYellow);
+$brand-pink: brandColor(brandPink);
+$brand-pink-dark: brandColor(brandPinkDark);
+$brand-blue: brandColor(brandBlue);
+$brand-blue-dark: brandColor(brandBlueDark);

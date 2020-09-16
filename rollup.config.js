@@ -201,7 +201,7 @@ export default {
       favicons({
         source: 'src/assets/images/steakeye-roundel.svg',
         configuration: {
-          appName: pkg.name, // process.env.npm_package_displayName,
+          appName: pkg.name,
           appDescription: pkg.description,
           path: faviconAssetPath,
         },
