@@ -5,7 +5,7 @@
     }
   },
   "global": {
-    "title": "Steakeye - Front End Development Services",
+    "title": "Steakeye - Expert Front End Development Services",
     "partials": {
       "nav": {
         "links": [
@@ -47,6 +47,10 @@
   },
   "pages": {
     "index": {
+      "header": {
+        "title": "Steakeye",
+        "subTitle": "Expert Front-end Development Services"
+      },
       "breakout": {
         "game": {
           "title": "Steakeye Breakout!"

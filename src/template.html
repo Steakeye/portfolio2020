@@ -60,13 +60,15 @@
     <meta name="msapplication-config" content="/favicon/browserconfig.xml">
     <link rel="yandex-tableau-widget" href="/favicon/yandex-browser-manifest.json">
 
-    %sapper.scripts%
-
     %sapper.styles%
 
     %sapper.head%
   </head>
   <body>
+    <script>
+        document.body.classList.add('js-enabled');
+    </script>
     <div id="sapper">%sapper.html%</div>
   </body>
+    %sapper.scripts%
 </html>

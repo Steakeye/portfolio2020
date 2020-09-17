@@ -12,13 +12,15 @@
     <!-- if there's any problem with links, look at cross origin credentials: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin#Example_Webmanifest_with_credentials -->
     ${faviconLinks}
 
-    %sapper.scripts%
-
     %sapper.styles%
 
     %sapper.head%
   </head>
   <body>
+    <script>
+        document.body.classList.add('js-enabled');
+    </script>
     <div id="sapper">%sapper.html%</div>
   </body>
+    %sapper.scripts%
 </html>
