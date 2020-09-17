@@ -16,9 +16,12 @@
     width: 100vw;
     margin-left: -2rem;
     top: 50vh;
-    font-size: 2.8em;
-    text-transform: uppercase;
-    font-weight: 700;
+    font-family: Bungee Shade;
+    color-scheme: blue;
+    font-weight: 500;
+    color: #E8BF87;
+    font-size: 4rem;
+    margin-top: -4rem;
   }
 
   p {

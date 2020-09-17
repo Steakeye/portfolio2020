@@ -37,7 +37,7 @@
           padding: .5rem 1.2rem;
           line-height: 0;
           justify-content: center;
-          background-color: sassColor.change(colour.$brand-pink); //, $alpha:0.25); //rgba(#E06D72,.25); // rgba(colour.$brand-pink,.25); //colour.$brand-yellow;
+          background-color: rgba(colour.$brand-pink, .25);
 
           .linkText {
             @include layout.extendVisuallyHidden;
