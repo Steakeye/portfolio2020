@@ -3,7 +3,7 @@
 $brandColours: map-get($ui, colors);
 
 @function brandColor($key) {
-  @return #{'#' + map-get($brandColours, $key)}
+  @return map-get($brandColours, $key)
 }
 
 $brand-black: brandColor(brandBlack);

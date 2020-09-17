@@ -1,13 +1,13 @@
 {
   "ui": {
     "colors": {
-      "brandBlack": "473839",
-      "brandWhite": "ECE0D0",
-      "brandYellow": "E8BF87",
-      "brandPink": "E06D72",
-      "brandPinkDark": "943A3E",
-      "brandBlue": "58AFE0",
-      "brandBlueDark": "417694"
+      "brandBlack": "#473839",
+      "brandWhite": "#ECE0D0",
+      "brandYellow": "#E8BF87",
+      "brandPink": "#E06D72",
+      "brandPinkDark": "#943A3E",
+      "brandBlue": "#58AFE0",
+      "brandBlueDark": "#417694"
     },
     "layout": {
       "baseUnit": 10,

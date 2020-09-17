@@ -1,5 +1,7 @@
 <style>
   @use 'sass:map' as sassMap;
+  @use 'sass:string' as sassString;
+  @use 'sass:color' as sassColor;
   @use 'src/styles/colour';
   @use 'src/styles/layout';
   @use 'src/styles/fonts';
@@ -21,19 +23,21 @@
         display: block;
 
         a {
-        $icons: (
-          about: info,
-          cv: short-text,
-          github: github,
-          linkedIn: linkedin,
-          twitter: twitter,
-          email: envelope-closed
-        );
+          //TODO: Move this map into the config.json
+          $icons: (
+            about: info,
+            cv: short-text,
+            github: github,
+            linkedIn: linkedin,
+            twitter: twitter,
+            email: envelope-closed
+          );
 
           display: flex;
           padding: .5rem 1.2rem;
           line-height: 0;
           justify-content: center;
+          background-color: sassColor.change(colour.$brand-pink); //, $alpha:0.25); //rgba(#E06D72,.25); // rgba(colour.$brand-pink,.25); //colour.$brand-yellow;
 
           .linkText {
             @include layout.extendVisuallyHidden;
