@@ -1,17 +1,26 @@
 <style>
+  @use '../styles/fonts';
+
   h1,
   p {
     margin: 0 auto;
   }
 
-  h1 {
-    font-size: 2.8em;
-    font-weight: 700;
+  h2 {
     margin: 0 0 0.5em 0;
   }
 
   p {
     margin: 1em auto;
+  }
+
+  a.back:before {
+    @include fonts.coreUIIcon(chevron-left);
+    font-size: .8em;
+    margin-right: .2em;
+    vertical-align: text-top;
+    text-decoration: none;
+    display: inline-block;
   }
 
   @media (min-width: 480px) {
@@ -37,9 +46,8 @@
 </svelte:head>
 
 <h1>{status}</h1>
-
-<p>{error.message}</p>
-<p><a href="/">{homeText}</a></p>
+<h2>{error.message}</h2>
+<p><a class="back" href="/">{homeText}</a></p>
 
 {#if dev && error.stack}
   <pre>{error.stack}</pre>

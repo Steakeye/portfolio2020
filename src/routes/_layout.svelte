@@ -11,11 +11,17 @@
 
 <style>
   @use '../styles/colour';
+  @use '../styles/type';
 
   .content {
     position: relative;
     padding: 2rem;
     margin: 0 auto;
+    font-size: 2em;
+
+    > :global(#{type.$headers}, p) {
+      color: colour.$brand-white;
+    }
   }
 
   footer {

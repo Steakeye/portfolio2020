@@ -13,7 +13,7 @@
     margin: 0 auto;
   }
 
-  h1 {
+  :global(.content) h1 {
     position: fixed;
     width: 100vw;
     margin-left: -2rem;

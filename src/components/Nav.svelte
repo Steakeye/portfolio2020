@@ -38,6 +38,7 @@
           line-height: 0;
           justify-content: center;
           background-color: rgba(colour.$brand-pink, .25);
+          text-decoration: none;
 
           .linkText {
             @include layout.extendVisuallyHidden;

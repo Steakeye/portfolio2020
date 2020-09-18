@@ -13,6 +13,13 @@
         width: 100vw;
         height: 100vh;
         background-image: linear-gradient(0deg, colour.$brand-black, transparent);
+
+        .loading-message {
+            text-align: center;
+            width: 100vw;
+            position: fixed;
+            bottom: 2rem;
+        }
     }
 </style>
 <script context="module">
