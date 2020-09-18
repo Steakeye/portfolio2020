@@ -22,6 +22,7 @@ import config from 'sapper/config/rollup';
 import copy from 'rollup-plugin-copy';
 import json from '@rollup/plugin-json';
 import pkg from './package.json';
+import { appRoot } from './src/resources/config.json'
 
 const cssFolderPath = 'public/assets/css/';
 const faviconAssetPath = '/favicon/';
@@ -210,6 +211,9 @@ export default {
       }),
       customSvelteHtmlTemplate({
         replacePairs: [{
+          templateKey: 'appRoot',
+          content: appRoot,
+        },{
           templateKey: 'faviconLinks',
           contentPath: ['__favicons_output'],
           contentTransformer(links) {

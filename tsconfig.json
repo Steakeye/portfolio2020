@@ -8,7 +8,8 @@
       "./node_modules/phaser/types",
       "typings"
     ],
-    "lib": ["ES2015", "DOM", "WebWorker"]
+    "lib": ["ES2015", "DOM", "WebWorker"],
+    "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]

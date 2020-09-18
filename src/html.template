@@ -20,7 +20,7 @@
     <script>
         document.body.classList.add('js-enabled');
     </script>
-    <div id="sapper">%sapper.html%</div>
+    <div id="${appRoot}">%sapper.html%</div>
   </body>
     %sapper.scripts%
 </html>

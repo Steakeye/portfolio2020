@@ -1,8 +1,7 @@
-import * as sapper from '@sapper/app'
+import * as sapper from '@sapper/app';
 import './styles/global.scss'
-
-//document.body.classList.add('js-enabled');
+import { appRoot } from './resources/config.json';
 
 sapper.start({
-  target: document.querySelector('#sapper'),
+  target: document.getElementById(appRoot),
 })
