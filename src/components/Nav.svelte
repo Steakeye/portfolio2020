@@ -78,7 +78,6 @@
               &:after {
                 @include fonts.coreUIIcon($icon);
               }
-
             }
           }
         }
@@ -87,17 +86,34 @@
   }
 </style>
 
-<script lang="ts">
-  import content from '../resources/content.json'
+<script context="module">
+  import { onMount } from 'svelte';
+  import { navItemSelected } from '../resources/event-keys.json';
+  import content from '../resources/content.json';
 
   const { global: { partials: { nav: { links } } } } = content;
+</script>
+<script>
+  const linkElements: HTMLAnchorElement[] = [];
+
+  onMount(() => {
+    function handleNavMenuItemSelected(event: CustomEvent) {
+      const { detail: { index } } = event;
+      console.log('nave menu detects item selected', event, 'therefore the el is', linkElements[index])
+    }
+    document.addEventListener(navItemSelected, handleNavMenuItemSelected)
+
+    return () => {
+      document.removeEventListener(handleNavMenuItemSelected);
+    }
+  })
 </script>
 
 <nav>
   <ul>
-    {#each links as { name, href, text }}
+    {#each links as { name, href, text }, index}
     <li>
-      <a class={name} href={href}>
+      <a bind:this={linkElements[index]} class={name} href={href}>
         <strong class='linkText'>{text}</strong>
       </a>
     </li>

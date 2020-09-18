@@ -1,6 +1,10 @@
 <script context="module">
+    import CustomEvent from 'custom-event';
+    import eventKeys from '/src/resources/event-keys.json';
     import config from '/src/resources/config.json';
+    import { getCanvas }  from './LayoutUtils.ts'
 
+    const { navItemSelected } = eventKeys;
     const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { gameWidth, sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
     const spacerUnit = sizeUnit * .6;
@@ -22,6 +26,7 @@
     const sceneToCanvasRatio = getSceneToCanvasRatio(game);
     const scaledBrickWidth = sceneToCanvasRatio * brickWidth;
     const bricksXOffset = ((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;
+    const bricks = [];
 
     let bat;
     let ball;
@@ -55,9 +60,33 @@
         // bricks are reactivated, meaning we inadvertently hit that last ball again!
     }
 
+    function isBrickInLinkRow(brick: Phaser.GameObjects.Rectangle): number | false {
+        const index = bricks.indexOf(brick);
+        const isInLinkRow = index > -1 && index < columns;
+
+        return isInLinkRow ? index : false;
+    }
+
+    function handleLinkBrickHit(brickIndex: number) {
+        console.log('handleLinkBrickHit index', brickIndex);
+        const navSelectedEvent = new CustomEvent(navItemSelected, {
+            bubbles: true,
+            detail: {
+                index: brickIndex,
+            },
+        })
+
+        getCanvas(game).dispatchEvent(navSelectedEvent);
+    }
+
     function onBallHitBrick(ball: Phaser.GameObjects.Sprite, brick: Phaser.GameObjects.Rectangle) {
         bricksGroup.killAndHide(brick as Phaser.GameObjects.GameObject);
         scene.physics.world.disable(brick);
+
+        const linkIndex = isBrickInLinkRow(brick)
+        if (linkIndex !== false) {
+            handleLinkBrickHit(linkIndex)
+        }
     }
 
     const scene = getScene();
@@ -69,9 +98,6 @@
     // set collisions on all edges of world except bottom
     scene.physics.world.setBoundsCollision(true, true, true, false);
 
-
-    const bricks = [];
-
     // setup game
     {
         const brickHeightPlusSpacer = brickHeight + spacerUnit;
@@ -82,6 +108,7 @@
                 x: (index % columns) * scaledBrickWidth,
                 y: Math.floor(index / columns) * brickHeightPlusSpacer,
                 key: index,
+
             }
         })
     }

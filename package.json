@@ -31,6 +31,7 @@
   "dependencies": {
     "@coreui/icons": "^2.0.0-beta.5",
     "compression": "^1.7.1",
+    "custom-event": "^1.0.1",
     "destyle.css": "^1.0.15",
     "phaser": "^3.24.1",
     "polka": "next",
