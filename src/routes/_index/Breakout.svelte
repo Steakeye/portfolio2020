@@ -20,20 +20,31 @@
             position: fixed;
             bottom: 2rem;
         }
+
+        .play-pause-button {
+            height: 2rem;
+            width: 2rem;
+        }
     }
 </style>
 <script context="module">
-    import config from '/src/resources/config.json';
-    import textContent from '/src/resources/content.json';
     import getter from "ramda/src/path";
+    import config from '/src/resources/config.json';
+    import { pages } from '/src/resources/content.json';
+    import { State as GameState } from './breakout/State.ts';
+    import type { State } from './breakout/State.ts';
+    import type { BreakoutStateContext } from './breakout/StateContext.d.ts'
 
     const { breakout: { gameHeight, gameWidth } } = config
-    const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
+    const breakoutText = pages.index.breakout;
+    const { playPauseButton: { pauseState: { text: pauseText }, playState: { text: playText } }, game: { title } } = breakoutText;
+    //const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
 </script>
 <script>
     import type { SvelteComponent } from 'svelte';
     import type { Phaser } from 'phaser';
     import {onMount} from 'svelte';
+    import { init as initGameState, context as gameState } from './breakout/StateContext.ts';
 
     import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
 
@@ -49,9 +60,12 @@
         exposedProgress = updatedValue;
     }
 
+    initGameState();
+
     export let className = '';
 
     let beforeMount = true;
+    //let gameState: BreakoutStateContext = context();
     let breakoutContainer: HTMLCanvasElement;
     let Phaser: SvelteComponent;
     let Game: SvelteComponent;
@@ -62,9 +76,23 @@
 
     let exposedProgress;
     let sceneInstance;
+    let playState: State = GameState.UNINITIALIZED;
+
+    let state: State = gameState();
+
+    $: if(state != gameState()) {
+        console.log('gameState', gameState())
+    }
+
+    $: if (exposedProgress === 1) {
+        //gameState.setState(GameState.READY);
+        gameState(GameState.READY)
+        console.log('exposed progress causes state to be set to ', gameState());
+    }
 
     onMount(async () => {
         const sveltePhaser = await import('svelte-phaser');
+
         Phaser = await import('phaser');
 
         Game = sveltePhaser.Game;
@@ -82,18 +110,21 @@
 {#if beforeMount}
     <p class="loading-message">Loading...</p>
 {:else}
-    <canvas bind:this={breakoutContainer}></canvas>
+    {#if state !== GameState.UNINITIALIZED }
+        <button class="play-pause-button"></button>
+    {/if}
+    <canvas bind:this={breakoutContainer} />
     {#if breakoutContainer}
     <Game
-        title={gameTitle}
+        {title}
         version="0.0.1a"
         width={gameWidth}
         height={gameHeight}
         physics={{
             default: 'arcade',
-            arcade: {
+            /*arcade: {
                 //debug: true, //TODO: Remove after debug complete
-            },
+            },*/
         }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_HORIZONTALLY }}
         transparent="true"

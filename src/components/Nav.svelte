@@ -44,28 +44,32 @@
             @include layout.extendVisuallyHidden;
           }
 
-          &:hover .linkText {
-            @include layout.extendOverrideVisuallyHidden;
-            background-color: colour.$brand-black;
-            color: colour.$brand-white;
-            position: absolute;
-            bottom: -2.4rem;
-            line-height: 1.2rem;
-            padding: 0.5rem 0.5rem .3rem;
-            border-radius: .5rem;
-            font-size: 1.2rem;
+          &:hover {
+            background-color: rgba(colour.$brand-pink, .5);
 
-            $pointerSquareSize: .8rem;
-
-            &:after {
-              content: '';
+            .linkText {
+              @include layout.extendOverrideVisuallyHidden;
+              background-color: colour.$brand-black;
+              color: colour.$brand-white;
               position: absolute;
-              height: $pointerSquareSize;
-              width: $pointerSquareSize;
-              background-color: inherit;
-              top: -#{$pointerSquareSize/2};
-              left: calc(50% - #{$pointerSquareSize/2});
-              transform: rotateZ(45deg);
+              bottom: -2.4rem;
+              line-height: 1.2rem;
+              padding: 0.5rem 0.5rem .3rem;
+              border-radius: .5rem;
+              font-size: 1.2rem;
+
+              $pointerSquareSize: .8rem;
+
+              &:after {
+                content: '';
+                position: absolute;
+                height: $pointerSquareSize;
+                width: $pointerSquareSize;
+                background-color: inherit;
+                top: -#{$pointerSquareSize/2};
+                left: calc(50% - #{$pointerSquareSize/2});
+                transform: rotateZ(45deg);
+              }
             }
           }
 
@@ -85,13 +89,21 @@
     }
   }
 </style>
-
 <script context="module">
   import { onMount } from 'svelte';
   import { navItemSelected } from '../resources/event-keys.json';
   import content from '../resources/content.json';
 
   const { global: { partials: { nav: { links } } } } = content;
+  const fullyQualifiedUrlTest = /^(?:http(s)?)?:\/\//;
+
+  function isLinkExternal(href: string): boolean {
+    return fullyQualifiedUrlTest.test(href);
+  }
+
+  function determineHrefTarget(href: string): '_self' | '_blank' {
+    return  isLinkExternal(href) || href.startsWith('mailto:') ? '_blank': '_self';
+  }
 </script>
 <script>
   const linkElements: HTMLAnchorElement[] = [];
@@ -113,7 +125,7 @@
   <ul>
     {#each links as { name, href, text }, index}
     <li>
-      <a bind:this={linkElements[index]} class={name} href={href}>
+      <a bind:this={linkElements[index]} class= {name} href={href} target={determineHrefTarget(href)}>
         <strong class='linkText'>{text}</strong>
       </a>
     </li>

@@ -1,7 +1,7 @@
 {
   "api": {
     "email": {
-      "redirect": ":andrew%20at%20steayeye.com?subject=Hi%20Steakeye&body=Dear%20Steakeye"
+      "redirect": "mailto:andrew%20at%20steayeye.com?subject=Hi%20Steakeye&body=Dear%20Steakeye"
     }
   },
   "global": {
@@ -52,6 +52,14 @@
         "subTitle": "Expert Front-end Development Services"
       },
       "breakout": {
+        "playPauseButton": {
+          "pauseState": {
+            "text": "play"
+          },
+          "playState": {
+            "text": "pause"
+          }
+        },
         "game": {
           "title": "Steakeye Breakout!"
         }
