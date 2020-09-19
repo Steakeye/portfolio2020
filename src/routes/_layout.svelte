@@ -1,7 +1,7 @@
 <script context="module">
   import content from '../resources/content.json'
 
-  const siteTitle = content.global.title;
+  const{ title, metaDescription } = content.global;
   const copyRightMessage = content.global.partials.footer.copyright;
   const year = new Date().getFullYear();
 </script>
@@ -36,7 +36,8 @@
 </style>
 
 <svelte:head>
-  <title>{siteTitle}</title>
+  <title>{title}</title>
+  <meta name="description" content={metaDescription}>
 </svelte:head>
 
 <header>
