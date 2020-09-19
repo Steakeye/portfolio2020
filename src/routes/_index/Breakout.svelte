@@ -1,5 +1,6 @@
 <style>
     @use 'src/styles/colour';
+    @use 'src/styles/fonts';
     @use 'src/styles/layout';
 
     .loading-node {
@@ -21,9 +22,36 @@
             bottom: 2rem;
         }
 
+        $button-diamter: 3rem;
+
         .play-pause-button {
-            height: 2rem;
-            width: 2rem;
+            @include layout.extendVisuallyHiddenNoClip;
+
+            &:before {
+                content: '';
+                height: $button-diamter;
+                width: $button-diamter;
+                position: fixed;
+                margin-top: 1rem;
+                margin-right: 1rem;
+                right: 0;
+                background-color: colour.$brand-yellow;
+                border-radius: $button-diamter/2;
+                padding: .5rem;
+            }
+
+            &.playing:before, &.paused:before {
+                font-weight: bold;
+            }
+
+            &.playing:before {
+                @include fonts.coreUIIcon('media-pause');
+            }
+
+            &.paused:before {
+                @include fonts.coreUIIcon('media-play');
+                padding-left: .55rem;
+            }
         }
     }
 </style>
@@ -37,7 +65,7 @@
 
     const { breakout: { gameHeight, gameWidth } } = config
     const breakoutText = pages.index.breakout;
-    const { playPauseButton: { pauseState: { text: pauseText }, playState: { text: playText } }, game: { title } } = breakoutText;
+    const { playPauseButton: { pauseState: { text: pausedText }, playState: { text: playingText } }, game: { title } } = breakoutText;
     //const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
 </script>
 <script>
@@ -60,12 +88,17 @@
         exposedProgress = updatedValue;
     }
 
-    initGameState();
+    function toggleGameState() {
+        if (gameState() === GameState.PAUSED) {
+            playState = gameState(GameState.PLAYING);
+        } else  {
+            playState = gameState(GameState.PAUSED);
+        }
+    }
 
     export let className = '';
 
     let beforeMount = true;
-    //let gameState: BreakoutStateContext = context();
     let breakoutContainer: HTMLCanvasElement;
     let Phaser: SvelteComponent;
     let Game: SvelteComponent;
@@ -76,19 +109,11 @@
 
     let exposedProgress;
     let sceneInstance;
-    let playState: State = GameState.UNINITIALIZED;
+    let playState: State;
 
-    let state: State = gameState();
+    initGameState();
 
-    $: if(state != gameState()) {
-        console.log('gameState', gameState())
-    }
-
-    $: if (exposedProgress === 1) {
-        //gameState.setState(GameState.READY);
-        gameState(GameState.READY)
-        console.log('exposed progress causes state to be set to ', gameState());
-    }
+    playState = gameState();
 
     onMount(async () => {
         const sveltePhaser = await import('svelte-phaser');
@@ -104,14 +129,27 @@
 
         beforeMount = false;
     });
+
+    $: playPauseText = playState === GameState.PAUSED ? pausedText : playingText;
+
+    $: if (exposedProgress === 1) {
+        playState = gameState(GameState.READY)
+    }
 </script>
 
 <div class="breakout-wrapper {className}">
 {#if beforeMount}
     <p class="loading-message">Loading...</p>
 {:else}
-    {#if state !== GameState.UNINITIALIZED }
-        <button class="play-pause-button"></button>
+    {#if playState !== GameState.UNINITIALIZED }
+        <button
+            on:click={toggleGameState}
+            class="play-pause-button"
+            class:playing={playState !== GameState.PAUSED}
+            class:paused={playState === GameState.PAUSED}
+        >
+            {playPauseText}
+        </button>
     {/if}
     <canvas bind:this={breakoutContainer} />
     {#if breakoutContainer}
