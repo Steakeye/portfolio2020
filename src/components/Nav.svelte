@@ -94,6 +94,10 @@
   import { navItemSelected } from '../resources/event-keys.json';
   import content from '../resources/content.json';
 
+  interface LinkProps {
+    target: '_self' | '_blank';
+  }
+
   const { global: { partials: { nav: { links } } } } = content;
   const fullyQualifiedUrlTest = /^(?:http(s)?)?:\/\//;
 
@@ -104,6 +108,21 @@
   function determineHrefTarget(href: string): '_self' | '_blank' {
     return  isLinkExternal(href) || href.startsWith('mailto:') ? '_blank': '_self';
   }
+
+  function getLinkPropsFromHref(href: string): LinkProps {
+    const target = determineHrefTarget(href);
+    const external = isLinkExternal(href);
+    const props: LinkProps = {
+      external,
+      target,
+    };
+
+    if (external) {
+      props.rel = 'noreferrer'
+    }
+    
+    return props;
+  }
 </script>
 <script>
   const linkElements: HTMLAnchorElement[] = [];
@@ -112,6 +131,8 @@
     function handleNavMenuItemSelected(event: CustomEvent) {
       const { detail: { index } } = event;
       console.log('nave menu detects item selected', event, 'therefore the el is', linkElements[index])
+      const elementToClick = linkElements[index];
+      elementToClick?.click();
     }
     document.addEventListener(navItemSelected, handleNavMenuItemSelected)
 
@@ -125,7 +146,7 @@
   <ul>
     {#each links as { name, href, text }, index}
     <li>
-      <a bind:this={linkElements[index]} class= {name} href={href} target={determineHrefTarget(href)}>
+      <a bind:this={linkElements[index]} class= {name} href={href} {...getLinkPropsFromHref(href)}>
         <strong class='linkText'>{text}</strong>
       </a>
     </li>
