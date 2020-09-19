@@ -68,7 +68,6 @@
     }
 
     function handleLinkBrickHit(brickIndex: number) {
-        console.log('handleLinkBrickHit index', brickIndex);
         const navSelectedEvent = new CustomEvent(navItemSelected, {
             bubbles: true,
             detail: {
@@ -131,8 +130,8 @@
         }
     })
 
-    // launch ball on click
-    onInputEvent('pointerdown', () => {
+    // launch ball on click - pointerup makes the experience better on touch devices
+    onInputEvent('pointerup', () => {
         if (!isBallLaunched) {
             isBallLaunched = true
             ball.body.setVelocity(-sizeUnit*2, -sceneHeight);
