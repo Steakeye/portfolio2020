@@ -8,14 +8,27 @@ $layoutConfig: map-get(config.$ui, layout);
   &:after { content: ''; display: table; clear: both; }
 }
 
-%visuallyHidden {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
+//A version that excludes clipping is useful when using visible pseudo elements ':before' & ':after'
+%visuallyHiddenNoClip {
   height: 1px;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.visually-hidden-no-clip {
+  @extend %visuallyHiddenNoClip;
+}
+
+@mixin extendVisuallyHiddenNoClip {
+  @extend %visuallyHiddenNoClip;
+}
+
+%visuallyHidden {
+  @extend %visuallyHiddenNoClip;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 .visually-hidden {
@@ -36,12 +49,25 @@ $layoutConfig: map-get(config.$ui, layout);
   position: initial;
 }
 
+%overrideVisuallyHiddenClip {
+  clip: initial;
+  clip-path: initial;
+}
+
 .override-visually-hidden {
   @extend %overrideVisuallyHidden;
 }
 
+.override-visually-hidden-clip {
+  @extend %overrideVisuallyHiddenClip;
+}
+
 @mixin extendOverrideVisuallyHidden {
   @extend %overrideVisuallyHidden;
+}
+
+@mixin extendOverrideVisuallyHiddenClip {
+  @extend %overrideVisuallyHiddenClip;
 }
 
 
