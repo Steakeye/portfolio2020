@@ -6,6 +6,7 @@
   },
   "global": {
     "title": "Steakeye - Expert Front End Development Services",
+    "metaDescription": "Steakeye Ltd. provides expert front-end development services.",
     "partials": {
       "nav": {
         "links": [
@@ -50,6 +51,17 @@
       "header": {
         "title": "Steakeye",
         "subTitle": "Expert Front-end Development Services"
+      },
+      "content": [
+        {
+          "title": "About",
+          "body": "Steakeye Ltd., is the vehicle of Andrew Keats, a Senior Front-end Developer with over a decade of experience building client applications. Prior to forming Steakeye, Andrew's experience was of e-commerce within an agency setting, delivering projects for a  multitude of leading high street retail outlets. In the 9 years since starting Steakeye, the variety of project work has spanned many industries such as B2B retail, Customer Loyalty, On-demand Video, Government Services, Shipping, and e-Commerce. Andrew also has FinTech experience. Happy in a full-stack environment, Andrew also has experience and qualifications in both design and UX; all of this brings a strong set of skills to any cross-functional team, especially those in need of mentoring or leadership."
+        }
+      ],
+      "modal": {
+        "closeButton": {
+          "text": "Close"
+        }
       },
       "breakout": {
         "playPauseButton": {
