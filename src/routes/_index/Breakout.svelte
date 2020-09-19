@@ -145,9 +145,10 @@
     }
 </script>
 
-<div class="breakout-wrapper {className}">
+<section class="breakout-wrapper {className}">
 {#if beforeMount}
     <p class="loading-message">Loading...</p>
+    <noscript><p>Oops, looks like you don't have JavaScript enabled! That's a shame, you won't be able to play the game that requires JavaScript :(</p></noscript>
 {:else}
     {#if playState !== GameState.UNINITIALIZED }
         <button
@@ -191,4 +192,4 @@
     </Game>
     {/if}
 {/if}
-</div>
+</section>

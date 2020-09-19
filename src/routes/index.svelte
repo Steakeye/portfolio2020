@@ -38,16 +38,24 @@
     width: 100vw;
   }
 </style>
+<script context="module">
+    import { pages } from '../resources/content.json';
+    import styles from "./index.scss";
 
-<script>
-  import { pages } from '../resources/content.json';
-  import Breakout from "./_index/Breakout.svelte";
-  import styles from "./index.scss";
-
-  const { index: { header: { title, subTitle } } } = pages
+    const { index: { header: { title, subTitle }, content: [{ title: aboutTitle, body: aboutBody }] } } = pages
 </script>
+<script>
+  import Breakout from "./_index/Breakout.svelte";
 
-<h1>{title}</h1>
-<h2>{subTitle}</h2>
-
+</script>
+<article>
+    <header>
+        <h1>{title}</h1>
+        <h2>{subTitle}</h2>
+    </header>
+    <section>
+        <h3>{aboutTitle}</h3>
+        <p class="about">{aboutBody}</p>
+    </section>
+</article>
 <Breakout className="{styles.breakoutWrapper}"/>

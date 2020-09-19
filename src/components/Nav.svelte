@@ -120,7 +120,7 @@
     if (external) {
       props.rel = 'noreferrer'
     }
-    
+
     return props;
   }
 </script>
@@ -130,7 +130,6 @@
   onMount(() => {
     function handleNavMenuItemSelected(event: CustomEvent) {
       const { detail: { index } } = event;
-      console.log('nave menu detects item selected', event, 'therefore the el is', linkElements[index])
       const elementToClick = linkElements[index];
       elementToClick?.click();
     }
