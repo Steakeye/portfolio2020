@@ -27,7 +27,13 @@
     const scaledBrickWidth = sceneToCanvasRatio * brickWidth;
     const bricksXOffset = ((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;
     const bricks = [];
+    const scene = getScene();
+    const sceneSize = scene.sys.game.scale.gameSize;
+    const { height: sceneHeight, width: sceneWidth } = sceneSize;
+    const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2);
 
+
+    export let pauseGame;
     let bat;
     let ball;
     let ballProps;
@@ -84,15 +90,10 @@
 
         const linkIndex = isBrickInLinkRow(brick)
         if (linkIndex !== false) {
+            pauseGame();
             handleLinkBrickHit(linkIndex)
         }
     }
-
-    const scene = getScene();
-    const sceneSize = scene.sys.game.scale.gameSize;
-    const { height: sceneHeight, width: sceneWidth } = sceneSize;
-
-    const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2);
 
     // set collisions on all edges of world except bottom
     scene.physics.world.setBoundsCollision(true, true, true, false);

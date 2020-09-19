@@ -89,13 +89,17 @@
         exposedProgress = updatedValue;
     }
 
+    function pauseGame() {
+        playState = gameState(GameState.PAUSED);
+        gameInstance.scene.pause(sceneKey);
+    }
+
     function toggleGameState() {
         if (gameState() === GameState.PAUSED) {
             playState = gameState(GameState.PLAYING);
             gameInstance.scene.resume(sceneKey);
         } else  {
-            playState = gameState(GameState.PAUSED);
-            gameInstance.scene.pause(sceneKey);
+            pauseGame();
         }
     }
 
@@ -182,7 +186,7 @@
             {#if exposedProgress !== 1}
                 <LoadingBar x={0} y={0} progress={exposedProgress}/>
             {/if}
-            <Arena />
+            <Arena {pauseGame} />
         </Scene>
     </Game>
     {/if}
