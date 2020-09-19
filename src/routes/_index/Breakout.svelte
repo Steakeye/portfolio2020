@@ -37,7 +37,7 @@
                 right: 0;
                 background-color: colour.$brand-yellow;
                 border-radius: $button-diamter/2;
-                padding: .5rem;
+                padding: .55rem .45rem;
             }
 
             &.playing:before, &.paused:before {
@@ -67,6 +67,7 @@
     const breakoutText = pages.index.breakout;
     const { playPauseButton: { pauseState: { text: pausedText }, playState: { text: playingText } }, game: { title } } = breakoutText;
     //const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
+    const sceneKey = 'breakoutScene'
 </script>
 <script>
     import type { SvelteComponent } from 'svelte';
@@ -91,8 +92,10 @@
     function toggleGameState() {
         if (gameState() === GameState.PAUSED) {
             playState = gameState(GameState.PLAYING);
+            gameInstance.scene.resume(sceneKey);
         } else  {
             playState = gameState(GameState.PAUSED);
+            gameInstance.scene.pause(sceneKey);
         }
     }
 
@@ -100,6 +103,7 @@
 
     let beforeMount = true;
     let breakoutContainer: HTMLCanvasElement;
+    let gameInstance: Phaser.Game;
     let Phaser: SvelteComponent;
     let Game: SvelteComponent;
     let Scene: SvelteComponent;
@@ -108,7 +112,7 @@
     let Arena: SvelteComponent;
 
     let exposedProgress;
-    let sceneInstance;
+    //let sceneInstance;
     let playState: State;
 
     initGameState();
@@ -168,11 +172,11 @@
         transparent="true"
         canvas={breakoutContainer}
         type={ hasWebGLSupport(breakoutContainer) ? Phaser.WEBGL: Phaser.CANVAS }
+        bind:instance={gameInstance}
     >
         <Scene
-            key="main"
+            key={sceneKey}
             preload={loadAssets}
-            bind:this={sceneInstance}
         >
             <div class="loading-node" slot="loading" let:progress>{assignExposedProgress(progress), ''}</div>
             {#if exposedProgress !== 1}
