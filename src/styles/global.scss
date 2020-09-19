@@ -30,7 +30,7 @@ body {
     Helvetica Neue,
     sans-serif;
   line-height: 1.5;
-  color: $brand-black;
+  color: $brand-white;
   background-color: $brand-pink-dark;
 
   &:after {
@@ -69,6 +69,11 @@ h1 {
 a {
   color: inherit;
   text-decoration: underline;
+}
+
+noscript {
+  padding: 1rem;
+  display: inline-block;
 }
 
 code, pre {

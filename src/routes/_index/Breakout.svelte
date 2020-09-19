@@ -16,16 +16,23 @@
         background-image: linear-gradient(0deg, colour.$brand-black, transparent);
 
         .loading-message {
-            text-align: center;
-            width: 100vw;
-            position: fixed;
-            bottom: 2rem;
+            @include layout.extendVisuallyHidden;
+
+            @include layout.js-enabled {
+                @include layout.extendOverrideVisuallyHidden;
+                text-align: center;
+                width: 100vw;
+                position: fixed;
+                bottom: 2rem;
+            }
         }
 
         $button-diamter: 3rem;
 
         .play-pause-button {
             @include layout.extendVisuallyHiddenNoClip;
+
+            color: colour.$brand-pink-dark;
 
             &:before {
                 content: '';

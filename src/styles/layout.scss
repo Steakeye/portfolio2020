@@ -70,7 +70,14 @@ $layoutConfig: map-get(config.$ui, layout);
   @extend %overrideVisuallyHiddenClip;
 }
 
+//JS flag
+@mixin js-enabled {
+  :global(body.js-enabled) & {
+    @content;
+  }
+}
 
+//Media  Queries
 $phone: 'phone';
 $tablet--portrait: 'tablet--portrait';
 $tablet--landscape: 'tablet--landscape';

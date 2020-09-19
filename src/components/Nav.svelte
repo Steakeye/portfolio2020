@@ -18,6 +18,7 @@
     ul {
       display: flex;
       justify-content: center;
+      color: colour.$brand-black;
 
       li {
         display: block;
