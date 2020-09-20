@@ -12,14 +12,16 @@
 }
 
 %iconOnlyButton {
-  @include layout.extendVisuallyHiddenNoClip;
+  > * {
+    @include layout.extendVisuallyHiddenNoClip;
+  }
 
-  /*&:before {
-    content: '';
-  }*/
+  &:focus {
+    outline: none;
 
-  &:focus:before {
-    @extend %hasFocus
+    &:before {
+      @extend %hasFocus
+    }
   }
 }
 

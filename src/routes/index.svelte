@@ -49,6 +49,7 @@
       &.modal {
         @extend %renderOver;
 
+        box-shadow: 0 2.5px 10px opacify(colour.$brand-black, .5);
         position: fixed;
         left: 0;
         margin: 2rem;
@@ -63,13 +64,19 @@
 
           top: 0;
           right: 0;
+          position: absolute;
+          padding: 1rem;
+          line-height: 1rem;
 
           &:before {
             @include fonts.coreUIIcon('x-circle');
 
+            color: colour.$brand-yellow;
             width: 1rem;
             height: 1rem;
           }
+
+          span {}
         }
       }
     }
@@ -78,6 +85,10 @@
       font-family: Bungee;
       border-bottom: 1px solid colour.$brand-yellow;
       padding-bottom: 1rem;
+
+      &.modal {
+        padding-right: 3rem;
+      }
     }
 
     p {
@@ -99,6 +110,7 @@
   let modalOpen: boolean = false;
 
   function closeModal() {
+      console.log('closeModal');
       modalOpen = false;
   }
 
@@ -111,11 +123,19 @@
         <h1>{title}</h1>
         <h2>{subTitle}</h2>
     </header>
-    <section class="content-section modal open" id="about">
+    <section
+        class="content-section"
+        class:modal={mounted}
+        class:open={mounted}
+        id="about">
         <h3>{aboutTitle}</h3>
         <p>{aboutBody}</p>
         {#if mounted}
-            <button class="close-button">{closeText}</button>
+            <button
+                class="close-button"
+                on:click={closeModal}>
+                <span>{closeText}</span>
+            </button>
         {/if}
     </section>
 </article>

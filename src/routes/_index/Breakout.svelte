@@ -31,7 +31,7 @@
         $button-diameter: 3rem;
 
         .play-pause-button {
-            @include elements.extendIconOnlyButton;
+            @include layout.extendVisuallyHiddenNoClip;
 
             color: colour.$brand-pink-dark;
 
@@ -46,6 +46,10 @@
                 background-color: colour.$brand-yellow;
                 border-radius: $button-diameter/2;
                 padding: .55rem .45rem;
+            }
+
+            &:focus:before {
+                @include elements.extendHasFocus;
             }
 
             &.playing:before, &.paused:before {
