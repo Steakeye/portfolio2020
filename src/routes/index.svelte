@@ -1,6 +1,8 @@
 <style lang="scss">
-  @use '../styles/colour.scss';
+  @use '../styles/colour';
+  @use '../styles/fonts';
   @use '../styles/layout';
+  @use '../styles/elements';
 
   %renderOver {
     position: relative;
@@ -38,18 +40,43 @@
   }
 
   .content-section {
-    @extend %renderOver;
     padding: 1rem;
     background-color: colour.$brand-pink-dark;
     text-align: left;
 
     @include layout.js-enabled {
-      //background-color: orange;
       //TODO: add styling just for the modal
+      &.modal {
+        @extend %renderOver;
+
+        position: fixed;
+        left: 0;
+        margin: 2rem;
+        top: 0;
+
+        &.open {
+          opacity: 1;
+        }
+
+        .close-button {
+          @include elements.extendIconOnlyButton;
+
+          top: 0;
+          right: 0;
+
+          &:before {
+            @include fonts.coreUIIcon('x-circle');
+
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+      }
     }
 
     h3 {
-      border-bottom: 1px solid;
+      font-family: Bungee;
+      border-bottom: 1px solid colour.$brand-yellow;
       padding-bottom: 1rem;
     }
 
@@ -62,20 +89,34 @@
     import { pages } from '../resources/content.json';
     import styles from "./index.scss";
 
-    const { index: { header: { title, subTitle }, content: [{ title: aboutTitle, body: aboutBody }] } } = pages
+    const { index: { header: { title, subTitle }, content: [{ title: aboutTitle, body: aboutBody }], modal: { closeButton: { text: closeText } } } } = pages
 </script>
 <script>
+  import { onMount } from "svelte";
   import Breakout from "./_index/Breakout.svelte";
 
+  let mounted: boolean = false;
+  let modalOpen: boolean = false;
+
+  function closeModal() {
+      modalOpen = false;
+  }
+
+  onMount(() => {
+      mounted = true;
+  })
 </script>
 <article>
     <header>
         <h1>{title}</h1>
         <h2>{subTitle}</h2>
     </header>
-    <section class="content-section" id="about">
+    <section class="content-section modal open" id="about">
         <h3>{aboutTitle}</h3>
         <p>{aboutBody}</p>
+        {#if mounted}
+            <button class="close-button">{closeText}</button>
+        {/if}
     </section>
 </article>
 <Breakout className="{styles.breakoutWrapper}"/>

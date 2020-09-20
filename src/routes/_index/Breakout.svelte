@@ -2,6 +2,7 @@
     @use 'src/styles/colour';
     @use 'src/styles/fonts';
     @use 'src/styles/layout';
+    @use 'src/styles/elements';
 
     .loading-node {
         @include layout.extendVisuallyHidden;
@@ -27,23 +28,23 @@
             }
         }
 
-        $button-diamter: 3rem;
+        $button-diameter: 3rem;
 
         .play-pause-button {
-            @include layout.extendVisuallyHiddenNoClip;
+            @include elements.extendIconOnlyButton;
 
             color: colour.$brand-pink-dark;
 
             &:before {
                 content: '';
-                height: $button-diamter;
-                width: $button-diamter;
+                height: $button-diameter;
+                width: $button-diameter;
                 position: fixed;
                 margin-top: 1rem;
                 margin-right: 1rem;
                 right: 0;
                 background-color: colour.$brand-yellow;
-                border-radius: $button-diamter/2;
+                border-radius: $button-diameter/2;
                 padding: .55rem .45rem;
             }
 

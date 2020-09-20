@@ -1,7 +1,8 @@
 @use '~destyle.css/destyle';
-@import 'colour';
+@use 'colour';
 @use 'fonts';
 @use 'layout';
+@use 'elements';
 
 /*
 * Begin global styles
@@ -30,8 +31,8 @@ body {
     Helvetica Neue,
     sans-serif;
   line-height: 1.5;
-  color: $brand-white;
-  background-color: $brand-pink-dark;
+  color: colour.$brand-white;
+  background-color: colour.$brand-pink-dark;
 
   &:after {
     content: '';
@@ -71,16 +72,16 @@ a {
   text-decoration: underline;
 }
 
+:focus {
+  @include elements.extendHasFocus;
+}
+
 noscript {
   padding: 1rem;
   display: inline-block;
 }
 
-code, pre {
+code,
+pre {
   font-family: 'Space Mono', menlo, inconsolata, monospace;
-  /*font-size: calc(1em - 2px);
-  color: #555;
-  background-color: #f0f0f0;
-  padding: 0.2em 0.4em;
-  border-radius: 2px;*/
 }

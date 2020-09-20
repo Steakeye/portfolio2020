@@ -1,0 +1,28 @@
+@use 'colour';
+@use 'layout';
+
+%hasFocus {
+  //outline: -webkit-focus-ring-color auto 1px;
+  outline: 1px solid colour.$brand-yellow;
+  outline-style: auto;
+}
+
+@mixin extendHasFocus {
+  @extend %hasFocus
+}
+
+%iconOnlyButton {
+  @include layout.extendVisuallyHiddenNoClip;
+
+  /*&:before {
+    content: '';
+  }*/
+
+  &:focus:before {
+    @extend %hasFocus
+  }
+}
+
+@mixin extendIconOnlyButton {
+  @extend %iconOnlyButton
+}

@@ -31,7 +31,9 @@ const getUrlOfPartial = url => {
 const resolvePromise = pify(resolve)
 
 // List of supported SASS modules in the order of preference
-const sassModuleIds = ['node-sass', 'sass']
+// This has been changed to opt for 'sass' first as this is a JS transpile of the latest Dart SASS which has desirable
+// features
+const sassModuleIds = ['sass', 'node-sass'];
 
 export default {
     name: 'sass',

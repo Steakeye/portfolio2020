@@ -159,10 +159,11 @@ export default {
         hydratable: true,
         emitCss: false,
         preprocess: preProcessConfig,
+        // we'll extract any component CSS out into
+        // a separate file — better for performance
         css: cssOutputFunc,
       }),
-      // we'll extract any component CSS out into
-      // a separate file — better for performance
+      // This handles baseline css: reset css, globals
       postCssPluginConfig(),
       resolve({
         browser: true,
@@ -250,8 +251,7 @@ export default {
         dev,
         preprocess: preProcessConfig,
       }),
-      // we'll extract any component CSS out into
-      // a separate file — better for performance
+      // This handles baseline css: reset css, globals
       postCssPluginConfig(false),
       resolve({
         dedupe: ['svelte'],
