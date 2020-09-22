@@ -5,9 +5,9 @@
     @use '../styles/elements';
 
     .modal-background {
-        display: grid;
+        /*display: grid;
         align-content: center;
-        justify-items: center;
+        justify-items: center;*/
         position: fixed;
         width: 100vw;
         height: 100vh;
@@ -17,6 +17,9 @@
         opacity: 0;
 
         &.open {
+            display: grid;
+            align-content: center;
+            justify-items: center;
             opacity: 1;
         }
     }
@@ -64,11 +67,9 @@
             props.id = id;
         }
 
-        //if (open !== undefined) {
         let hidden = !open;
         props.hidden = hidden;
         props['aria-hidden'] = hidden;
-        //}
     }
 </script>
 <script>
@@ -83,11 +84,8 @@
     let wrapperEl: HTMLDivElement;
 
     function closeModal() {
-        console.log('closeModal');
         open = false;
     }
-
-    assignModalBackgroundElProps(modalBGProps, id);
 
     onMount(async () => {
         mounted = true;
@@ -119,6 +117,10 @@
             //TODO: teardown
         }
     });
+
+    $: {
+        assignModalBackgroundElProps(modalBGProps, open, id);
+    }
 </script>
 
 {#if !mounted && renderBeforeOpen}
@@ -127,8 +129,8 @@
     <div
             {...modalBGProps}
             class="modal-background"
-            class:open
             class:className
+            class:open
     >
         <div bind:this={wrapperEl} class="modal-content-wrapper">
             <slot />
