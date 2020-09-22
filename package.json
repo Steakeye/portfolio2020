@@ -33,6 +33,7 @@
     "compression": "^1.7.1",
     "custom-event": "^1.0.1",
     "destyle.css": "^1.0.15",
+    "devtools-detect": "^3.0.1",
     "phaser": "^3.24.1",
     "polka": "next",
     "ramda": "^0.27.1",
