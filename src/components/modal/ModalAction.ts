@@ -1,10 +1,14 @@
 import { createEventDispatcher } from 'svelte';
+import {throwError} from "svelte-preprocess/dist/modules/errors";
 
 type EventDispatcher = (type: string, detail?: any) => void;
 
 const modalEventTriggerKey = 'modal-trigger';
+const modalTriggerIdNodeAttribute = 'data-modal-trigger-id';
 
 function handleModalTrigger() {
+    //TODO!
+
     console.log('modal trigger fired');
 }
 
@@ -12,17 +16,45 @@ function dispatchModalTriggerEvent(dispatcher: EventDispatcher, originalEvent: E
     dispatcher(modalEventTriggerKey, { originalEvent });
 }
 
+function tryToGetTargetIdFromHref(node: Node): string | undefined {
+    //Could use hash property but would return true for external urls too.
+    const href = (node as HTMLAnchorElement).getAttribute('href');
+    let targetId;
+
+    if (href && href.length > 1 && href.startsWith('#')) {
+        targetId = href.slice(1);
+    } else {
+        console.error(`Tried to find targetId on href but no valid href was found. 'href' must start with '#' and  contain at least one more character.`);
+    }
+
+    return targetId
+}
+
+function determineTargetKey(node: Node, targetId?: string) {
+    let targetKey = targetId || (node as HTMLElement).dataset.modalTargetId || tryToGetTargetIdFromHref(node);
+
+    if (!targetKey) {
+        throw new Error(`No explicit targetId parameter passed, nor 'data-modal-target-id' attribute set, nor valid 'href'.`)
+    }
+
+    return targetKey;
+}
+
 export function modalTrigger(node: Node, targetId?: string) {
+    console.log('fn modalTrigger', 'node', node);
     const dispatch: EventDispatcher = createEventDispatcher();
+    const targetKey = determineTargetKey(node, targetId);
 
-    const temp = () => console.log('hit');
+    const handler = (event: Event) => {
+        handleModalTrigger();
+        dispatchModalTriggerEvent(dispatch, event);
+    }
 
-    node.addEventListener('click', temp);
+    node.addEventListener('click', handler);
 
     return {
         destroy() {
-            // ...cleanup goes here
-            node.removeEventListener('click', temp);
+            node.removeEventListener('click', handler);
         }
     };
 }

@@ -97,10 +97,6 @@
   import content from '../resources/content.json';
   import type { LinkProps } from './Nav.d.ts';
 
-  /*decalre interface LinkProps {
-    target: '_self' | '_blank';
-  }*/
-
   const { global: { partials: { nav: { links } } } } = content;
   const fullyQualifiedUrlTest = /^(?:http(s)?)?:\/\//;
 
@@ -128,10 +124,6 @@
       props.rel = 'noreferrer'
     }
 
-    if (isLinkToLocalTarget(href)) {
-      props[`use:${modalTrigger.name}`] = modalTrigger;
-    }
-
     return props;
   }
 </script>
@@ -156,9 +148,15 @@
   <ul>
     {#each links as { name, href, text }, index}
     <li>
-      <a bind:this={linkElements[index]} class={name} href={href} {...getLinkPropsFromHref(href)}>
-        <strong class='linkText'>{text}</strong>
-      </a>
+      {#if isLinkToLocalTarget(href)}
+        <a bind:this={linkElements[index]} use:modalTrigger class={name} href={href} {...getLinkPropsFromHref(href)}>
+          <strong class='linkText'>{text}</strong>
+        </a>
+      {:else}
+        <a bind:this={linkElements[index]} class={name} href={href} {...getLinkPropsFromHref(href)}>
+          <strong class='linkText'>{text}</strong>
+        </a>
+      {/if}
     </li>
     {/each}
   </ul>
