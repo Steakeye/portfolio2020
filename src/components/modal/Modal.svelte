@@ -1,8 +1,8 @@
 <style>
-    @use '../styles/colour';
-    @use '../styles/fonts';
-    @use '../styles/layout';
-    @use '../styles/elements';
+    @use 'src/styles/colour';
+    @use 'src/styles/fonts';
+    @use 'src/styles/layout';
+    @use 'src/styles/elements';
 
     .modal-background {
         /*display: grid;
@@ -55,8 +55,8 @@
 </style>
 <script context="module">
     import { onMount } from 'svelte';
-    import {sleep} from "../utils/Runtime.ts";
-    import { components } from '../resources/content.json';
+    import {sleep} from "../../utils/Runtime.ts";
+    import { components } from '../../resources/content.json';
 
     const { modal: { closeButton: { text: closeText } } } = components;
 

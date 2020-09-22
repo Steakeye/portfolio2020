@@ -92,15 +92,21 @@
 </style>
 <script context="module">
   import { onMount } from 'svelte';
+  import { modalTrigger } from '../components/modal/ModalAction.ts';
   import { navItemSelected } from '../resources/event-keys.json';
   import content from '../resources/content.json';
+  import type { LinkProps } from './Nav.d.ts';
 
-  interface LinkProps {
+  /*decalre interface LinkProps {
     target: '_self' | '_blank';
-  }
+  }*/
 
   const { global: { partials: { nav: { links } } } } = content;
   const fullyQualifiedUrlTest = /^(?:http(s)?)?:\/\//;
+
+  function isLinkToLocalTarget(href: string): boolean {
+    return href.startsWith('#');
+  }
 
   function isLinkExternal(href: string): boolean {
     return fullyQualifiedUrlTest.test(href);
@@ -120,6 +126,10 @@
 
     if (external) {
       props.rel = 'noreferrer'
+    }
+
+    if (isLinkToLocalTarget(href)) {
+      props[`use:${modalTrigger.name}`] = modalTrigger;
     }
 
     return props;
@@ -146,7 +156,7 @@
   <ul>
     {#each links as { name, href, text }, index}
     <li>
-      <a bind:this={linkElements[index]} class= {name} href={href} {...getLinkPropsFromHref(href)}>
+      <a bind:this={linkElements[index]} class={name} href={href} {...getLinkPropsFromHref(href)}>
         <strong class='linkText'>{text}</strong>
       </a>
     </li>

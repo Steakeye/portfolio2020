@@ -67,7 +67,7 @@
 </script>
 <script>
   import { onMount } from "svelte";
-  import Modal from "../components/Modal.svelte";
+  import Modal from "../components/modal/Modal.svelte";
   import Breakout from "./_index/Breakout.svelte";
 
   let mounted: boolean = false;

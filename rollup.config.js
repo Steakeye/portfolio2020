@@ -127,7 +127,7 @@ const urlImportConfig = (client = true) => importUrl({
 
 const includePathPlugin = includePaths(
     {
-      root: __dirname,
+      root: __dirname, //TODO, consider changing this to include 'src' folder?
     }
 );
 
