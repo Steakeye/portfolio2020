@@ -6,7 +6,7 @@
   const year = new Date().getFullYear();
 </script>
 <script>
-  import Nav from '../components/Nav.svelte'
+  import Nav from '../partials/Nav.svelte'
 </script>
 
 <style>

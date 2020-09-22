@@ -1,4 +1,3 @@
-//@import "../resources/config.json";
 @use "../resources/config.json" as config;
 
 $layoutConfig: map-get(config.$ui, layout);

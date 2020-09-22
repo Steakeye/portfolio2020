@@ -1,4 +1,4 @@
-<style lang="scss">
+<style>
   @use '../styles/colour';
   @use '../styles/fonts';
   @use '../styles/layout';
@@ -44,49 +44,12 @@
     background-color: colour.$brand-pink-dark;
     text-align: left;
 
-    @include layout.js-enabled {
-      //TODO: add styling just for the modal
-      &.modal {
-        @extend %renderOver;
-
-        box-shadow: 0 2.5px 10px opacify(colour.$brand-black, .5);
-        position: fixed;
-        left: 0;
-        margin: 2rem;
-        top: 0;
-
-        &.open {
-          opacity: 1;
-        }
-
-        .close-button {
-          @include elements.extendIconOnlyButton;
-
-          top: 0;
-          right: 0;
-          position: absolute;
-          padding: 1rem;
-          line-height: 1rem;
-
-          &:before {
-            @include fonts.coreUIIcon('x-circle');
-
-            color: colour.$brand-yellow;
-            width: 1rem;
-            height: 1rem;
-          }
-
-          span {}
-        }
-      }
-    }
-
     h3 {
       font-family: Bungee;
       border-bottom: 1px solid colour.$brand-yellow;
       padding-bottom: 1rem;
 
-      &.modal {
+      :global(.modal) & {
         padding-right: 3rem;
       }
     }
@@ -100,19 +63,15 @@
     import { pages } from '../resources/content.json';
     import styles from "./index.scss";
 
-    const { index: { header: { title, subTitle }, content: [{ title: aboutTitle, body: aboutBody }], modal: { closeButton: { text: closeText } } } } = pages
+    const { index: { header: { title, subTitle }, content: [{ title: aboutTitle, body: aboutBody }] } } = pages;
 </script>
 <script>
   import { onMount } from "svelte";
+  import Modal from "../components/Modal.svelte";
   import Breakout from "./_index/Breakout.svelte";
 
   let mounted: boolean = false;
   let modalOpen: boolean = false;
-
-  function closeModal() {
-      console.log('closeModal');
-      modalOpen = false;
-  }
 
   onMount(() => {
       mounted = true;
@@ -123,20 +82,13 @@
         <h1>{title}</h1>
         <h2>{subTitle}</h2>
     </header>
-    <section
-        class="content-section"
-        class:modal={mounted}
-        class:open={mounted}
-        id="about">
-        <h3>{aboutTitle}</h3>
-        <p>{aboutBody}</p>
-        {#if mounted}
-            <button
-                class="close-button"
-                on:click={closeModal}>
-                <span>{closeText}</span>
-            </button>
-        {/if}
-    </section>
+    <Modal>
+        <section
+            class="content-section"
+            id="about">
+            <h3>{aboutTitle}</h3>
+            <p>{aboutBody}</p>
+        </section>
+    </Modal>
 </article>
 <Breakout className="{styles.breakoutWrapper}"/>
