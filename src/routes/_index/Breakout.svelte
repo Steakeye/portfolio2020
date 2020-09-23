@@ -9,11 +9,15 @@
     }
 
     .breakout-wrapper {
+        $bottom-margin: layout.$footer-height;
+
         position: fixed;
         left: 0;
         top: 0;
         width: 100vw;
         height: 100vh;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
         background-image: linear-gradient(0deg, colour.$brand-black, transparent);
 
         .loading-message {
@@ -28,14 +32,16 @@
             }
         }
 
-        $button-diameter: 3rem;
-
         .play-pause-button {
             @include layout.extendVisuallyHiddenNoClip;
 
+            top: 0;
+            right: 0;
             color: colour.$brand-pink-dark;
 
             &:before {
+                $button-diameter: 3rem;
+
                 content: '';
                 height: $button-diameter;
                 width: $button-diameter;
@@ -64,6 +70,10 @@
                 @include fonts.coreUIIcon('media-play');
                 padding-left: .55rem;
             }
+        }
+
+        > canvas {
+            padding-bottom: $bottom-margin;
         }
     }
 </style>
@@ -128,7 +138,6 @@
     let Arena: SvelteComponent;
 
     let exposedProgress;
-    //let sceneInstance;
     let playState: State;
 
     initGameState();

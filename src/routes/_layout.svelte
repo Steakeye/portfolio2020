@@ -12,11 +12,13 @@
 <style>
   @use '../styles/colour';
   @use '../styles/type';
+  @use '../styles/layout';
 
   .content {
     position: relative;
     padding: 2rem;
-    margin: 0 auto;
+    //margin: 0 auto;
+    margin-bottom: 2rem;
     font-size: 2em;
 
     > :global(#{type.$headers}, p) {
@@ -32,6 +34,7 @@
     color: colour.$brand-white;
     font-size: 1.2rem;
     padding: .25rem .5rem;
+    height: layout.$footer-height;
   }
 </style>
 

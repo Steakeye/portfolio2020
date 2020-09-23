@@ -25,7 +25,10 @@
     const game: Phaser.Game = getGame();
     const sceneToCanvasRatio = getSceneToCanvasRatio(game);
     const scaledBrickWidth = sceneToCanvasRatio * brickWidth;
-    const bricksXOffset = ((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;
+    //const bricksXOffset = ((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;
+    const bricksXOffset = ((gameWidth - (brickWidth * columns) + brickWidth)/2 - columns)/sceneToCanvasRatio; // - scaledBrickWidth/2 + columns/2;
+    console.log('((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;', `((${gameWidth} * ${sceneToCanvasRatio}) - (${scaledBrickWidth} * ${columns}))/2 - ${scaledBrickWidth}/2 + ${columns}/2;`);
+    console.log('bricksXOffset', bricksXOffset);
     const bricks = [];
     const scene = getScene();
     const sceneSize = scene.sys.game.scale.gameSize;
