@@ -26,9 +26,18 @@
     const sceneToCanvasRatio = getSceneToCanvasRatio(game);
     const scaledBrickWidth = sceneToCanvasRatio * brickWidth;
     //const bricksXOffset = ((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;
-    const bricksXOffset = ((gameWidth - (brickWidth * columns) + brickWidth)/2 - columns)/sceneToCanvasRatio; // - scaledBrickWidth/2 + columns/2;
+    //const bricksXOffset = ((gameWidth - (brickWidth * columns) + brickWidth)/2 - columns)/sceneToCanvasRatio; // - scaledBrickWidth/2 + columns/2;
+    const ratioSuggestsPortrait = sceneToCanvasRatio > 1
+    const offsetTweak = ratioSuggestsPortrait ? 0: columns;
+    const bricksXOffset = ((gameWidth - (brickWidth * columns) + brickWidth)/2 - offsetTweak); // works with Moto G4
+    //const scaledBricksXOffset = sceneToCanvasRatio > 1 ? bricksXOffset * sceneToCanvasRatio: bricksXOffset * 1/ sceneToCanvasRatio; //bricksXOffset / sceneToCanvasRatio;
+    //const scaledBricksXOffset = sceneToCanvasRatio > 1 ? bricksXOffset/sceneToCanvasRatio: bricksXOffset * 1/ sceneToCanvasRatio; //works with Moto G4
+    //const scaledBricksXOffset = 0 | (ratioSuggestsPortrait ? bricksXOffset/sceneToCanvasRatio: bricksXOffset * 1/ sceneToCanvasRatio); //works with Moto G4
+    const scaledBricksXOffset = gameWidth/2 + scaledBrickWidth/2 - (scaledBrickWidth * columns)/2;
     console.log('((gameWidth * sceneToCanvasRatio) - (scaledBrickWidth * columns))/2 - scaledBrickWidth/2 + columns/2;', `((${gameWidth} * ${sceneToCanvasRatio}) - (${scaledBrickWidth} * ${columns}))/2 - ${scaledBrickWidth}/2 + ${columns}/2;`);
+    console.log('offsetTweak', offsetTweak);
     console.log('bricksXOffset', bricksXOffset);
+    console.log('scaledBricksXOffset', scaledBricksXOffset);
     const bricks = [];
     const scene = getScene();
     const sceneSize = scene.sys.game.scale.gameSize;
@@ -147,7 +156,7 @@
 <Group options={{ name: 'bricks' }} bind:instance={bricksGroup} items={bricks} />
 {#each bricksConfig as brickConfig, index (brickConfig.key)}
     <Brick
-        x={brickConfig.x + bricksXOffset}
+        x={brickConfig.x + scaledBricksXOffset}
         y={brickConfig.y + actualBricksYOffset}
         bind:instance={bricks[index]}
         scale={sceneToCanvasRatio}
