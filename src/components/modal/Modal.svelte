@@ -5,9 +5,6 @@
     @use 'src/styles/elements';
 
     .modal-background {
-        /*display: grid;
-        align-content: center;
-        justify-items: center;*/
         position: fixed;
         width: 100vw;
         height: 100vh;
@@ -93,9 +90,7 @@
 
     onMount(async () => {
         mounted = true;
-        setTimeout(() => console.log('wrapperEl', wrapperEl), 0);
 
-        //TODO: add open and close modal callbacks to sore with unique key
         let modalId = targetId || id;
 
         if (!modalId) {

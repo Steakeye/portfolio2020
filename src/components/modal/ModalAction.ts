@@ -48,7 +48,6 @@ function determineTargetKey(node: Node, targetId?: string) {
 }
 
 export function modalTrigger(node: Node, action: ModalTriggerAction = 'open', targetId?: string) {
-    //console.log('fn modalTrigger', 'node', node);
     const dispatch: EventDispatcher = createEventDispatcher();
     const targetKey = determineTargetKey(node, targetId);
 
