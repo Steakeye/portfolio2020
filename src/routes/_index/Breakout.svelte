@@ -182,7 +182,7 @@
         physics={{
             default: 'arcade',
             /*arcade: {
-                //debug: true, //TODO: Remove after debug complete
+                //debug: true, //TODO: Comment/Remove after debug complete
             },*/
         }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_HORIZONTALLY }}
@@ -190,6 +190,7 @@
         canvas={breakoutContainer}
         type={ hasWebGLSupport(breakoutContainer) ? Phaser.WEBGL: Phaser.CANVAS }
         bind:instance={gameInstance}
+        on:postBoot={() => /*TODO: leverage this to know when to init the browser CLI*/ console.log('game started!')}
     >
         <Scene
             key={sceneKey}

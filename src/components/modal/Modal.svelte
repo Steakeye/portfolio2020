@@ -57,10 +57,10 @@
     import { onMount } from 'svelte';
     import {sleep} from "../../utils/Runtime.ts";
     import { components } from '../../resources/content.json';
+    import type { ModalActions } from './Modal.d.ts';
+    import { ModalsActions } from './ModalAction.ts';
 
     const { modal: { closeButton: { text: closeText } } } = components;
-
-    const storeKeyPrefixModal = 'modal#';
 
     function assignModalBackgroundElProps(props, open:boolean, id?:string) {
         if (id) {
@@ -80,8 +80,12 @@
 
     const modalBGProps = {};
     let mounted = false;
-    let open = true; //TODO change after debug
+    let open = false;
     let wrapperEl: HTMLDivElement;
+
+    function openModal() {
+        open = true;
+    }
 
     function closeModal() {
         open = false;
@@ -97,7 +101,7 @@
         if (!modalId) {
             console.warn(`Modal is missing 'targetId' or 'id' property set, looking for nearest child with 'id' attribute`);
 
-            await sleep(0);
+            await sleep(0); // This is just to guarantee the node is available
 
             //try to find first child element with an id to use as the target value
             if (wrapperEl) {
@@ -111,10 +115,15 @@
             }
         }
 
-        const modalKey = `${storeKeyPrefixModal}${targetId || id}`;
+        if (ModalsActions.has(modalId)) {
+            throw new Error(`Modal id is already listed ias a key in the modal Map. Make sure your modal id values are unique.`);
+        }
+
+        ModalsActions.set(modalId, { open: openModal, close: closeModal })
 
         return () => {
-            //TODO: teardown
+            //teardown
+            ModalsActions.delete(modalId);
         }
     });
 

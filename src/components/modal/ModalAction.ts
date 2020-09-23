@@ -1,15 +1,22 @@
 import { createEventDispatcher } from 'svelte';
-import {throwError} from "svelte-preprocess/dist/modules/errors";
+import type {ModalActions, ModalTriggerAction} from "./Modal.d";
 
 type EventDispatcher = (type: string, detail?: any) => void;
+
+export const ModalsActions: Map<string, ModalActions> = new Map();
 
 const modalEventTriggerKey = 'modal-trigger';
 const modalTriggerIdNodeAttribute = 'data-modal-trigger-id';
 
-function handleModalTrigger() {
-    //TODO!
+function handleModalTrigger(mapKey: string, action: ModalTriggerAction) {
+    const actions = ModalsActions.get(mapKey);
 
-    console.log('modal trigger fired');
+    if (actions) {
+        actions[action]();
+    } else {
+        console.error(`Modal actions not found for targetId: ${mapKey}`)
+    }
+
 }
 
 function dispatchModalTriggerEvent(dispatcher: EventDispatcher, originalEvent: Event) {
@@ -40,13 +47,13 @@ function determineTargetKey(node: Node, targetId?: string) {
     return targetKey;
 }
 
-export function modalTrigger(node: Node, targetId?: string) {
-    console.log('fn modalTrigger', 'node', node);
+export function modalTrigger(node: Node, action: ModalTriggerAction = 'open', targetId?: string) {
+    //console.log('fn modalTrigger', 'node', node);
     const dispatch: EventDispatcher = createEventDispatcher();
     const targetKey = determineTargetKey(node, targetId);
 
     const handler = (event: Event) => {
-        handleModalTrigger();
+        handleModalTrigger(targetKey, action);
         dispatchModalTriggerEvent(dispatch, event);
     }
 
