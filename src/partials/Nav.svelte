@@ -85,6 +85,31 @@
               }
             }
           }
+
+          @include layout.for-device(layout.$tablet--portrait) {
+            padding: 1rem 2.4rem;
+
+            &:hover .linkText {
+              bottom: -4.8rem;
+              line-height: 2.4rem;
+              padding: 1rem 1rem .6rem;
+              border-radius: 1rem;
+              font-size: 2.4rem;
+
+              $pointerSquareSize: 1.6rem;
+
+              &:after {
+                height: $pointerSquareSize;
+                width: $pointerSquareSize;
+                top: -#{$pointerSquareSize/2};
+                left: calc(50% - #{$pointerSquareSize/2});
+              }
+            }
+
+            &:after {
+              font-size: 3.6rem;
+            }
+          }
         }
       }
     }
