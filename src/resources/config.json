@@ -12,6 +12,9 @@
     },
     "layout": {
       "baseUnit": 10,
+      "mediaQueries": {
+        "tablet": "(min-width: 600px)"
+      },
       "nav": {
         "marginTop": 120
       }

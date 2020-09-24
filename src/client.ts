@@ -6,7 +6,7 @@ import { appRoot } from './resources/config.json';
 sapper.start({
   target: document.getElementById(appRoot),
 }).then(() => {
-  console.log('after sapper start');
+  console.info('Steakeye client app initialised');
   initConsoleCLI();
 })
 

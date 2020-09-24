@@ -1,6 +1,9 @@
 <script context="module">
+  import MediaQuery from '../components/media-query/MediaQuery.svelte'
+  import { ui } from '../resources/config.json'
   import content from '../resources/content.json'
 
+  const { layout: { mediaQueries } } = ui;
   const{ title, metaDescription } = content.global;
   const copyRightMessage = content.global.partials.footer.copyright;
   const year = new Date().getFullYear();
@@ -43,6 +46,7 @@
   <meta name="description" content={metaDescription}>
 </svelte:head>
 
+<MediaQuery {mediaQueries}>
 <header>
 <Nav />
 </header>
@@ -53,3 +57,4 @@
 <footer>
   <p>{@html copyRightMessage} {year}</p>
 </footer>
+</MediaQuery>
