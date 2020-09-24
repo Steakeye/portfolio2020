@@ -72,8 +72,10 @@
             }
         }
 
-        > canvas {
-            padding-bottom: $bottom-margin;
+        @include layout.for-device(layout.$tablet--portrait) {
+            > canvas {
+                padding-bottom: $bottom-margin;
+            }
         }
     }
 </style>
