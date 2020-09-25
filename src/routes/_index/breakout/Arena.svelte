@@ -3,13 +3,12 @@
     import eventKeys from '/src/resources/event-keys.json';
     import config from '/src/resources/config.json';
     import type { MediaQueryMatchMap } from '/src/components/media-query/MediaQueryStore.d';
-
     import { getCanvas }  from './LayoutUtils.ts'
 
     const { navItemSelected } = eventKeys;
     const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { canvas: { marginBottom: gameBottomMargin, width: gameWidth }, sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
-    const spacerUnit = sizeUnit * .6;
+    //const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
     const batMargin = sizeUnit * brickWidthSize / 2;
@@ -23,7 +22,7 @@
     }
 
     function deriveYOffsetFromMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'tablet'> | null): number {
-        return isDevicePhone(mediaQueryMatches) ? 0: gameBottomMargin.tablet;
+        return isDevicePhone(mediaQueryMatches) ? 0: 4; //gameBottomMargin.tablet/4;
     }
 </script>
 <script>
@@ -43,15 +42,22 @@
     const game: Phaser.Game = getGame();
     const sceneToCanvasRatio = getSceneToCanvasRatio(game);
     const scaledBrickWidth = mediaQueryScale * sceneToCanvasRatio * brickWidth;
+    const scaledBrickHeight = mediaQueryScale * sceneToCanvasRatio * brickHeight;
     const bricksXOffset = (gameWidth + scaledBrickWidth - scaledBrickWidth * columns)/2;
     const bricks = [];
     const scene = getScene();
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
     const deviceBasedYOffset = deriveYOffsetFromMediaQuery(mediaQueryMatches);
-    const actualBricksYOffset = deviceBasedYOffset/2 + sceneToCanvasRatio * (bricksYOffset + brickHeight/2);
+    //const actualBricksYOffset = deviceBasedYOffset/2 + scaledBrickHeight/2 + sceneToCanvasRatio * bricksYOffset;
+    //const actualBricksYOffset = scaledBrickHeight/2 + sceneToCanvasRatio * (bricksYOffset + deviceBasedYOffset);
+    const actualBricksYOffset = scaledBrickHeight/2 + sceneToCanvasRatio * bricksYOffset + deviceBasedYOffset;
 
-    $: console.log('arena mediaQueryStore', $mediaQueryStore);
+    console.log('sceneToCanvasRatio', sceneToCanvasRatio);
+    console.log('mediaQueryScale * sceneToCanvasRatio', mediaQueryScale * sceneToCanvasRatio);
+    console.log('brickHeight', brickHeight);
+    console.log('mediaQueryScale * brickHeight', mediaQueryScale * brickHeight);
+    console.log('scaledBrickHeight', scaledBrickHeight);
 
     export let pauseGame;
     let bat;
@@ -120,7 +126,8 @@
 
     // setup game
     {
-        const brickHeightPlusSpacer = mediaQueryScale * brickHeight + spacerUnit;
+        //const brickHeightPlusSpacer = mediaQueryScale * brickHeight + spacerUnit;
+        const brickHeightPlusSpacer = scaledBrickHeight + 1; // + deviceBasedYOffset;
 
         // create an array of 60 bricksConfig
         bricksConfig = Array.from({ length: maxBricks }).map((_, index) => {
