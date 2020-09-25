@@ -60,7 +60,8 @@ function tearDownMediaQueryLists(mediaQueryLists: [string, MediaQueryList][], me
 
 export function initMediaQueryStore(mediaQueries?: MediaQueryMap) {
     let readableSetter: (matchMat: MediaQueryMatchMap) => void;
-    const initialMatchMap = determineInitialMatchMap(mediaQueries);
+    let mounted = false;
+    let mediaQueryLists: [string, MediaQueryList][];
 
     const matches = readable(determineInitialMatchMap(mediaQueries),
         (setter: (matchMat: MediaQueryMatchMap) => void) => {
@@ -72,13 +73,7 @@ export function initMediaQueryStore(mediaQueries?: MediaQueryMap) {
             readableSetter = null;
         }
     })
-
     const queries = writable(mediaQueries);
-
-    let mounted = false;
-    let mediaQueryLists: [string, MediaQueryList][];
-
-    let matchers;
 
     function handleMediaQueryChange() {
         const updatedMatchMap = {};

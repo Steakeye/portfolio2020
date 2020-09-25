@@ -14,8 +14,9 @@
 </script>
 <script>
     import type Phaser from 'phaser';
-    import { onMount } from 'svelte';
+    import { onMount, getContext } from 'svelte';
     import { onGameEvent, onInputEvent, getGame, getScene } from 'svelte-phaser';
+    import { contextKey } from '/src/components/media-query/MediaQuery.svelte';
     import Group from '/src/components/svelte-phaser/Group.svelte';
     import Bat from './Bat.svelte';
     import Ball from './Ball.svelte';
@@ -32,6 +33,11 @@
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
     const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2);
+
+    console.log('contextKey', contextKey);
+    const mediaQueryStore = getContext(contextKey)
+    $: console.log('arena mediaQueryStore', $mediaQueryStore);
+    //console.log('$mediaQueryStore', $mediaQueryStore);
 
     export let pauseGame;
     let bat;

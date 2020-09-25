@@ -1,43 +1,28 @@
 <script context="module">
-    import { onMount } from 'svelte';
+    import { onMount, setContext } from 'svelte';
     import { initMediaQueryStore } from './MediaQueryStore.ts';
+    export const contextKey = 'mediaQueries';
 </script>
 <script>
-    export let mediaQueries: { [key: string]: string } | undefined;
+    export let mediaQueries: { [key: string]: string } | undefined = undefined;
 
-    let mounted = false;
-    let mediaQueryLists: MediaQueryList; // = MediaQueriesValues.map(q => window.matchMedia(q));
-    //let matchers = {};
-    //let mediaQueryStore;
-    let mediaQueryStore = initMediaQueryStore(mediaQueries);
+    if (!mediaQueries) {
+        console.warn('No media queries passed to MediaQuery Component')
+    }
 
-    const { queries, matchers } = mediaQueryStore;
+    let mediaQueryStore;
 
-    console.log('mediaQueries', mediaQueries);
-    console.log('$queries ', $queries);
-
-    onMount(() => {
-        mounted = true;
-
-        console.log('MediaQuery onMount')
-
-        if (!mediaQueries) {
-            console.error('No media queries passed to MediaQuery Component')
+    $: {
+        if (!mediaQueryStore) {
+            mediaQueryStore = initMediaQueryStore(mediaQueries);
+        } else {
+            mediaQueryStore.set(mediaQueries)
         }
 
-        console.log('mediaQueryStore', $mediaQueryStore)
 
-        //mediaQueryStore.set({ duff: 'next query' });
-
-        setTimeout(() => {
-            console.log('mediaQueryStore after being changed', $mediaQueryStore)
-        }, 0);
-
-        return () => {
-            //teardown
-        }
-    });
-
-    $: console.log('mediaQueryStore listener', mediaQueryStore)
+        //Pass down the matches as read only for the context
+        setContext(contextKey, { subscribe: mediaQueryStore.subscribe });
+    }
 </script>
-<slot {matchers} />
+<!--slot matches={mediaQueryStore ? $mediaQueryStore: {}} /-->
+<slot matches={$mediaQueryStore} />
