@@ -1,6 +1,6 @@
 import { onMount } from 'svelte';
 import { writable, derived, readable } from 'svelte/store';
-import type { MediaQueryMap, MediaQueryEventListener } from './MediaQueryStore.d';
+import type { MediaQueryMap, MediaQueryMatchMap, MediaQueryEventListener } from './MediaQueryStore.d';
 
 /*export const time = writable(undefined, function start(set) {
     /*const interval = setInterval(() => {
@@ -31,25 +31,41 @@ function removeMediaQueryEventListeners(mediaQueryLists:  [string, MediaQueryLis
     }
 }
 
+function determineInitialMatchMap(mediaQueries?: MediaQueryMap): MediaQueryMatchMap {
+    const matchMap = {};
+
+    if (mediaQueries) {
+        Object.keys(mediaQueries).forEach(key => matchMap[key] = false);
+    }
+
+    return matchMap;
+}
+
 export function initMediaQueryStore(mediaQueries?: MediaQueryMap) {
+
+    let readableSetter: (matchMat: MediaQueryMatchMap) => void;
+    const initialMatchMap = determineInitialMatchMap(mediaQueries);
+
+    const matches = readable(determineInitialMatchMap(mediaQueries), (setter: (matchMat: MediaQueryMatchMap) => void) => {
+        readableSetter = setter;
+
+        //teardown
+        return () => {
+            //best to not leave this reference hanging around!
+            readableSetter = null;
+        }
+    })
+
     const queries = writable(mediaQueries);
 
     let mounted = false;
     let mediaQueryLists: [string, MediaQueryList][];
 
     let matchers;
-    /*const matchers = derived(queries, ($val) => {
-        console.log('derived store', arguments);
-        if (mounted) {
-            debugger;
-        } else {
-            debugger;
-        }
-        return 'derived value';
-    })*/
 
     function handleMediaQueryChange() {
         console.log('handleMediaQueryChange', arguments);
+        console.log('readableSetter', readableSetter);
     }
 
     onMount(() => {
@@ -58,14 +74,20 @@ export function initMediaQueryStore(mediaQueries?: MediaQueryMap) {
         console.log('window && window.matchMedia', window && window.matchMedia)
 
         if (mediaQueries) {
-            /*mediaQueryLists = Object.entries(mediaQueries).map(([key, query]) => [key, matchMedia(query)]);
-            console.log('mediaQueryLists', mediaQueryLists);*/
-            matchers = derived(queries, queries => {
-                removeMediaQueryEventListeners(mediaQueryLists, handleMediaQueryChange);
+            const updatedMatchMap = {};
 
-                debugger;
-                mediaQueryLists = Object.entries(queries).map(([key, query]: [string, string]) => [key, addMediaQueryEventListener(matchMedia(query), handleMediaQueryChange)]);
-            })
+            mediaQueryLists = Object.entries(mediaQueries).map(([key, query]: [string, string]) => {
+                    const mediaQueryList = matchMedia(query);
+
+                    addMediaQueryEventListener(mediaQueryList, handleMediaQueryChange);
+
+                    updatedMatchMap[key] = mediaQueryList.matches;
+
+                    return [key, addMediaQueryEventListener(matchMedia(query), handleMediaQueryChange)];
+                }
+            );
+
+            readableSetter(updatedMatchMap)
         }
 
         return () => {
@@ -74,5 +96,6 @@ export function initMediaQueryStore(mediaQueries?: MediaQueryMap) {
         }
     })
 
-    return { queries, get matchers() { return matchers } }
+    //return { queries, get matchers() { return matchers } }
+    return { subscribe: matches.subscribe, set: queries.set }
 }

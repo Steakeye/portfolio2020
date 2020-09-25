@@ -31,12 +31,9 @@
 
         //const { queries, matchers} = mediaQueryStore
 
-        console.log('mediaQueryStore', mediaQueryStore)
-        console.log('mediaQueryStore.queries', mediaQueryStore.queries)
-        console.log('mediaQueryStore.queries', $queries)
-        console.log('mediaQueryStore.matchers', $matchers)
+        console.log('mediaQueryStore', $mediaQueryStore)
 
-        mediaQueryStore.queries.update(() => 'next query');
+        mediaQueryStore.set('next query');
 
         return () => {
             //teardown
