@@ -5,7 +5,5 @@ export function getCanvas(game: Phaser.Game) {
 }
 
 export function getSceneToCanvasRatio(game: Phaser.Game) {
-    console.log('function getSceneToCanvasRatio');
-    console.log('game.scale.gameSize.width/game.canvas.clientWidth', `${game.scale.gameSize.width}/${game.canvas.clientWidth}`, game.scale.gameSize.width/game.canvas.clientWidth);
     return game.scale.gameSize.width/game.canvas.clientWidth;
 }

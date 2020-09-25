@@ -21,8 +21,8 @@
         return isDevicePhone(mediaQueryMatches) ? 1: 2;
     }
 
-    function deriveYOffsetFromMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'tablet'> | null): number {
-        return isDevicePhone(mediaQueryMatches) ? 0: 4; //gameBottomMargin.tablet/4;
+    function deriveYOffsetFromMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'tablet' | 'retina'> | null): number {
+        return isDevicePhone(mediaQueryMatches) ? 0: mediaQueryMatches.retina ? 2: 4;
     }
 </script>
 <script>
@@ -49,15 +49,7 @@
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
     const deviceBasedYOffset = deriveYOffsetFromMediaQuery(mediaQueryMatches);
-    //const actualBricksYOffset = deviceBasedYOffset/2 + scaledBrickHeight/2 + sceneToCanvasRatio * bricksYOffset;
-    //const actualBricksYOffset = scaledBrickHeight/2 + sceneToCanvasRatio * (bricksYOffset + deviceBasedYOffset);
     const actualBricksYOffset = scaledBrickHeight/2 + sceneToCanvasRatio * bricksYOffset + deviceBasedYOffset;
-
-    console.log('sceneToCanvasRatio', sceneToCanvasRatio);
-    console.log('mediaQueryScale * sceneToCanvasRatio', mediaQueryScale * sceneToCanvasRatio);
-    console.log('brickHeight', brickHeight);
-    console.log('mediaQueryScale * brickHeight', mediaQueryScale * brickHeight);
-    console.log('scaledBrickHeight', scaledBrickHeight);
 
     export let pauseGame;
     let bat;
@@ -126,8 +118,7 @@
 
     // setup game
     {
-        //const brickHeightPlusSpacer = mediaQueryScale * brickHeight + spacerUnit;
-        const brickHeightPlusSpacer = scaledBrickHeight + 1; // + deviceBasedYOffset;
+        const brickHeightPlusSpacer = scaledBrickHeight + 1;
 
         // create an array of 60 bricksConfig
         bricksConfig = Array.from({ length: maxBricks }).map((_, index) => {
