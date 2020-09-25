@@ -1,7 +1,12 @@
 <script context="module">
-    import { onMount, setContext } from 'svelte';
+    import { onMount, getContext, setContext } from 'svelte';
     import { initMediaQueryStore } from './MediaQueryStore.ts';
+
     export const contextKey = 'mediaQueries';
+
+    export function getMediaQueryContext() {
+        return getContext(contextKey)
+    }
 </script>
 <script>
     export let mediaQueries: { [key: string]: string } | undefined = undefined;

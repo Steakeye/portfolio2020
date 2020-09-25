@@ -2,42 +2,56 @@
     import CustomEvent from 'custom-event';
     import eventKeys from '/src/resources/event-keys.json';
     import config from '/src/resources/config.json';
+    import type { MediaQueryMatchMap } from '/src/components/media-query/MediaQueryStore.d';
+
     import { getCanvas }  from './LayoutUtils.ts'
 
     const { navItemSelected } = eventKeys;
-    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { gameWidth, sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
+    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { canvas: { marginBottom: gameBottomMargin, width: gameWidth }, sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
     const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
     const batMargin = sizeUnit * brickWidthSize / 2;
+
+    function isDevicePhone(mediaQueryMatches: MediaQueryMatchMap<'tablet'> | null): boolean {
+        return !(mediaQueryMatches && mediaQueryMatches.tablet)
+    }
+
+    function deriveScaleFromMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'tablet'> | null): number {
+        return isDevicePhone(mediaQueryMatches) ? 1: 2;
+    }
+
+    function deriveYOffsetFromMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'tablet'> | null): number {
+        return isDevicePhone(mediaQueryMatches) ? 0: gameBottomMargin.tablet;
+    }
 </script>
 <script>
     import type Phaser from 'phaser';
     import { onMount, getContext } from 'svelte';
     import { onGameEvent, onInputEvent, getGame, getScene } from 'svelte-phaser';
-    import { contextKey } from '/src/components/media-query/MediaQuery.svelte';
+    import { getMediaQueryContext } from '/src/components/media-query/MediaQuery.svelte';
     import Group from '/src/components/svelte-phaser/Group.svelte';
     import Bat from './Bat.svelte';
     import Ball from './Ball.svelte';
     import Brick from './Brick.svelte';
     import { getSceneToCanvasRatio } from "./LayoutUtils.ts";
 
+    const mediaQueryStore = getMediaQueryContext();
+    const mediaQueryMatches = $mediaQueryStore;
+    const mediaQueryScale = deriveScaleFromMediaQuery(mediaQueryMatches);
     const game: Phaser.Game = getGame();
     const sceneToCanvasRatio = getSceneToCanvasRatio(game);
-    const scaledBrickWidth = sceneToCanvasRatio * brickWidth;
-    const ratioSuggestsPortrait = sceneToCanvasRatio > 1
+    const scaledBrickWidth = mediaQueryScale * sceneToCanvasRatio * brickWidth;
     const bricksXOffset = (gameWidth + scaledBrickWidth - scaledBrickWidth * columns)/2;
     const bricks = [];
     const scene = getScene();
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
-    const actualBricksYOffset = sceneToCanvasRatio * (bricksYOffset + brickHeight/2);
+    const deviceBasedYOffset = deriveYOffsetFromMediaQuery(mediaQueryMatches);
+    const actualBricksYOffset = deviceBasedYOffset/2 + sceneToCanvasRatio * (bricksYOffset + brickHeight/2);
 
-    console.log('contextKey', contextKey);
-    const mediaQueryStore = getContext(contextKey)
     $: console.log('arena mediaQueryStore', $mediaQueryStore);
-    //console.log('$mediaQueryStore', $mediaQueryStore);
 
     export let pauseGame;
     let bat;
@@ -106,7 +120,7 @@
 
     // setup game
     {
-        const brickHeightPlusSpacer = brickHeight + spacerUnit;
+        const brickHeightPlusSpacer = mediaQueryScale * brickHeight + spacerUnit;
 
         // create an array of 60 bricksConfig
         bricksConfig = Array.from({ length: maxBricks }).map((_, index) => {
@@ -114,7 +128,6 @@
                 x: (index % columns) * scaledBrickWidth,
                 y: Math.floor(index / columns) * brickHeightPlusSpacer,
                 key: index,
-
             }
         })
     }
@@ -135,7 +148,7 @@
             case gameBallLost(): resetBatAndBall(); break;
             case gameReady(): setBallPosition(); break;
         }
-    })
+    });
 
     // launch ball on click - pointerup makes the experience better on touch devices
     onInputEvent('pointerup', () => {
@@ -143,8 +156,7 @@
             isBallLaunched = true
             ball.body.setVelocity(-sizeUnit*2, -sceneHeight);
         }
-    })
-
+    });
 </script>
 
 <Group options={{ name: 'bricks' }} bind:instance={bricksGroup} items={bricks} />
@@ -153,7 +165,7 @@
         x={brickConfig.x + bricksXOffset}
         y={brickConfig.y + actualBricksYOffset}
         bind:instance={bricks[index]}
-        scale={sceneToCanvasRatio}
+        scale={mediaQueryScale * sceneToCanvasRatio}
     />
 {/each}
 <Bat bind:instance={bat} x={sceneWidth/2} y={sceneHeight - sizeUnit} xMin={batMargin} xMax={sceneWidth - batMargin}/>

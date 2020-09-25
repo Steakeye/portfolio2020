@@ -21,8 +21,13 @@
     }
   },
   "breakout": {
-    "gameHeight": 647,
-    "gameWidth": 400,
+    "canvas": {
+      "height": 647,
+      "width": 400,
+      "marginBottom": {
+        "tablet": 24
+      }
+    },
     "sizeUnit": 14,
     "ball": {
       "diameterSize": 1

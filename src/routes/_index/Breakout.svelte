@@ -87,11 +87,11 @@
     import type { State } from './breakout/State.ts';
     import type { BreakoutStateContext } from './breakout/StateContext.d.ts'
 
-    const { breakout: { gameHeight, gameWidth } } = config
+    const { breakout: { canvas: { height: canvasHeight, width: canvasWidth } } } = config;
     const breakoutText = pages.index.breakout;
     const { playPauseButton: { pauseState: { text: pausedText }, playState: { text: playingText } }, game: { title } } = breakoutText;
     //const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
-    const sceneKey = 'breakoutScene'
+    const sceneKey = 'breakoutScene';
 </script>
 <script>
     import type { SvelteComponent } from 'svelte';
@@ -188,8 +188,8 @@
     <Game
         {title}
         version="0.0.1a"
-        width={gameWidth}
-        height={gameHeight}
+        width={canvasWidth}
+        height={canvasHeight}
         physics={{
             default: 'arcade',
             /*arcade: {
