@@ -25,15 +25,13 @@
             console.error('No media queries passed to MediaQuery Component')
         }
 
-        console.log('mediaQueries', mediaQueries)
-
-        //mediaQueryStore = initMediaQueryStore(mediaQueries)
-
-        //const { queries, matchers} = mediaQueryStore
-
         console.log('mediaQueryStore', $mediaQueryStore)
 
-        mediaQueryStore.set('next query');
+        //mediaQueryStore.set({ duff: 'next query' });
+
+        setTimeout(() => {
+            console.log('mediaQueryStore after being changed', $mediaQueryStore)
+        }, 0);
 
         return () => {
             //teardown
