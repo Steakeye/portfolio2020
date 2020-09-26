@@ -80,26 +80,20 @@
     }
 </style>
 <script context="module">
+    import type { Phaser } from 'phaser';
     import getter from "ramda/src/path";
     import config from '/src/resources/config.json';
     import { pages } from '/src/resources/content.json';
+    import type { MediaQueryMatchMap } from '/src/components/media-query/MediaQueryStore.d';
     import { State as GameState } from './breakout/State.ts';
     import type { State } from './breakout/State.ts';
     import type { BreakoutStateContext } from './breakout/StateContext.d.ts'
+    import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
 
     const { breakout: { canvas: { height: canvasHeight, width: canvasWidth } } } = config;
     const breakoutText = pages.index.breakout;
-    const { playPauseButton: { pauseState: { text: pausedText }, playState: { text: playingText } }, game: { title } } = breakoutText;
-    //const gameTitle = getter('pages.index.breakout.game.title'.split('.'), textContent)
+    const { playPauseButton: { pauseState: { text: pausedText }, playState: { text: playingText } }, game: { title }, noJavaScript: { text: noJSMessage } } = breakoutText;
     const sceneKey = 'breakoutScene';
-</script>
-<script>
-    import type { SvelteComponent } from 'svelte';
-    import type { Phaser } from 'phaser';
-    import {onMount} from 'svelte';
-    import { init as initGameState, context as gameState } from './breakout/StateContext.ts';
-
-    import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
 
     function hasWebGLSupport(canvas: HTMLCanvasElement) {
         return !!window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
@@ -108,6 +102,17 @@
     function loadAssets(scene: Phaser.Scene) {
         scene.load.image('ball', roundelPath);
     }
+
+    function isLandscapeMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'landscape'> | null): boolean {
+        return !!(mediaQueryMatches && mediaQueryMatches.landscape);
+    }
+</script>
+<script>
+    import type { SvelteComponent } from 'svelte';
+    import {onMount} from 'svelte';
+    import { init as initGameState, context as gameState } from './breakout/StateContext.ts';
+    import {getMediaQueryContext} from "../../components/media-query/MediaQuery.svelte";
+    import {sleep} from "../../utils/Runtime.ts";
 
     function assignExposedProgress(updatedValue: number) {
         exposedProgress = updatedValue;
@@ -129,7 +134,7 @@
 
     export let className = '';
 
-    let beforeMount = true;
+    let mounted = false;
     let breakoutContainer: HTMLCanvasElement;
     let gameInstance: Phaser.Game;
     let Phaser: SvelteComponent;
@@ -138,27 +143,27 @@
     let Text: SvelteComponent;
     let LoadingBar: SvelteComponent;
     let Arena: SvelteComponent;
-
+    let isLandscape: boolean;
     let exposedProgress;
     let playState: State;
+
+    const mediaQueryStore = getMediaQueryContext();
+    const mediaQueryMatches = $mediaQueryStore;
 
     initGameState();
 
     playState = gameState();
 
     onMount(async () => {
-        const sveltePhaser = await import('svelte-phaser');
+        ({ Game, Scene, Text } = await import('svelte-phaser'));
 
         Phaser = await import('phaser');
-
-        Game = sveltePhaser.Game;
-        Scene = sveltePhaser.Scene;
-        Text = sveltePhaser.Text;
-
         LoadingBar = (await import('./breakout/LoadingBar.svelte')).default;
         Arena = (await import('./breakout/Arena.svelte')).default;
 
-        beforeMount = false;
+        isLandscape = isLandscapeMediaQuery($mediaQueryStore)
+
+        mounted = true;
     });
 
     $: playPauseText = playState === GameState.PAUSED ? pausedText : playingText;
@@ -169,9 +174,9 @@
 </script>
 
 <section class="breakout-wrapper {className}">
-{#if beforeMount}
+{#if !mounted}
     <p class="loading-message">Loading...</p>
-    <noscript><p>Oops, looks like you don't have JavaScript enabled! That's a shame, you won't be able to play the game that requires JavaScript :(</p></noscript>
+    <noscript><p>{noJSMessage}</p></noscript>
 {:else}
     {#if playState !== GameState.UNINITIALIZED }
         <button
@@ -188,7 +193,7 @@
     <Game
         {title}
         version="0.0.1a"
-        width={canvasWidth}
+        width={isLandscape ? canvasHeight: canvasWidth}
         height={canvasHeight}
         physics={{
             default: 'arcade',

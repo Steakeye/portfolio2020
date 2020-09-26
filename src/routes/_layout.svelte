@@ -24,8 +24,6 @@
 </script>
 <script>
   import Nav from '../partials/Nav.svelte'
-
-  console.log('layout unquotedMediaQueries', unquotedMediaQueries);
 </script>
 
 <style>

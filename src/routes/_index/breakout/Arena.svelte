@@ -6,7 +6,7 @@
     import { getCanvas }  from './LayoutUtils.ts'
 
     const { navItemSelected } = eventKeys;
-    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { canvas: { marginBottom: gameBottomMargin, width: gameWidth }, sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
+    const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
     //const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
@@ -40,14 +40,14 @@
     const mediaQueryMatches = $mediaQueryStore;
     const mediaQueryScale = deriveScaleFromMediaQuery(mediaQueryMatches);
     const game: Phaser.Game = getGame();
-    const sceneToCanvasRatio = getSceneToCanvasRatio(game);
-    const scaledBrickWidth = mediaQueryScale * sceneToCanvasRatio * brickWidth;
-    const scaledBrickHeight = mediaQueryScale * sceneToCanvasRatio * brickHeight;
-    const bricksXOffset = (gameWidth + scaledBrickWidth - scaledBrickWidth * columns)/2;
-    const bricks = [];
     const scene = getScene();
     const sceneSize = scene.sys.game.scale.gameSize;
     const { height: sceneHeight, width: sceneWidth } = sceneSize;
+    const sceneToCanvasRatio = getSceneToCanvasRatio(game);
+    const scaledBrickWidth = mediaQueryScale * sceneToCanvasRatio * brickWidth;
+    const scaledBrickHeight = mediaQueryScale * sceneToCanvasRatio * brickHeight;
+    const bricksXOffset = (sceneWidth + scaledBrickWidth - scaledBrickWidth * columns)/2;
+    const bricks = [];
     const deviceBasedYOffset = deriveYOffsetFromMediaQuery(mediaQueryMatches);
     const actualBricksYOffset = scaledBrickHeight/2 + sceneToCanvasRatio * bricksYOffset + deviceBasedYOffset;
 
@@ -59,6 +59,8 @@
     let bricksConfig;
     let isBallLaunched = false;
     let resetting = false;
+
+    $: console.log('arena $mediaQueryStore', $mediaQueryStore);
 
     function setBallPosition() {
         ball.setPosition(bat.x, bat.y - bat.height/2 - ballProps.height/2)
