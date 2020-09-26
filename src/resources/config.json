@@ -14,7 +14,8 @@
       "baseUnit": 10,
       "mediaQueries": {
         "tablet": "(min-width: 600px)",
-        "retina": "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)"
+        "landscape": "(orientation: landscape)",
+        "retina": "'(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)'"
       },
       "nav": {
         "marginTop": 120
