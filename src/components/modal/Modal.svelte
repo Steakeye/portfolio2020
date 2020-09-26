@@ -25,8 +25,10 @@
         position: relative;
         box-shadow: 0 2.5px 10px opacify(colour.$brand-black, .5);
         max-height: calc(100vh - 6rem);
+        margin: 3rem;
+        overflow: hidden;
 
-        @include layout.for-device(layout.$desktop) {
+        @include layout.for-device(layout.$tablet--portrait) {
             width: 50vw;
         }
 

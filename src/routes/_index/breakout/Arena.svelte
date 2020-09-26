@@ -60,8 +60,6 @@
     let isBallLaunched = false;
     let resetting = false;
 
-    $: console.log('arena $mediaQueryStore', $mediaQueryStore);
-
     function setBallPosition() {
         ball.setPosition(bat.x, bat.y - bat.height/2 - ballProps.height/2)
     }

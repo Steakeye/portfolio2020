@@ -57,6 +57,21 @@
     p {
       text-align: justify;
     }
+
+    :global(.modal-content-wrapper) & {
+        overflow-y: auto;
+        max-height: inherit;
+
+        h3 {
+            background-color: colour.$brand-pink-dark;
+            position: sticky;
+            padding-top: 1rem;
+            padding-left: 1rem;
+            top: -1rem;
+            right: -1rem;
+            margin: -1rem -1rem 1rem;
+        }
+    }
   }
 </style>
 <script context="module">
