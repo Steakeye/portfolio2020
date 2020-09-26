@@ -76,6 +76,9 @@
         },
         "game": {
           "title": "Steakeye Breakout!"
+        },
+        "noJavaScript": {
+          "text": "Oops, looks like you don't have JavaScript enabled! That's a shame, you won't be able to play the game that requires JavaScript :("
         }
       }
       },
