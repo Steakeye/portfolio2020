@@ -84,6 +84,7 @@ $desktop--small: 'desktop--small';
 $desktop: 'desktop';
 $desktop--large: 'desktop--large';
 $retina: 'retina';
+$landscape: 'landscape';
 $print: 'print';
 
 //For more details on other retina options, see: //https://css-tricks.com/snippets/css/retina-display-media-query/
@@ -114,6 +115,10 @@ $print: 'print';
     }
   } @else if $device == $retina {
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      @content;
+    }
+  } @else if $device == $landscape {
+    @media (orientation: landscape) {
       @content;
     }
   } @else if $device == $print {

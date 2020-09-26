@@ -48,6 +48,14 @@ body {
     bottom: 0;
     z-index: -1;
     opacity: .62;
+
+    @include layout.for-device(layout.$landscape) {
+      background-position-y: 50vh;
+      background-position-x: 50vh;
+      height: 100vh;
+      width: 100vh;
+      right: 0;
+    }
   }
 }
 
