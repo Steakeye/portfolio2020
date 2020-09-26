@@ -43,34 +43,35 @@
 
           .linkText {
             @include layout.extendVisuallyHidden;
+            background-color: colour.$brand-black;
+            color: colour.$brand-white;
+            bottom: -2.4rem;
+            line-height: 1.2rem;
+            padding: 0.5rem 0.5rem .3rem;
+            border-radius: .5rem;
+            font-size: 1.2rem;
+
+          $pointerSquareSize: .8rem;
+
+            &:after {
+              content: '';
+              position: absolute;
+              height: $pointerSquareSize;
+              width: $pointerSquareSize;
+              background-color: inherit;
+              top: -#{$pointerSquareSize/2};
+              left: calc(50% - #{$pointerSquareSize/2});
+              transform: rotateZ(45deg);
+            }
           }
 
-          &:hover {
+          &:hover,
+          &:focus {
             background-color: rgba(colour.$brand-pink, .5);
 
             .linkText {
               @include layout.extendOverrideVisuallyHidden;
-              background-color: colour.$brand-black;
-              color: colour.$brand-white;
               position: absolute;
-              bottom: -2.4rem;
-              line-height: 1.2rem;
-              padding: 0.5rem 0.5rem .3rem;
-              border-radius: .5rem;
-              font-size: 1.2rem;
-
-              $pointerSquareSize: .8rem;
-
-              &:after {
-                content: '';
-                position: absolute;
-                height: $pointerSquareSize;
-                width: $pointerSquareSize;
-                background-color: inherit;
-                top: -#{$pointerSquareSize/2};
-                left: calc(50% - #{$pointerSquareSize/2});
-                transform: rotateZ(45deg);
-              }
             }
           }
 
@@ -89,20 +90,20 @@
           @include layout.for-device(layout.$tablet--portrait) {
             padding: 1rem 2.4rem;
 
-            &:hover .linkText {
+            .linkText {
               bottom: -4.8rem;
               line-height: 2.4rem;
               padding: 1rem 1rem .6rem;
               border-radius: 1rem;
               font-size: 2.4rem;
 
-              $pointerSquareSize: 1.6rem;
+              $pointerSquareSizeLarge: 1.6rem;
 
               &:after {
-                height: $pointerSquareSize;
-                width: $pointerSquareSize;
-                top: -#{$pointerSquareSize/2};
-                left: calc(50% - #{$pointerSquareSize/2});
+                height: $pointerSquareSizeLarge;
+                width: $pointerSquareSizeLarge;
+                top: -#{$pointerSquareSizeLarge/2};
+                left: calc(50% - #{$pointerSquareSizeLarge/2});
               }
             }
 
@@ -158,8 +159,8 @@
   onMount(() => {
     function handleNavMenuItemSelected(event: CustomEvent) {
       const { detail: { index } } = event;
-      const elementToClick = linkElements[index];
-      elementToClick?.click();
+      const elementToTarget = linkElements[index];
+      elementToTarget.focus()
     }
     document.addEventListener(navItemSelected, handleNavMenuItemSelected)
 
