@@ -1,5 +1,4 @@
 import { getContext, setContext } from 'svelte';
-//import type { BreakoutStateContext } from './StateContext.d'
 import { State } from './State'
 
 export const contextKey = 'breakout:gameState';
@@ -10,11 +9,7 @@ let initialState = State.UNINITIALIZED;
 export function init(): void {
     if (!initialised) {
         initialised = true;
-/*
-        setContext<BreakoutStateContext>(contextKey, {
-            getState() { return initialState },
-            setState(updatedState: State) { return initialState = updatedState },
-        });*/
+
         setContext<State>(contextKey, initialState);
     }
 }
