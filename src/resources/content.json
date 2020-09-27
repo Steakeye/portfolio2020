@@ -7,6 +7,7 @@
   "global": {
     "title": "Steakeye - Expert Front End Development Services",
     "metaDescription": "Steakeye Ltd. provides expert front-end development services.",
+    "devComment": "<!-- Greetings fellow developer, thanks for viewing the source! To check out this project why not go to https://github.com/Steakeye/portfolio2020 -->",
     "partials": {
       "nav": {
         "links": [

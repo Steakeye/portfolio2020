@@ -23,6 +23,9 @@ import copy from 'rollup-plugin-copy';
 import json from '@rollup/plugin-json';
 import pkg from './package.json';
 import { appRoot } from './src/resources/config.json'
+import { global as globalStrings } from './src/resources/content.json'
+
+const { devComment } = globalStrings;
 
 const cssFolderPath = 'public/assets/css/';
 const faviconAssetPath = '/favicon/';
@@ -214,6 +217,9 @@ export default {
         replacePairs: [{
           templateKey: 'appRoot',
           content: appRoot,
+        },{
+          templateKey: 'devComment',
+          content: devComment,
         },{
           templateKey: 'faviconLinks',
           contentPath: ['__favicons_output'],

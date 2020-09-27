@@ -24,3 +24,4 @@
   </body>
     %sapper.scripts%
 </html>
+${ devComment }
