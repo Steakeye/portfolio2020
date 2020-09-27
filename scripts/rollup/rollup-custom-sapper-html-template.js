@@ -13,7 +13,7 @@ function transformTemplate(template, replacePairs, rollupConfig) {
             replacementContent = contentTransformer(replacementContent);
         }
 
-        template = template.replace(RegExp(`\\$\\{${templateKey}}`, 'g'), replacementContent);
+        template = template.replace(RegExp(`\\$\\{ *${templateKey} *}`, 'g'), replacementContent);
     })
 
     return template;
