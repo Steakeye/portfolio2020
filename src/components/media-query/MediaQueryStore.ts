@@ -23,7 +23,7 @@ function removeMediaQueryEventListeners(mediaQueryLists:  [string, MediaQueryLis
 function setupMediaQueryListsAndListeners(
     mediaQueries: MediaQueryMap,
     mediaQueryChangeHandler: () => void,
-    readableSetter: (matchMat: MediaQueryMatchMap) => void)
+    readableSetter: (matchMatch: MediaQueryMatchMap) => void)
     : [string, MediaQueryList][] {
     const updatedMatchMap = {};
 
