@@ -8,6 +8,8 @@
         position: fixed;
         width: 100vw;
         height: 100vh;
+        /* mobile viewport bug fix */
+        height: -webkit-fill-available;
         z-index: 100;
         top: 0;
         left: 0;
@@ -24,9 +26,9 @@
     .modal-content-wrapper {
         @include colour.extendStandardBoxShadow;
         position: relative;
-        max-height: calc(100vh - 6rem);
         margin: 3rem;
         overflow: hidden;
+        max-height: 100vh;
 
         @include layout.for-device(layout.$tablet--portrait) {
             width: 50vw;

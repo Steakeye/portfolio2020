@@ -87,7 +87,7 @@
 
     :global(.modal-content-wrapper) & {
         overflow-y: auto;
-        max-height: inherit;
+        max-height: 100%;
 
         h3 {
             background-color: colour.$brand-pink-dark;
