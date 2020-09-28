@@ -16,6 +16,8 @@
         top: 0;
         width: 100vw;
         height: 100vh;
+        /* mobile viewport bug fix */
+        max-height: -webkit-fill-available;
         margin-bottom: 2rem;
         padding-bottom: 2rem;
         background-image: linear-gradient(0deg, colour.$brand-black, transparent);
@@ -135,7 +137,8 @@
     export let className = '';
 
     let mounted = false;
-    let breakoutContainer: HTMLCanvasElement;
+    let breakoutContainer: HTMLDivElement;
+    let breakoutCanvas: HTMLCanvasElement;
     let gameInstance: Phaser.Game;
     let Phaser: SvelteComponent;
     let Game: SvelteComponent;
@@ -173,7 +176,7 @@
     }
 </script>
 
-<section class="breakout-wrapper {className}">
+<section bind:this={breakoutContainer} class="breakout-wrapper {className}">
 {#if !mounted}
     <p class="loading-message">Loading...</p>
     <noscript><p>{noJSMessage}</p></noscript>
@@ -188,13 +191,13 @@
             {playPauseText}
         </button>
     {/if}
-    <canvas bind:this={breakoutContainer} />
-    {#if breakoutContainer}
+    <canvas bind:this={breakoutCanvas} />
+    {#if breakoutCanvas}
     <Game
         {title}
         version="0.0.1a"
         width={isLandscape ? canvasHeight: canvasWidth}
-        height={canvasHeight}
+        height={Math.min(breakoutContainer.clientHeight, canvasHeight)}
         physics={{
             default: 'arcade',
             /*arcade: {
@@ -203,8 +206,8 @@
         }}
         scale={{ mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_HORIZONTALLY }}
         transparent="true"
-        canvas={breakoutContainer}
-        type={ hasWebGLSupport(breakoutContainer) ? Phaser.WEBGL: Phaser.CANVAS }
+        canvas={breakoutCanvas}
+        type={ hasWebGLSupport(breakoutCanvas) ? Phaser.WEBGL: Phaser.CANVAS }
         bind:instance={gameInstance}
         on:postBoot={() => /*TODO: leverage this to know when to init the browser CLI*/ console.log('game started!')}
     >
