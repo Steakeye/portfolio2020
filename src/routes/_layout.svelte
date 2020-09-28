@@ -52,6 +52,10 @@
     font-size: 1.2rem;
     padding: .25rem .5rem;
     height: layout.$footer-height;
+
+    .copyright {
+      line-height: 1.62;
+    }
   }
 </style>
 
@@ -69,6 +73,6 @@
   <slot />
 </main>
 <footer>
-  <p>{@html copyRightMessage} {year}</p>
+  <p class="copyright">{@html copyRightMessage} {year}</p>
 </footer>
 </MediaQuery>

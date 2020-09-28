@@ -13,3 +13,11 @@ $brand-pink: brandColor(brandPink);
 $brand-pink-dark: brandColor(brandPinkDark);
 $brand-blue: brandColor(brandBlue);
 $brand-blue-dark: brandColor(brandBlueDark);
+
+%standardBoxShadow {
+  box-shadow: 0 .25rem 1rem rgba($brand-black, .62);
+}
+
+@mixin extendStandardBoxShadow {
+  @extend %standardBoxShadow;
+}

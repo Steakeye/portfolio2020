@@ -39,6 +39,34 @@
     }
   }
 
+  .promo-message {
+      @include colour.extendStandardBoxShadow;
+
+      $promoFlagDimensions: 20rem;
+      $promoFlagPosition: 0 - $promoFlagDimensions/2;
+
+      background-color: colour.$brand-blue;
+      height: $promoFlagDimensions;
+      width: $promoFlagDimensions;
+      position: fixed;
+      top: $promoFlagPosition;
+      left: $promoFlagPosition;
+      transform: rotateZ(-45deg);
+      text-align: center;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      p {
+          //color: colour.$brand-blue-dark;
+          font-family: bungee;
+          padding: 0 3rem .5rem;
+          font-size: 3rem;
+          line-height: 1em;
+          text-shadow: -2px 2px 0px colour.$brand-blue-dark;
+      }
+  }
+
   .content-section {
     padding: 1rem;
     background-color: colour.$brand-pink-dark;
@@ -78,7 +106,7 @@
     import { pages } from '../resources/content.json';
     import styles from "./index.scss";
 
-    const { index: { header: { title, subTitle }, content: [{ title: aboutTitle, body: aboutBody }] } } = pages;
+    const { index: { header: { title, subTitle }, aside: { promo }, content: [{ title: aboutTitle, body: aboutBody }] } } = pages;
 </script>
 <script>
   import { onMount } from "svelte";
@@ -97,12 +125,21 @@
         <h1>{title}</h1>
         <h2>{subTitle}</h2>
     </header>
+    <aside class="promo-message">
+        <p><strong>{promo}</strong></p>
+    </aside>
     <Modal>
         <section
             class="content-section"
             id="about">
             <h3>{aboutTitle}</h3>
-            <p>{aboutBody}</p>
+            {#if Array.isArray(aboutBody) }
+                {#each aboutBody as bodyItem, index}
+                <p>{bodyItem}</p>
+                {/each}
+            {:else}
+                <p>{aboutBody}</p>
+            {/if}
         </section>
     </Modal>
 </article>

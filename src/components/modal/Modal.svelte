@@ -22,8 +22,8 @@
     }
 
     .modal-content-wrapper {
+        @include colour.extendStandardBoxShadow;
         position: relative;
-        box-shadow: 0 2.5px 10px opacify(colour.$brand-black, .5);
         max-height: calc(100vh - 6rem);
         margin: 3rem;
         overflow: hidden;
