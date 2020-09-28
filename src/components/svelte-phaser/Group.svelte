@@ -11,8 +11,6 @@
 
     export const instance: Phaser.GameObjects.Group = currentScene.add.group(options);
 
-    //setContext('phaser/group', instance);
-
     function addItems() {
         if (items.length) {
             instance.addMultiple(items);

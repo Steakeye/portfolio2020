@@ -8,7 +8,6 @@
     const { navItemSelected } = eventKeys;
     const { ui: { layout: { nav: { marginTop: bricksYOffset }} }, breakout: { sizeUnit, bat: { widthSize: brickWidthSize }, bricks: { columns, rows, widthSize, heightSize } } } = config;
     const maxBricks = columns * rows;
-    //const spacerUnit = sizeUnit * .6;
     const brickWidth = sizeUnit * widthSize;
     const brickHeight = sizeUnit * heightSize;
     const batMargin = sizeUnit * brickWidthSize / 2;

@@ -58,7 +58,6 @@
       justify-content: center;
 
       p {
-          //color: colour.$brand-blue-dark;
           font-family: bungee;
           padding: 0 3rem .5rem;
           font-size: 3rem;
