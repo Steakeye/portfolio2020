@@ -1,7 +1,7 @@
 import { onMount } from 'svelte';
-import type { SvelteStore } from 'svelte';
+import type { Readable } from 'svelte/store';
 import { writable, readable } from 'svelte/store';
-import type { MediaQueryMap, MediaQueryMatchMap, MediaQueryEventListener } from './MediaQueryStore.d';
+import type { MediaQueryStore, MediaQueryMap, MediaQueryMatchMap, MediaQueryEventListener } from './MediaQueryStore.d';
 
 function matchMedia(mediaQuery: string): MediaQueryList {
   return window.matchMedia(mediaQuery);
@@ -60,7 +60,7 @@ function tearDownMediaQueryLists(mediaQueryLists: [string, MediaQueryList][], me
   if (mediaQueryLists) { mediaQueryLists.length = 0; }
 }
 
-export function initMediaQueryStore(mediaQueries?: MediaQueryMap): SvelteStore<MediaQueryMatchMap> {
+export function initMediaQueryStore(mediaQueries?: MediaQueryMap): MediaQueryStore {
   let readableSetter: (matchMat: MediaQueryMatchMap) => void;
   let mounted = false;
   let mediaQueryLists: [string, MediaQueryList][];
@@ -111,5 +111,5 @@ export function initMediaQueryStore(mediaQueries?: MediaQueryMap): SvelteStore<M
     mediaQueryLists = undefined;
   });
 
-  return { subscribe: matches.subscribe, set: queries.set };
+  return { subscribe: matches.subscribe, set: queries.set } as MediaQueryStore;
 }
