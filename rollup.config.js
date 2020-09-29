@@ -8,25 +8,25 @@ import importUrl from '@rollup/plugin-url';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import cleaner from 'rollup-plugin-cleaner';
-import postcss from 'rollup-plugin-postcss'
+import postcss from 'rollup-plugin-postcss';
 import postcssSass from '@csstools/postcss-sass';
-import tildeSassImporter from "node-sass-tilde-importer";
+import tildeSassImporter from 'node-sass-tilde-importer';
 import jsonImporter from 'node-sass-json-importer';
 import { terser } from 'rollup-plugin-terser';
-import favicons from 'rollup-plugin-favicons'
-import customSvelteHtmlTemplate from './scripts/rollup/rollup-custom-sapper-html-template'
-import customPostcssSassLoader from './scripts/rollup/rollup-custom-postcss-sass-loader'
-//import sveltePreprocess from 'svelte-preprocess';
+import favicons from 'rollup-plugin-favicons';
+// import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';
 import copy from 'rollup-plugin-copy';
 import json from '@rollup/plugin-json';
+import customPostcssSassLoader from './scripts/rollup/rollup-custom-postcss-sass-loader';
+import customSvelteHtmlTemplate from './scripts/rollup/rollup-custom-sapper-html-template';
 import pkg from './package.json';
-//import { preprocess as preProcessConfig } from './svelte.config';
-import { appRoot } from './src/resources/config.json'
-import { global as globalStrings } from './src/resources/content.json'
+// import { preprocess as preProcessConfig } from './svelte.config';
+import { appRoot } from './src/resources/config.json';
+import { global as globalStrings } from './src/resources/content.json';
 
-const preProcessConfig = require("./svelte.config").preprocess
+const preProcessConfig = require('./svelte.config').preprocess;
 
 const { devComment } = globalStrings;
 
@@ -39,103 +39,76 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 function faviconCallback(error, response) {
+  let successResult;
+
   if (error) {
     console.log(error.message); // Error description e.g. "An unknown error has occurred"
-    return;
+  } else {
+    fs.mkdirSync(faviconOutputPath, { recursive: true });
+
+    response.images.forEach(({ name, contents }) => {
+      // noop callback just to avoid using the sync version
+      fs.writeFile(path.resolve(path.join(faviconOutputPath, name)), contents, () => {
+      });
+    });
+
+    response.files.forEach(({ name, contents }) => {
+      // noop callback just to avoid using the sync version
+      fs.writeFile(path.resolve(path.join(faviconOutputPath, name)), contents, () => {
+      });
+    });
+
+    successResult = response; // Have to return a valid response to process and cache
   }
 
-  fs.mkdirSync(faviconOutputPath, { recursive: true });
-
-  response.images.forEach(({ name, contents }) => {
-    //noop callback just to avoid using the sync version
-    fs.writeFile(path.resolve(path.join(faviconOutputPath, name)), contents, () => {})
-  })
-
-  response.files.forEach(({ name, contents }) => {
-    //noop callback just to avoid using the sync version
-    fs.writeFile(path.resolve(path.join(faviconOutputPath, name)), contents, () => {})
-  })
-
-  return response; //Have yo return a valid response to process and cache
+  return successResult;
 }
 
 const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message))
   || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
   || onWarnFn(warning);
 
-/*const preProcessOptions = {
-  babel: {
-    presets: [
-      [
-        '@babel/preset-env',
-        {
-          loose: true,
-          // No need for babel to resolve modules
-          modules: false,
-          targets: {
-            // ! Very important. Target es6+
-            esmodules: true,
-          },
-        },
-      ],
-    ],
-  },
-  defaults: {
-    script: 'typescript',
-    style: 'scss',
-  },
-  postcss: {
-    plugins: [require('autoprefixer')()],
-  },
-  scss: {
-    importer: [jsonImporter()],
-  }
-};
-
-const preProcessConfig = sveltePreprocess(preProcessOptions);*/
-//const preProcessConfig = svelteConfig.preprocess;
-
 const postCssPluginConfig = (client = true) => postcss({
-      extract: client ? 'base.css': false,
-      onExtract: (processedCSSWrapper) => {
-        const result = processedCSSWrapper();
-        fs.mkdirSync(cssFolderPath, { recursive: true })
-        fs.writeFileSync(path.join(cssFolderPath, result.codeFileName), result.code);
+  extract: client ? 'base.css' : false,
+  onExtract: (processedCSSWrapper) => {
+    const result = processedCSSWrapper();
+    fs.mkdirSync(cssFolderPath, { recursive: true });
+    fs.writeFileSync(path.join(cssFolderPath, result.codeFileName), result.code);
 
-        if (result.map) {
-          fs.writeFileSync(path.join(cssFolderPath, result.mapFileName), result.map);
-        }
+    if (result.map) {
+      fs.writeFileSync(path.join(cssFolderPath, result.mapFileName), result.map);
+    }
 
-        return false; //Returning false prevents the emission of css files
-      },
-      sourceMap: dev,
-      minimize: !dev,
-      modules: true,
-      extensions: ['.css', '.scss'],
-      use: [
-          ['sass', {
-          importer: jsonImporter(),
-        },]
-      ],
-      loaders: [customPostcssSassLoader],
-      plugins: [postcssSass({
-        includePaths: ['node_modules', 'src'],
-        importer: [jsonImporter(), tildeSassImporter,],
-      })],
-    });
+    return false; // Returning false prevents the emission of css files
+  },
+  sourceMap: dev,
+  minimize: !dev,
+  modules: true,
+  extensions: ['.css', '.scss'],
+  use: [
+    ['sass', {
+      importer: jsonImporter(),
+    }],
+  ],
+  loaders: [customPostcssSassLoader],
+  plugins: [postcssSass({
+    includePaths: ['node_modules', 'src'],
+    importer: [jsonImporter(), tildeSassImporter],
+  })],
+});
 
 const urlImportConfig = (client = true) => importUrl({
-  emitFiles:client,
-  sourceDir: path.join(__dirname, 'src'), //'src',
+  emitFiles: client,
+  sourceDir: path.join(__dirname, 'src'), // 'src',
   destDir: 'public',
   fileName: '[dirname][name][extname]',
   limit: 0,
 });
 
 const includePathPlugin = includePaths(
-    {
-      root: __dirname, //TODO, consider changing this to include 'src' folder?
-    }
+  {
+    root: __dirname, // TODO, consider changing this to include 'src' folder?
+  },
 );
 
 const cssOutputFunc = (css) => {
@@ -147,16 +120,17 @@ export default {
     input: config.client.input().replace(/.js$/, '.ts'),
     output: {
       ...config.client.output(),
-      //`assetFileNames` has to be a function in order to workaround the favicon plugin overriding the path when it's a string
+      // `assetFileNames` has to be a function in order to workaround the favicon plugin overriding the path when it's a
+      // string
       assetFileNames: () => '[name]-[hash][extname]',
     },
     plugins: [
       cleaner({
-        targets: ['public']
+        targets: ['public'],
       }),
       includePathPlugin,
       replace({
-        //'process.browser': true, // Phaser tries to assign a value to `process.browser` which would fail
+        // 'process.browser': true, // Phaser tries to assign a value to `process.browser` which would fail
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       json(),
@@ -221,22 +195,22 @@ export default {
         replacePairs: [{
           templateKey: 'appRoot',
           content: appRoot,
-        },{
+        }, {
           templateKey: 'devComment',
           content: devComment,
-        },{
+        }, {
           templateKey: 'faviconLinks',
           contentPath: ['__favicons_output'],
           contentTransformer(links) {
             return links.join('\n    ');
-          }
+          },
         }],
       }),
       copy({
         targets: [
-            { src: 'static/*', dest: 'public' },
-            { src: 'node_modules/@coreui/icons/fonts', dest: 'public/assets' },
-            ],
+          { src: 'static/*', dest: 'public' },
+          { src: 'node_modules/@coreui/icons/fonts', dest: 'public/assets' },
+        ],
       }),
     ],
 
