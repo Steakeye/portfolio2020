@@ -1,0 +1,117 @@
+@use '~destyle.css/destyle';
+@use 'colour';
+@use 'fonts';
+@use 'layout';
+@use 'type';
+@use 'elements';
+
+/*
+* Begin global styles
+*/
+
+html {
+  font-size: 10px;
+}
+
+* {
+  @include elements.extendCustomScroll;
+}
+
+body {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family:
+    Farsan,
+    Roboto,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  line-height: 1.24;
+  color: colour.$brand-white;
+  background-color: colour.$brand-pink-dark;
+
+  &:after {
+    content: '';
+    background-image: url("/assets/images/game/steakeye-roundel.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: 50vw;
+    background-position-x: 50vw;
+    height: 100vw;
+    width: 100vw;
+    margin-bottom: 2rem;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    opacity: .62;
+
+    @include layout.for-device(layout.$landscape) {
+      background-position-y: 50vh;
+      background-position-x: 50vh;
+      height: 100vh;
+      width: 100vh;
+      right: 0;
+    }
+  }
+}
+
+#{type.$headers} {
+  margin: 0 0 .5em 0;
+  font-weight: 500;
+  font-family: Pacifico, cursive;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+:focus {
+  @include elements.extendHasFocus;
+}
+
+::selection {
+  background-color: colour.$brand-white;
+  color: colour.$brand-pink-dark;
+}
+
+[aria-disabled],
+[disabled] {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+noscript {
+  padding: 1rem;
+  display: inline-block;
+}
+
+code,
+pre {
+  font-family: 'Space Mono', menlo, inconsolata, monospace;
+}
+
+[id=steakeye] {
+  position: fixed;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+}

@@ -1,0 +1,57 @@
+@use 'sass:map';
+@use 'coreui-icons/free/free-icons';
+@use 'coreui-icons/brand/brand-icons';
+
+/* Add fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Farsan&family=Pacifico&family=Space+Mono:ital@1&display=swap');
+
+/*
+Fonts:
+font-family: 'Bungee', cursive;
+font-family: 'Bungee Shade', cursive;
+font-family: 'Farsan', sans-serif; //cursive;
+font-family: 'Pacifico', cursive;
+font-family: 'Space Mono', monospace;
+*/
+
+/* Icons */
+%coreUIIconBase {
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+$coreui-icon-font-family-prefix: 'CoreUI-Icons-';
+
+%coreUIIconFree {
+  @extend %coreUIIconBase;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: $coreui-icon-font-family-prefix + 'Free';
+}
+
+%coreUIIconBrand {
+  @extend %coreUIIconBase;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: $coreui-icon-font-family-prefix + 'Brand';
+}
+
+@mixin coreUIIcon($iconName) {
+  @if map.has-key(free-icons.$icons, $iconName) {
+    @extend %coreUIIconFree;
+
+    content: free-icons.unicode(map.get(free-icons.$icons, $iconName));
+  } @else if map.has-key(brand-icons.$icons, $iconName) {
+    @extend %coreUIIconBrand;
+
+    content: free-icons.unicode(map.get(brand-icons.$icons, $iconName));
+  } @else {
+    @error "Icon '#{$iconName}' not found.";
+  }
+}

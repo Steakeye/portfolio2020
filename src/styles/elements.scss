@@ -1,0 +1,61 @@
+@use 'colour';
+@use 'layout';
+
+%customScroll {
+  $scrollbarBaseDimension: layout.$default-margin * .75;
+
+  &::-webkit-scrollbar {
+    width: $scrollbarBaseDimension;
+    height: $scrollbarBaseDimension;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: colour.$brand-pink;
+    border: 1px solid transparent;
+    border-radius: $scrollbarBaseDimension * 4;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: colour.$brand-pink-dark;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: colour.$brand-yellow;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: colour.$brand-yellow;
+  }
+}
+
+@mixin extendCustomScroll {
+  @extend %customScroll;
+}
+
+%hasFocus {
+  outline: 1px solid colour.$brand-yellow;
+  outline-style: auto;
+}
+
+@mixin extendHasFocus {
+  @extend %hasFocus;
+}
+
+%iconOnlyButton {
+  > * {
+    @include layout.extendVisuallyHiddenNoClip;
+  }
+
+  &:focus {
+    outline: none;
+
+    &:before {
+      @extend %hasFocus;
+    }
+  }
+}
+
+@mixin extendIconOnlyButton {
+  @extend %iconOnlyButton;
+}

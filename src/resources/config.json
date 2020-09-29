@@ -1,0 +1,57 @@
+{
+  "appRoot": "steakeye",
+  "ui": {
+    "colors": {
+      "brandBlack": "#473839",
+      "brandWhite": "#ECE0D0",
+      "brandYellow": "#E8BF87",
+      "brandPink": "#E06D72",
+      "brandPinkDark": "#943A3E",
+      "brandBlue": "#58AFE0",
+      "brandBlueDark": "#417694"
+    },
+    "layout": {
+      "baseUnit": 10,
+      "mediaQueries": {
+        "tablet": "(min-width: 600px)",
+        "landscape": "(orientation: landscape)",
+        "retina": "'(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)'"
+      },
+      "nav": {
+        "marginTop": 120
+      }
+    }
+  },
+  "breakout": {
+    "canvas": {
+      "height": 647,
+      "width": 400,
+      "marginBottom": {
+        "tablet": 24
+      }
+    },
+    "sizeUnit": 14,
+    "ball": {
+      "diameterSize": 1
+    },
+    "bat": {
+      "defaultColor": "0xE06D72",
+      "defaultStroke": "0x943A3E",
+      "widthSize": 5,
+      "heightSize": 1
+    },
+    "bricks": {
+      "rows": 3,
+      "columns": 6,
+      "defaultColor": "0xE06D72",
+      "defaultStroke": "0x943A3E",
+      "widthSize": 3,
+      "heightSize": 2
+    },
+    "loadingBar": {
+      "heightSize": 0.6,
+      "progressColor": "0xE06D72",
+      "backgroundColor": "0x943A3E"
+    }
+  }
+}

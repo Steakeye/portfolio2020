@@ -1,0 +1,24 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "at-rule-no-unknown": null,
+    "number-leading-zero": "never",
+    "function-name-case": null,
+    "value-keyword-case": null,
+    "selector-pseudo-element-colon-notation": "single",
+    "declaration-block-single-line-max-declarations": null,
+    "at-rule-empty-line-before": ["always", {
+      "except": [
+        "blockless-after-same-name-blockless"
+      ],
+      "ignore": [
+        "after-comment",
+        "first-nested",
+        "blockless-after-blockless"
+      ],
+      "ignoreAtRules": ["else if", "else"]
+    }],
+    "block-closing-brace-newline-after": "always-single-line",
+    "selector-pseudo-class-no-unknown": null
+  }
+}

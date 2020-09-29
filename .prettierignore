@@ -1,0 +1,8 @@
+# Ignore assets folder
+assets
+
+# Ignore all SCSS files:
+*.scss
+
+# Ignore html template
+html.template

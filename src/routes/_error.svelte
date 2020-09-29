@@ -1,40 +1,60 @@
-<script>
-	export let status;
-	export let error;
+<style lang="scss">
+  @use '../styles/fonts';
 
-	const dev = process.env.NODE_ENV === 'development';
-</script>
+  h1,
+  p {
+    margin: 0 auto;
+  }
 
-<style>
-	h1, p {
-		margin: 0 auto;
-	}
+  h2 {
+    margin: 0 0 0.5em 0;
+  }
 
-	h1 {
-		font-size: 2.8em;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
+  p {
+    margin: 1em auto;
+  }
 
-	p {
-		margin: 1em auto;
-	}
+  a.back:before {
+    @include fonts.coreUIIcon(chevron-left);
+    font-size: 0.8em;
+    margin-right: 0.2em;
+    vertical-align: text-top;
+    text-decoration: none;
+    display: inline-block;
+  }
 
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
+  @media (min-width: 480px) {
+    h1 {
+      font-size: 4em;
+    }
+  }
 </style>
 
+<script lang="ts">
+  import content from '../resources/content.json';
+
+  export let status: number;
+  export let error: Error;
+
+  const dev = process.env.NODE_ENV === 'development';
+
+  const {
+    pages: {
+      error: {
+        backHomeLink: { text: homeText },
+      },
+    },
+  } = content;
+</script>
+
 <svelte:head>
-	<title>{status}</title>
+  <title>{status}</title>
 </svelte:head>
-
 <h1>{status}</h1>
-
-<p>{error.message}</p>
-
+<h2>{error.message}</h2>
+<p>
+  <a class="back" href="/">{homeText}</a>
+</p>
 {#if dev && error.stack}
-	<pre>{error.stack}</pre>
+  <pre>{error.stack}</pre>
 {/if}
