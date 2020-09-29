@@ -8,18 +8,22 @@
     width: $scrollbarBaseDimension;
     height: $scrollbarBaseDimension;
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: colour.$brand-pink;
     border: 1px solid transparent;
     border-radius: $scrollbarBaseDimension * 4;
     background-clip: content-box;
   }
+
   &::-webkit-scrollbar-thumb:hover {
     background-color: colour.$brand-pink-dark;
   }
+
   &::-webkit-scrollbar-track {
     background-color: colour.$brand-yellow;
   }
+
   &::-webkit-scrollbar-corner {
     background-color: colour.$brand-yellow;
   }
@@ -35,7 +39,7 @@
 }
 
 @mixin extendHasFocus {
-  @extend %hasFocus
+  @extend %hasFocus;
 }
 
 %iconOnlyButton {
@@ -47,11 +51,11 @@
     outline: none;
 
     &:before {
-      @extend %hasFocus
+      @extend %hasFocus;
     }
   }
 }
 
 @mixin extendIconOnlyButton {
-  @extend %iconOnlyButton
+  @extend %iconOnlyButton;
 }

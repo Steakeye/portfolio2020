@@ -14,7 +14,7 @@ font-family: 'Pacifico', cursive;
 font-family: 'Space Mono', monospace;
 */
 
-/*Icons*/
+/* Icons */
 %coreUIIconBase {
   speak: none;
   font-style: normal;
@@ -32,20 +32,24 @@ $coreui-icon-font-family-prefix: 'CoreUI-Icons-';
 
 %coreUIIconFree {
   @extend %coreUIIconBase;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: $coreui-icon-font-family-prefix + 'Free';
 }
 
 %coreUIIconBrand {
   @extend %coreUIIconBase;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: $coreui-icon-font-family-prefix + 'Brand';
 }
 
 @mixin coreUIIcon($iconName) {
   @if map.has-key(free-icons.$icons, $iconName) {
     @extend %coreUIIconFree;
+
     content: free-icons.unicode(map.get(free-icons.$icons, $iconName));
   } @else if map.has-key(brand-icons.$icons, $iconName) {
     @extend %coreUIIconBrand;
+
     content: free-icons.unicode(map.get(brand-icons.$icons, $iconName));
   } @else {
     @error "Icon '#{$iconName}' not found.";

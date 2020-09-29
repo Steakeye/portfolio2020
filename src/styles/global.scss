@@ -65,9 +65,9 @@ body {
 }
 
 #{type.$headers} {
-  margin: 0 0 0.5em 0;
+  margin: 0 0 .5em 0;
   font-weight: 500;
-  font-family: Pacifico;
+  font-family: Pacifico, cursive;
   line-height: 1.2;
 }
 
@@ -89,13 +89,14 @@ a {
   color: colour.$brand-pink-dark;
 }
 
-[aria-disabled],[disabled] {
-  cursor: not-allowed!important;
-  pointer-events: none!important
+[aria-disabled],
+[disabled] {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
 }
 
 [tabindex="-1"]:focus {
-  outline: none
+  outline: none;
 }
 
 noscript {

@@ -26,6 +26,7 @@ $layoutConfig: map-get(config.$ui, layout);
 
 %visuallyHidden {
   @extend %visuallyHiddenNoClip;
+
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
 }
