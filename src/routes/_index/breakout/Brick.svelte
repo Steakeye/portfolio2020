@@ -5,10 +5,7 @@
   const {
     breakout: { sizeUnit },
   } = config;
-  const { defaultColor, defaultStroke, widthSize, heightSize } = getter(
-    'breakout.bricks'.split('.'),
-    config,
-  );
+  const { defaultColor, defaultStroke, widthSize, heightSize } = getter('breakout.bricks'.split('.'), config);
   const width = sizeUnit * widthSize;
   const height = sizeUnit * heightSize;
 </script>

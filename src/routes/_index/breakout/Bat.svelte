@@ -5,10 +5,7 @@
   const {
     breakout: { sizeUnit },
   } = config;
-  const { defaultColor, defaultStroke, widthSize, heightSize } = getter(
-    'breakout.bat'.split('.'),
-    config,
-  );
+  const { defaultColor, defaultStroke, widthSize, heightSize } = getter('breakout.bat'.split('.'), config);
   const width = sizeUnit * widthSize;
   const height = sizeUnit * heightSize;
 </script>
@@ -55,14 +52,4 @@
   });
 </script>
 
-<Rectangle
-  bind:instance
-  name="bat"
-  bind:x
-  {y}
-  {fillColor}
-  {strokeColor}
-  strokeWidth="1"
-  {width}
-  {height}
-/>
+<Rectangle bind:instance name="bat" bind:x {y} {fillColor} {strokeColor} strokeWidth="1" {width} {height} />

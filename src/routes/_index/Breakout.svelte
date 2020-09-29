@@ -110,19 +110,14 @@
   const sceneKey = 'breakoutScene';
 
   function hasWebGLSupport(canvas: HTMLCanvasElement) {
-    return (
-      !!window.WebGLRenderingContext &&
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-    );
+    return !!window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
   }
 
   function loadAssets(scene: Phaser.Scene) {
     scene.load.image('ball', roundelPath);
   }
 
-  function isLandscapeMediaQuery(
-    mediaQueryMatches: MediaQueryMatchMap<'landscape'> | null,
-  ): boolean {
+  function isLandscapeMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'landscape'> | null): boolean {
     return !!(mediaQueryMatches && mediaQueryMatches.landscape);
   }
 </script>
@@ -224,9 +219,7 @@
         on:postBoot="{() => console.log('game started!')}"
       >
         <Scene key="{sceneKey}" preload="{loadAssets}">
-          <div class="loading-node" slot="loading" let:progress>
-            {(assignExposedProgress(progress), '')}
-          </div>
+          <div class="loading-node" slot="loading" let:progress>{(assignExposedProgress(progress), '')}</div>
           {#if exposedProgress !== 1}
             <LoadingBar x="{0}" y="{0}" progress="{exposedProgress}" />
           {/if}

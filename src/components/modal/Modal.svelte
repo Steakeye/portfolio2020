@@ -104,9 +104,7 @@
     let modalId = targetId || id;
 
     if (!modalId) {
-      console.warn(
-        `Modal is missing 'targetId' or 'id' property set, looking for nearest child with 'id' attribute`,
-      );
+      console.warn(`Modal is missing 'targetId' or 'id' property set, looking for nearest child with 'id' attribute`);
 
       await sleep(0); // This is just to guarantee the node is available
 
@@ -118,9 +116,7 @@
       }
 
       if (!modalId) {
-        throw new Error(
-          `Modal is missing 'targetId' or 'id', cannot create store entry for trigger bindings`,
-        );
+        throw new Error(`Modal is missing 'targetId' or 'id', cannot create store entry for trigger bindings`);
       }
     }
 

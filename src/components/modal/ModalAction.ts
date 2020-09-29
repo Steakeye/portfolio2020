@@ -6,7 +6,6 @@ type EventDispatcher = (type: string, detail?: any) => void;
 export const ModalsActions: Map<string, ModalActions> = new Map();
 
 const modalEventTriggerKey = `modal-trigger`;
-const modalTriggerIdNodeAttribute = `data-modal-trigger-id`;
 
 function handleModalTrigger(mapKey: string, action: ModalTriggerAction) {
   const actions = ModalsActions.get(mapKey);
@@ -41,9 +40,7 @@ function tryToGetTargetIdFromHref(node: Node): string | undefined {
 }
 
 function determineTargetKey(node: Node, targetId?: string) {
-  const targetKey = targetId
-      || (node as HTMLElement).dataset.modalTargetId
-      || tryToGetTargetIdFromHref(node);
+  const targetKey = targetId || (node as HTMLElement).dataset.modalTargetId || tryToGetTargetIdFromHref(node);
 
   if (!targetKey) {
     /* eslint-disable-next-line max-len */

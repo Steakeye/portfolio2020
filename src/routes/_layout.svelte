@@ -43,9 +43,7 @@
     for (let key in mediaQueryMap) {
       const query = mediaQueryMap[key];
 
-      updatedMap[key] = nestedStringTest.test(query)
-        ? JSON.parse(query.replace(nestedStringTest, `"$2"`))
-        : query;
+      updatedMap[key] = nestedStringTest.test(query) ? JSON.parse(query.replace(nestedStringTest, `"$2"`)) : query;
     }
 
     return updatedMap;

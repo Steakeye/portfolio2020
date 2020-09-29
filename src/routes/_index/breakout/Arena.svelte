@@ -27,15 +27,11 @@
     return !(mediaQueryMatches && mediaQueryMatches.tablet);
   }
 
-  function deriveScaleFromMediaQuery(
-    mediaQueryMatches: MediaQueryMatchMap<'tablet'> | null,
-  ): number {
+  function deriveScaleFromMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'tablet'> | null): number {
     return isDevicePhone(mediaQueryMatches) ? 1 : 2;
   }
 
-  function deriveYOffsetFromMediaQuery(
-    mediaQueryMatches: MediaQueryMatchMap<'tablet' | 'retina'> | null,
-  ): number {
+  function deriveYOffsetFromMediaQuery(mediaQueryMatches: MediaQueryMatchMap<'tablet' | 'retina'> | null): number {
     return isDevicePhone(mediaQueryMatches) ? 0 : mediaQueryMatches.retina ? 2 : 4;
   }
 </script>
@@ -64,8 +60,7 @@
   const bricksXOffset = (sceneWidth + scaledBrickWidth - scaledBrickWidth * columns) / 2;
   const bricks = [];
   const deviceBasedYOffset = deriveYOffsetFromMediaQuery(mediaQueryMatches);
-  const actualBricksYOffset =
-    scaledBrickHeight / 2 + sceneToCanvasRatio * bricksYOffset + deviceBasedYOffset;
+  const actualBricksYOffset = scaledBrickHeight / 2 + sceneToCanvasRatio * bricksYOffset + deviceBasedYOffset;
 
   export let pauseGame: () => void;
   let bat: Phaser.GameObjects.Rectangle;

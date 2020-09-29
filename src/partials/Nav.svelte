@@ -185,22 +185,11 @@
     {#each links as { name, href, text }, index}
       <li>
         {#if isLinkToLocalTarget(href)}
-          <a
-            bind:this="{linkElements[index]}"
-            use:modalTrigger
-            class="{name}"
-            {href}
-            {...getLinkPropsFromHref(href)}
-          >
+          <a bind:this="{linkElements[index]}" use:modalTrigger class="{name}" {href} {...getLinkPropsFromHref(href)}>
             <strong class="linkText">{text}</strong>
           </a>
         {:else}
-          <a
-            bind:this="{linkElements[index]}"
-            class="{name}"
-            {href}
-            {...getLinkPropsFromHref(href)}
-          >
+          <a bind:this="{linkElements[index]}" class="{name}" {href} {...getLinkPropsFromHref(href)}>
             <strong class="linkText">{text}</strong>
           </a>
         {/if}
