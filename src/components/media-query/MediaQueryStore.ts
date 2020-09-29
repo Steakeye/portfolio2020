@@ -72,8 +72,8 @@ function tearDownMediaQueryLists(
   mediaQueryChangeHandler: () => void,
 ) {
   removeMediaQueryEventListeners(mediaQueryLists, mediaQueryChangeHandler);
-  /* eslint-disable-next-line no-param-reassign */
   if (mediaQueryLists) {
+    /* eslint-disable-next-line no-param-reassign */
     mediaQueryLists.length = 0;
   }
 }

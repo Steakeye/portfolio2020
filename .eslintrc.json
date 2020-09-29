@@ -39,7 +39,7 @@
         "varsIgnorePattern": "^_"
       }
     ],
-    "quotes": ["error", "single"],
+    "quotes": ["error", "backtick"],
     "semi": ["warn","always"],
     "semi-style": ["warn", "last"],
     "linebreak-style": 0,

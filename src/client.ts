@@ -8,6 +8,6 @@ sapper
     target: document.getElementById(appRoot),
   })
   .then(() => {
-    console.info('Steakeye client app initialised');
+    console.info(`Steakeye client app initialised`);
     initConsoleCLI();
   });

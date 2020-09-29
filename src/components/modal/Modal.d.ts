@@ -1,4 +1,4 @@
-export type ModalTriggerAction = 'open' | 'close';
+export type ModalTriggerAction = `open` | `close`;
 
 export interface ModalActions {
   open(): void;
