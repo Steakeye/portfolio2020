@@ -4,7 +4,7 @@
 name: Steakeye Web UI CI
 
 on:
-  workflow_dispatch
+  workflow_dispatch: {}
   push:
     branches: [ master ]
   pull_request:
