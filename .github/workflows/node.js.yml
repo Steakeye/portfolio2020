@@ -4,6 +4,7 @@
 name: Steakeye Web UI CI
 
 on:
+  workflow_dispatch
   push:
     branches: [ master ]
   pull_request:
@@ -60,9 +61,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build project
-        run: npm build
-      - name: Run tests
-        run: npm test
+        run: npm run build
+      - name: Start server
+        run: npm start
       - name: Run tests
         run: npm test
 
