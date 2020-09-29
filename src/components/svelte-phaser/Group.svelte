@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { onDestroy, onMount, afterUpdate } from 'svelte';
     import type { Phaser } from 'phaser';
     import { getScene } from 'svelte-phaser';
@@ -29,3 +29,4 @@
         instance.destroy(true);
     })
 </script>
+<slot />

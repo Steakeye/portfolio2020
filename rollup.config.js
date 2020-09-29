@@ -16,14 +16,17 @@ import { terser } from 'rollup-plugin-terser';
 import favicons from 'rollup-plugin-favicons'
 import customSvelteHtmlTemplate from './scripts/rollup/rollup-custom-sapper-html-template'
 import customPostcssSassLoader from './scripts/rollup/rollup-custom-postcss-sass-loader'
-import sveltePreprocess from 'svelte-preprocess';
+//import sveltePreprocess from 'svelte-preprocess';
 import typescript from 'rollup-plugin-typescript2';
 import config from 'sapper/config/rollup';
 import copy from 'rollup-plugin-copy';
 import json from '@rollup/plugin-json';
 import pkg from './package.json';
+//import { preprocess as preProcessConfig } from './svelte.config';
 import { appRoot } from './src/resources/config.json'
 import { global as globalStrings } from './src/resources/content.json'
+
+const preProcessConfig = require("./svelte.config").preprocess
 
 const { devComment } = globalStrings;
 
@@ -60,7 +63,7 @@ const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'pr
   || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
   || onWarnFn(warning);
 
-const preProcessOptions = {
+/*const preProcessOptions = {
   babel: {
     presets: [
       [
@@ -89,7 +92,8 @@ const preProcessOptions = {
   }
 };
 
-const preProcessConfig = sveltePreprocess(preProcessOptions);
+const preProcessConfig = sveltePreprocess(preProcessOptions);*/
+//const preProcessConfig = svelteConfig.preprocess;
 
 const postCssPluginConfig = (client = true) => postcss({
       extract: client ? 'base.css': false,

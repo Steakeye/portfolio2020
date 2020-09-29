@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
   @use 'sass:map' as sassMap;
   @use 'sass:string' as sassString;
   @use 'sass:color' as sassColor;
@@ -116,7 +116,7 @@
     }
   }
 </style>
-<script context="module">
+<script context="module" lang="ts">
   import { onMount } from 'svelte';
   import { modalTrigger } from '../components/modal/ModalAction.ts';
   import { navItemSelected } from '../resources/event-keys.json';
@@ -153,7 +153,7 @@
     return props;
   }
 </script>
-<script>
+<script lang="ts">
   const linkElements: HTMLAnchorElement[] = [];
 
   onMount(() => {

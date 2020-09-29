@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
     @use 'src/styles/colour';
     @use 'src/styles/fonts';
     @use 'src/styles/layout';
@@ -54,7 +54,7 @@
         }
     }
 </style>
-<script context="module">
+<script context="module" lang="ts">
     import { onMount } from 'svelte';
     import {sleep} from "../../utils/Runtime.ts";
     import { components } from '../../resources/content.json';
@@ -73,7 +73,7 @@
         props['aria-hidden'] = hidden;
     }
 </script>
-<script>
+<script lang="ts">
     export let id = ''
     export let targetId = ''
     export let className = ''

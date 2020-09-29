@@ -7,14 +7,14 @@
     const width = sizeUnit * widthSize;
     const height = sizeUnit * heightSize;
 </script>
-<script>
+<script lang="ts">
     import { onMount } from 'svelte'
-    import { Rectangle, ArcadePhysics, ArcadeCollider, getScene, getGame } from 'svelte-phaser'
+    import { Rectangle, getScene } from 'svelte-phaser'
     import Phaser from "phaser";
 
     export let instance = undefined;
-    export let x;
-    export let y;
+    export let x: number;
+    export let y: number;
     export let fillColor = parseInt(defaultColor, 16);
     export let strokeColor = parseInt(defaultStroke, 16);
     export let scale = 1

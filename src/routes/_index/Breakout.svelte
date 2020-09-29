@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
     @use 'src/styles/colour';
     @use 'src/styles/fonts';
     @use 'src/styles/layout';
@@ -81,7 +81,7 @@
         }
     }
 </style>
-<script context="module">
+<script context="module" lang="ts">
     import type { Phaser } from 'phaser';
     import getter from "ramda/src/path";
     import config from '/src/resources/config.json';
@@ -89,7 +89,6 @@
     import type { MediaQueryMatchMap } from '/src/components/media-query/MediaQueryStore.d';
     import { State as GameState } from './breakout/State.ts';
     import type { State } from './breakout/State.ts';
-    import type { BreakoutStateContext } from './breakout/StateContext.d.ts'
     import roundelPath from '/src/assets/images/game/steakeye-roundel.svg';
 
     const { breakout: { canvas: { height: canvasHeight, width: canvasWidth } } } = config;
@@ -109,12 +108,11 @@
         return !!(mediaQueryMatches && mediaQueryMatches.landscape);
     }
 </script>
-<script>
+<script lang="ts">
     import type { SvelteComponent } from 'svelte';
     import {onMount} from 'svelte';
     import { init as initGameState, context as gameState } from './breakout/StateContext.ts';
     import {getMediaQueryContext} from "../../components/media-query/MediaQuery.svelte";
-    import {sleep} from "../../utils/Runtime.ts";
 
     function assignExposedProgress(updatedValue: number) {
         exposedProgress = updatedValue;
@@ -143,22 +141,20 @@
     let Phaser: SvelteComponent;
     let Game: SvelteComponent;
     let Scene: SvelteComponent;
-    let Text: SvelteComponent;
     let LoadingBar: SvelteComponent;
     let Arena: SvelteComponent;
     let isLandscape: boolean;
     let exposedProgress;
     let playState: State;
 
-    const mediaQueryStore = getMediaQueryContext();
-    const mediaQueryMatches = $mediaQueryStore;
+    const mediaQueryStore: SvelteStore<MediaQueryMatchMap> = getMediaQueryContext();
 
     initGameState();
 
     playState = gameState();
 
     onMount(async () => {
-        ({ Game, Scene, Text } = await import('svelte-phaser'));
+        ({ Game, Scene } = await import('svelte-phaser'));
 
         Phaser = await import('phaser');
         LoadingBar = (await import('./breakout/LoadingBar.svelte')).default;

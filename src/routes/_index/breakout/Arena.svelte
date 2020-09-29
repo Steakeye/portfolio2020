@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
     import CustomEvent from 'custom-event';
     import eventKeys from '/src/resources/event-keys.json';
     import config from '/src/resources/config.json';
@@ -24,9 +24,9 @@
         return isDevicePhone(mediaQueryMatches) ? 0: mediaQueryMatches.retina ? 2: 4;
     }
 </script>
-<script>
+<script lang="ts">
     import type Phaser from 'phaser';
-    import { onMount, getContext } from 'svelte';
+    import { onMount } from 'svelte';
     import { onGameEvent, onInputEvent, getGame, getScene } from 'svelte-phaser';
     import { getMediaQueryContext } from '/src/components/media-query/MediaQuery.svelte';
     import Group from '/src/components/svelte-phaser/Group.svelte';
@@ -50,12 +50,16 @@
     const deviceBasedYOffset = deriveYOffsetFromMediaQuery(mediaQueryMatches);
     const actualBricksYOffset = scaledBrickHeight/2 + sceneToCanvasRatio * bricksYOffset + deviceBasedYOffset;
 
-    export let pauseGame;
-    let bat;
-    let ball;
+    export let pauseGame: () => void;
+    let bat: Phaser.GameObjects.Rectangle;
+    let ball: Phaser.GameObjects.Sprite;
     let ballProps;
     let bricksGroup: Phaser.GameObjects.Group;
-    let bricksConfig;
+    let bricksConfig: {
+        x: number;
+        y: number;
+        key: number;
+    }[];
     let isBallLaunched = false;
     let resetting = false;
 
@@ -150,8 +154,8 @@
     // launch ball on click - pointerup makes the experience better on touch devices
     onInputEvent('pointerup', () => {
         if (!isBallLaunched) {
-            isBallLaunched = true
-            ball.body.setVelocity(-sizeUnit*2, -sceneHeight);
+            isBallLaunched = true;
+            (ball.body as Phaser.Physics.Arcade.Body).setVelocity(-sizeUnit*2, -sceneHeight);
         }
     });
 </script>

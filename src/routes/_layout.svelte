@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
   import MediaQuery from '../components/media-query/MediaQuery.svelte'
   import { ui } from '../resources/config.json'
   import content from '../resources/content.json'
@@ -26,7 +26,7 @@
   import Nav from '../partials/Nav.svelte'
 </script>
 
-<style>
+<style lang="scss">
   @use '../styles/colour';
   @use '../styles/type';
   @use '../styles/layout';

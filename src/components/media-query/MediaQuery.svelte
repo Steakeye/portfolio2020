@@ -1,14 +1,15 @@
 <script context="module">
-    import { onMount, getContext, setContext } from 'svelte';
+    import { getContext, setContext } from 'svelte';
+    import type { MediaQueryMatchMap } from './MediaQueryStore.d';
     import { initMediaQueryStore } from './MediaQueryStore.ts';
 
     export const contextKey = 'mediaQueries';
 
-    export function getMediaQueryContext() {
+    export function getMediaQueryContext(): SvelteStore<MediaQueryMatchMap> {
         return getContext(contextKey)
     }
 </script>
-<script>
+<script lang="ts">
     export let mediaQueries: { [key: string]: string } | undefined = undefined;
 
     if (!mediaQueries) {
@@ -24,10 +25,8 @@
             mediaQueryStore.set(mediaQueries)
         }
 
-
         //Pass down the matches as read only for the context
         setContext(contextKey, { subscribe: mediaQueryStore.subscribe });
     }
 </script>
-<!--slot matches={mediaQueryStore ? $mediaQueryStore: {}} /-->
 <slot matches={$mediaQueryStore} />

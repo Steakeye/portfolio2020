@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
   @use '../styles/fonts';
 
   h1,
@@ -29,7 +29,6 @@
     }
   }
 </style>
-
 <script lang="ts">
   import content from '../resources/content.json'
 
@@ -40,15 +39,12 @@
 
   const { pages: { error: { backHomeLink: { text: homeText } } } } = content;
 </script>
-
 <svelte:head>
   <title>{status}</title>
 </svelte:head>
-
 <h1>{status}</h1>
 <h2>{error.message}</h2>
 <p><a class="back" href="/">{homeText}</a></p>
-
 {#if dev && error.stack}
   <pre>{error.stack}</pre>
 {/if}

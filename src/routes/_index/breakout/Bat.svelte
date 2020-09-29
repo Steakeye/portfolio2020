@@ -7,13 +7,12 @@
     const width = sizeUnit * widthSize;
     const height = sizeUnit * heightSize;
 </script>
-<script>
-    import type { Phaser } from 'phaser'
-    import Phaser from 'phaser'
-    import { onMount } from 'svelte'
-    import { Rectangle, onInputEvent, getScene } from 'svelte-phaser'
-    export let x
-    export let y
+<script lang="ts">
+    import Phaser from 'phaser';
+    import { onMount } from 'svelte';
+    import { Rectangle, onInputEvent, getScene } from 'svelte-phaser';
+    export let x: number;
+    export let y: number;
     export let fillColor = parseInt(defaultColor, 16);
     export let strokeColor = parseInt(defaultStroke, 16);
     export let instance = undefined
@@ -22,7 +21,7 @@
 
     let scene: Phaser.Scene;
 
-    onInputEvent('pointermove', pointer => {
+    onInputEvent('pointermove', (pointer: PointerEvent)=> {
         const pointerX = pointer.x;
 
         let updatedX = pointerX;

@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
   @use '../styles/colour';
   @use '../styles/fonts';
   @use '../styles/layout';
@@ -13,17 +13,14 @@
     > h1 {
       @extend %renderOver;
       text-align: center;
-      margin: 0 auto;
+      margin: -4rem auto 0 -2rem;
       position: fixed;
       width: 100vw;
-      margin-left: -2rem;
       top: 50vh;
       font-family: Bungee Shade;
-      color-scheme: blue;
       font-weight: 500;
       color: colour.$brand-yellow;
       font-size: 4rem;
-      margin-top: -4rem;
     }
 
     > h2 {
@@ -108,16 +105,8 @@
     const { index: { header: { title, subTitle }, aside: { promo }, content: [{ title: aboutTitle, body: aboutBody }] } } = pages;
 </script>
 <script>
-  import { onMount } from "svelte";
   import Modal from "../components/modal/Modal.svelte";
   import Breakout from "./_index/Breakout.svelte";
-
-  let mounted: boolean = false;
-  let modalOpen: boolean = false;
-
-  onMount(() => {
-      mounted = true;
-  })
 </script>
 <article>
     <header>
@@ -133,7 +122,7 @@
             id="about">
             <h3>{aboutTitle}</h3>
             {#if Array.isArray(aboutBody) }
-                {#each aboutBody as bodyItem, index}
+                {#each aboutBody as bodyItem}
                 <p>{bodyItem}</p>
                 {/each}
             {:else}
