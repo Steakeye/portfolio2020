@@ -54,12 +54,19 @@ jobs:
             ${{ runner.OS }}-
       - name: Install dependencies
         run: npm ci
-      - name: Build project
-        run: npm run build
-      - name: Start server
-        run: npm start
+      #- name: Build project
+        #run: npm run build
+      #- name: Start server
+        #run: npm start
       - name: Run tests
-        run: npm test
+        uses: cypress-io/github-action@v2
+        with:
+          #spec: cypress/integration/spec.js
+          build: npm run build
+          start: npm start
+          browser: chrome
+          headless: true
+          wait-on: http://localhost:3000
 
   build:
     needs: [lint, test]
