@@ -23,7 +23,7 @@ function dispatchModalTriggerEvent(dispatcher: EventDispatcher, originalEvent: E
 }
 
 const hrefErrorMessageNotFound = 'Tried to find targetId on href but no valid href was found.';
-const hrefErrorMessageHelp = '\'href\' must start with \'#\' and contain at least one more character.';
+const hrefErrorMessageHelp = "'href' must start with '#' and contain at least one more character.";
 const hrefErrorMessage = `${hrefErrorMessageNotFound} ${hrefErrorMessageHelp}`;
 
 function tryToGetTargetIdFromHref(node: Node): string | undefined {
@@ -41,11 +41,14 @@ function tryToGetTargetIdFromHref(node: Node): string | undefined {
 }
 
 function determineTargetKey(node: Node, targetId?: string) {
-  const targetKey = targetId || (node as HTMLElement).dataset.modalTargetId || tryToGetTargetIdFromHref(node);
+  const targetKey =
+    targetId || (node as HTMLElement).dataset.modalTargetId || tryToGetTargetIdFromHref(node);
 
   if (!targetKey) {
     /* eslint-disable-next-line max-len */
-    throw new Error('No explicit targetId parameter passed, nor \'data-modal-target-id\' attribute set, nor valid \'href\'.');
+    throw new Error(
+      "No explicit targetId parameter passed, nor 'data-modal-target-id' attribute set, nor valid 'href'.",
+    );
   }
 
   return targetKey;

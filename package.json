@@ -17,7 +17,7 @@
     "eslint:fix": "npm run eslint --- --fix",
     "fix": "npm run prettier && npm run eslint:fix && npm run stylelint:fix && npm run svelte:check",
     "format-and-fix": "npm run prettier && npm run eslint --fix",
-    "prettier": "prettier --write ./src/**",
+    "prettier": "prettier --write src",
     "prettier:root": "npm run prettier:root:json && npm run prettier:root:js",
     "prettier:root:js": "prettier --write ./*.js",
     "prettier:root:json": "prettier --write ./*.json",

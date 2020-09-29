@@ -1,3 +1,3 @@
 export interface LinkProps {
-    target: '_self' | '_blank';
+  target: '_self' | '_blank';
 }

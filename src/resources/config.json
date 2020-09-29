@@ -49,7 +49,7 @@
       "heightSize": 2
     },
     "loadingBar": {
-      "heightSize" : 0.6,
+      "heightSize": 0.6,
       "progressColor": "0xE06D72",
       "backgroundColor": "0x943A3E"
     }
