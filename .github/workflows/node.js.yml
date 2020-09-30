@@ -14,7 +14,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
@@ -31,13 +31,12 @@ jobs:
             ${{ runner.OS }}-
       - name: Install dependencies
         run: npm ci
-      #- run: npm run build --if-present
       - name: Run Linting
         run: npm run lint
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
@@ -54,14 +53,9 @@ jobs:
             ${{ runner.OS }}-
       - name: Install dependencies
         run: npm ci
-      #- name: Build project
-        #run: npm run build
-      #- name: Start server
-        #run: npm start
       - name: Run tests
         uses: cypress-io/github-action@v2
         with:
-          #spec: cypress/integration/spec.js
           build: npm run build
           start: npm start
           browser: chrome
@@ -73,9 +67,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
     - run: npm ci
     - run: npm run build --if-present
+    - name: Deploy
+      uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
+      with:
+        credentials: ${{ secrets.GCP_SA_KEY }}

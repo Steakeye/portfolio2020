@@ -69,6 +69,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-svelte3": "^2.7.3",
     "husky": "^4.3.0",
+    "jpeg-js": ">=0.4.0",
     "lint-staged": "^10.2.11",
     "node-sass-json-importer": "^4.3.0",
     "node-sass-tilde-importer": "^1.0.2",

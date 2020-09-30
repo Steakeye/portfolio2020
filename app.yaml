@@ -1,0 +1,6 @@
+runtime: nodejs12
+
+service: steakeye-web-ui
+
+env_variables:
+  NODE_ENV: 'production'
