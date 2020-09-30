@@ -65,8 +65,6 @@ jobs:
   build:
     needs: [lint, test]
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js 12.x
@@ -77,7 +75,11 @@ jobs:
       run: npm ci
     - name: Build app
       run: npm run build --if-present
+      env:
+        NODE_ENV: production
     - name: Deploy
       uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
       with:
         credentials: ${{ secrets.GCP_SA_KEY }}
+      env:
+        NODE_ENV: production
