@@ -1,6 +1,6 @@
 runtime: nodejs12
 
-service: steakeye-web-ui
+service: default
 
 instance_class: F1
 
