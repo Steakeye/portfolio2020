@@ -77,10 +77,10 @@ jobs:
       run: npm run build --if-present
       env:
         NODE_ENV: production
-    - name: Install runtime dependencies
-      run: npm ci
-      env:
-        NODE_ENV: production
+    #- name: Install runtime dependencies
+    #  run: npm ci
+    #  env:
+    #    NODE_ENV: production
     - name: Deploy
       uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
       with:
