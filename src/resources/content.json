@@ -7,7 +7,7 @@
   "global": {
     "title": "Steakeye - Expert Front End Development Services",
     "metaDescription": "Steakeye Ltd. provides expert front-end development services.",
-    "devComment": "<!-- Greetings fellow developer, thanks for viewing the source! To check out this project why not go to https://github.com/Steakeye/portfolio2020 -->",
+    "devComment": "<template>\nGreetings fellow developer, thanks for viewing the source!\nTo check out this project why not go to https://github.com/Steakeye/portfolio2020\nOh, and why don't you check out the dev console too if you haven't already ;)</template>",
     "partials": {
       "nav": {
         "links": [
@@ -19,7 +19,7 @@
           {
             "name": "cv",
             "text": "CV/Resumé",
-            "href": "/media/cv.pdf"
+            "href": "/docs/AK_CV_2020_v0.1-contact.pdf"
           },
           {
             "name": "github",
