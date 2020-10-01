@@ -71,10 +71,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: Install dependencies
+    - name: Install build dependencies
       run: npm ci
     - name: Build app
       run: npm run build --if-present
+      env:
+        NODE_ENV: production
+    - name: Install runtime dependencies
+      run: npm ci
       env:
         NODE_ENV: production
     - name: Deploy
