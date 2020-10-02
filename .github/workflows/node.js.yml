@@ -76,11 +76,16 @@ jobs:
     - name: Build app
       run: npm run build --if-present
       env:
-        NODE_ENV: production
+        NODE_ENV: productionlo
     - name: Keep only runtime dependencies
       run: npm prune
       env:
         NODE_ENV: production
+    - name: Check public folder
+      run: |
+        sudo apt-get install tree
+        tree -d public
+        ls -R public/media/
     - name: Deploy
       uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
       with:
