@@ -27,7 +27,6 @@ typings
 app.yaml
 cypress.json
 LICENSE
-package.json
 package-lock.json
 README.md
 rollup.config.js
