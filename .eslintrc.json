@@ -10,6 +10,7 @@
     "browser": true,
     "es2020": true
   },
+  "plugins": ["json"],
   "rules": {
     "class-methods-use-this": "off",
     "import/extensions": [
@@ -39,12 +40,13 @@
         "varsIgnorePattern": "^_"
       }
     ],
-    "quotes": ["error", "single"],
+    "quotes": ["error", "backtick"],
     "semi": ["warn","always"],
     "semi-style": ["warn", "last"],
     "linebreak-style": 0,
     "global-require": 0,
-    "max-len": ["error", { "code":  121 }]
+    "max-len": ["error", { "code":  121 }],
+    "object-curly-newline": ["error", { "consistent":  true }]
   },
   "overrides": [
     {

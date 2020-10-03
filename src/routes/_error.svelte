@@ -16,8 +16,8 @@
 
   a.back:before {
     @include fonts.coreUIIcon(chevron-left);
-    font-size: .8em;
-    margin-right: .2em;
+    font-size: 0.8em;
+    margin-right: 0.2em;
     vertical-align: text-top;
     text-decoration: none;
     display: inline-block;
@@ -32,19 +32,31 @@
 <script lang="ts">
   import content from '../resources/content.json'
 
-  export let status: number
-  export let error: Error
+<script lang="ts">
+  import content from '../resources/content.json';
 
-  const dev = process.env.NODE_ENV === 'development'
+  export let status: number;
+  export let error: Error;
 
-  const { pages: { error: { backHomeLink: { text: homeText } } } } = content;
+  const dev = process.env.NODE_ENV === 'development';
+
+  const {
+    pages: {
+      error: {
+        backHomeLink: { text: homeText },
+      },
+    },
+  } = content;
 </script>
+
 <svelte:head>
   <title>{status}</title>
 </svelte:head>
 <h1>{status}</h1>
 <h2>{error.message}</h2>
-<p><a class="back" href="/">{homeText}</a></p>
+<p>
+  <a class="back" href="/">{homeText}</a>
+</p>
 {#if dev && error.stack}
   <pre>{error.stack}</pre>
 {/if}

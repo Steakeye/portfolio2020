@@ -1,0 +1,36 @@
+# This file specifies files that are *not* uploaded to Google Cloud Platform
+# using gcloud. It follows the same syntax as .gitignore, with the addition of
+# "#!include" directives (which insert the entries of the given .gitignore-style
+# file at that point).
+#
+# For more information, run:
+#   $ gcloud topic gcloudignore
+#
+
+/.eslintcache
+/.eslintrc.json
+/.gcloudignore
+/.git
+/.gitignore
+/.github
+/.idea
+/.pnp.js
+/.prettierignore
+/.prettierrc.json
+/.stylelintrc.json
+/.vscode
+/cypress
+/docs
+/research
+/scripts
+/src
+/static
+/typings
+/app.yaml
+/cypress.json
+/LICENSE
+/package-lock.json
+/README.md
+/rollup.config.js
+/svelte.config.js
+/tsconfig.json

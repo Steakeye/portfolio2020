@@ -1,7 +1,7 @@
 import { getContext, setContext } from 'svelte';
 import { State } from './State';
 
-export const contextKey = 'breakout:gameState';
+export const contextKey = `breakout:gameState`;
 
 let initialised = false;
 const initialState = State.UNINITIALIZED;
