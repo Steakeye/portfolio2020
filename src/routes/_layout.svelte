@@ -32,10 +32,13 @@
 
 <script context="module" lang="ts">
   import MediaQuery from '../components/media-query/MediaQuery.svelte';
+  import type { MediaQueryMap, MediaQueryMatchMap } from '../components/media-query/MediaQueryStore.d';
   import { ui } from '../resources/config.json';
-  import content from '../resources/content.json';
+  import { global } from '../resources/content.json';
+  import Nav from '../partials/Nav.svelte';
+  import SteakeyeMetaLinks from './_layout/SteakeyeMetaLinks.svelte';
 
-  function unquoteMediaQueries(mediaQueryMap: { [key: string]: string }) {
+  function unquoteMediaQueries(mediaQueryMap: MediaQueryMap) {
     const nestedStringTest = /^('|")(.+)\1$/;
     const updatedMap = {};
 
@@ -51,19 +54,15 @@
   const {
     layout: { mediaQueries },
   } = ui;
-  const { title, metaDescription } = content.global;
-  const copyRightMessage = content.global.partials.footer.copyright;
+  const { title, metaData: { description }, partials: { footer: { copyright } } } = global;
   const year = new Date().getFullYear();
-  const unquotedMediaQueries = unquoteMediaQueries(mediaQueries);
-</script>
-
-<script>
-  import Nav from '../partials/Nav.svelte';
+  const unquotedMediaQueries = unquoteMediaQueries(mediaQueries as MediaQueryMap);
 </script>
 
 <svelte:head>
   <title>{title}</title>
-  <meta name="description" content="{metaDescription}" />
+  <meta name="description" content="{description}" />
+  <SteakeyeMetaLinks />
 </svelte:head>
 
 <MediaQuery mediaQueries="{unquotedMediaQueries}">
@@ -71,12 +70,12 @@
     <Nav />
   </header>
 
-  <main class:content>
+  <main class="content">
     <slot />
   </main>
   <footer>
     <p class="copyright">
-      {@html copyRightMessage}
+      {@html copyright}
       {year}
     </p>
   </footer>

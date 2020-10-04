@@ -1,6 +1,6 @@
 <script context="module">
   import { getContext, setContext } from 'svelte';
-  import type { MediaQueryMatchMap } from './MediaQueryStore.d';
+  import type { MediaQueryMap, MediaQueryMatchMap } from './MediaQueryStore.d';
   import { initMediaQueryStore } from './MediaQueryStore.ts';
 
   export const contextKey = 'mediaQueries';
@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-  export let mediaQueries: { [key: string]: string } | undefined = undefined;
+  export let mediaQueries: MediaQueryMap | undefined = undefined;
 
   if (!mediaQueries) {
     console.warn('No media queries passed to MediaQuery Component');

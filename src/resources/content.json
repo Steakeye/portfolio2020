@@ -6,7 +6,27 @@
   },
   "global": {
     "title": "Steakeye - Expert Front End Development Services",
-    "metaDescription": "Steakeye Ltd. provides expert front-end development services.",
+    "metaData": {
+      "description": "Steakeye Ltd. provides expert front-end development services.",
+      "externalLinks": [
+        {
+          "relation":  "me",
+          "link": "https://github.com/steakeye"
+        },
+        {
+          "relation":  "me",
+          "link": "https://www.linkedin.com/in/steakeye"
+        },
+        {
+          "relation":  "me",
+          "link": "https://twitter.com/steakeye"
+        },
+        {
+          "relation":  "me",
+          "link": "https://dev.to/steakeye"
+        }
+      ]
+    },
     "devComment": "<template>\nGreetings fellow developer, thanks for viewing the source!\nTo check out this project why not go to https://github.com/Steakeye/portfolio2020\nOh, and why don't you check out the dev console too if you haven't already ;)</template>",
     "partials": {
       "nav": {

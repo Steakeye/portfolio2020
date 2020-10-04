@@ -30,9 +30,6 @@
   }
 </style>
 <script lang="ts">
-  import content from '../resources/content.json'
-
-<script lang="ts">
   import content from '../resources/content.json';
 
   export let status: number;

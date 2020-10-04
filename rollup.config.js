@@ -99,15 +99,17 @@ const postCssPluginConfig = (client = true) => postcss({
 
 const urlImportConfig = (client = true) => importUrl({
   emitFiles: client,
-  sourceDir: path.join(__dirname, 'src'), // 'src',
+  sourceDir: path.join(__dirname, 'src'),
   destDir: 'public',
   fileName: '[dirname][name][extname]',
-  limit: 0,
+  limit: 0, // This `0` ensures all assets are imported as modules, no data URIs
 });
 
 const includePathPlugin = includePaths(
   {
     root: __dirname, // TODO, consider changing this to include 'src' folder?
+    //TODO: consider using extensions array to clean up imports? Though being explicit is good and this would introduce
+    // ambiguity
   },
 );
 
