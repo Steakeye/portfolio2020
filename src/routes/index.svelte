@@ -98,7 +98,6 @@
     }
   }
 </style>
-
 <script context="module">
   import { pages } from '../resources/content.json';
   import styles from './index.scss';
@@ -111,12 +110,10 @@
     },
   } = pages;
 </script>
-
 <script>
   import Modal from '../components/modal/Modal.svelte';
   import Breakout from './_index/Breakout.svelte';
 </script>
-
 <article>
   <header>
     <h1>{title}</h1>
