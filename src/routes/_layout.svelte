@@ -29,13 +29,14 @@
     }
   }
 </style>
-
 <script context="module" lang="ts">
+  import SvelteOpenGraph from "svelte-seo";
   import MediaQuery from '../components/media-query/MediaQuery.svelte';
   import type { MediaQueryMap, MediaQueryMatchMap } from '../components/media-query/MediaQueryStore.d';
   import { ui } from '../resources/config.json';
   import { global } from '../resources/content.json';
   import Nav from '../partials/Nav.svelte';
+  import RobotsMetaData from './_layout/RobotsMetaData.svelte';
   import SteakeyeMetaLinks from './_layout/SteakeyeMetaLinks.svelte';
 
   function unquoteMediaQueries(mediaQueryMap: MediaQueryMap) {
@@ -58,18 +59,30 @@
   const year = new Date().getFullYear();
   const unquotedMediaQueries = unquoteMediaQueries(mediaQueries as MediaQueryMap);
 </script>
-
 <svelte:head>
   <title>{title}</title>
   <meta name="description" content="{description}" />
+  <RobotsMetaData />
   <SteakeyeMetaLinks />
+  <SvelteOpenGraph title="why does this work?!" description="test description" openGraph={{
+    title: 'Open Graph Title',
+    description: 'Open Graph Description',
+    url: 'https://www.example.com/page',
+    type: 'website',
+    images: [
+      {
+        url: 'https://www.example.com/images/og-image.jpg',
+        width: 850,
+        height: 650,
+        alt: 'Og Image Alt'
+      }
+     ]
+  }} />
 </svelte:head>
-
 <MediaQuery mediaQueries="{unquotedMediaQueries}">
   <header>
     <Nav />
   </header>
-
   <main class="content">
     <slot />
   </main>

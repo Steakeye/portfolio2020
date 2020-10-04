@@ -39,7 +39,8 @@
     "polka": "next",
     "ramda": "^0.27.1",
     "sirv": "^1.0.0",
-    "svelte-phaser": "0.0.6"
+    "svelte-phaser": "0.0.6",
+    "svelte-seo": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
