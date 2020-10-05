@@ -7,7 +7,7 @@
   "global": {
     "title": "Steakeye - Expert Front End Development Services",
     "metaData": {
-      "description": "Steakeye Ltd. provides expert front-end development services.",
+      "description": "Steakeye Ltd. provides expert front-end development services. NOW FOR HIRE!",
       "externalLinks": [
         {
           "relation":  "me",
@@ -25,7 +25,10 @@
           "relation":  "me",
           "link": "https://dev.to/steakeye"
         }
-      ]
+      ],
+      "openGraph": {
+        "imageAlt": "Steakeye Roundel Logo"
+      }
     },
     "devComment": "<template>\nGreetings fellow developer, thanks for viewing the source!\nTo check out this project why not go to https://github.com/Steakeye/portfolio2020\nOh, and why don't you check out the dev console too if you haven't already ;)</template>",
     "partials": {

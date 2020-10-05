@@ -1,6 +1,6 @@
 <script>
-    export let noIndex: boolean;
-    export let noFollow: boolean;
+    export let noIndex: boolean = false;
+    export let noFollow: boolean = false;
 </script>
 {#each ['robots', 'googlebot'] as robotName}
 <meta

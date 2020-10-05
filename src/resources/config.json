@@ -1,5 +1,6 @@
 {
   "appRoot": "steakeye",
+  "appRootURL": "'https://steakeye.com'",
   "ui": {
     "colors": {
       "brandBlack": "#473839",

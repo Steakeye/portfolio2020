@@ -30,23 +30,24 @@
   }
 </style>
 <script context="module" lang="ts">
-  import SvelteOpenGraph from "svelte-seo";
+  import SvelteSEO from "svelte-seo";
+  import { unquoteString } from '../utils/String.ts';
   import MediaQuery from '../components/media-query/MediaQuery.svelte';
   import type { MediaQueryMap, MediaQueryMatchMap } from '../components/media-query/MediaQueryStore.d';
-  import { ui } from '../resources/config.json';
+  import { ui, appRootURL } from '../resources/config.json';
   import { global } from '../resources/content.json';
   import Nav from '../partials/Nav.svelte';
-  import RobotsMetaData from './_layout/RobotsMetaData.svelte';
   import SteakeyeMetaLinks from './_layout/SteakeyeMetaLinks.svelte';
 
+  import steakeyeRoundel from '../assets/images/steakeye-roundel.svg';
+
   function unquoteMediaQueries(mediaQueryMap: MediaQueryMap) {
-    const nestedStringTest = /^('|")(.+)\1$/;
     const updatedMap = {};
 
     for (let key in mediaQueryMap) {
       const query = mediaQueryMap[key];
 
-      updatedMap[key] = nestedStringTest.test(query) ? JSON.parse(query.replace(nestedStringTest, `"$2"`)) : query;
+      updatedMap[key] = unquoteString(query);
     }
 
     return updatedMap;
@@ -55,29 +56,31 @@
   const {
     layout: { mediaQueries },
   } = ui;
-  const { title, metaData: { description }, partials: { footer: { copyright } } } = global;
+  const { title, metaData: { description, openGraph: { imageAlt } }, partials: { footer: { copyright } } } = global;
+  const startYear = 2020;
   const year = new Date().getFullYear();
+  const copyRightYears = year > startYear ? `${startYear} - ${year}`: year;
   const unquotedMediaQueries = unquoteMediaQueries(mediaQueries as MediaQueryMap);
 </script>
-<svelte:head>
-  <title>{title}</title>
-  <meta name="description" content="{description}" />
-  <RobotsMetaData />
-  <SteakeyeMetaLinks />
-  <SvelteOpenGraph title="why does this work?!" description="test description" openGraph={{
-    title: 'Open Graph Title',
-    description: 'Open Graph Description',
-    url: 'https://www.example.com/page',
+<SvelteSEO
+        {title}
+        {description}
+        openGraph={{
+    title: title,
+    description: description,
+    url: unquoteString(appRootURL),
     type: 'website',
     images: [
       {
-        url: 'https://www.example.com/images/og-image.jpg',
-        width: 850,
-        height: 650,
-        alt: 'Og Image Alt'
+        url: steakeyeRoundel,
+        width: 512,
+        height: 512,
+        alt: imageAlt,
       }
      ]
   }} />
+<svelte:head>
+  <SteakeyeMetaLinks />
 </svelte:head>
 <MediaQuery mediaQueries="{unquotedMediaQueries}">
   <header>
@@ -89,7 +92,7 @@
   <footer>
     <p class="copyright">
       {@html copyright}
-      {year}
+      {copyRightYears}
     </p>
   </footer>
 </MediaQuery>
