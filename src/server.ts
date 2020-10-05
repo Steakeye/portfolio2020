@@ -27,7 +27,6 @@ const helmetDirectivesDefault = {
 const { ['img-src']: oldImageSrc, ['script-src']: oldScriptSrc, ...serverHelmetDirectives } = helmetDirectivesDefault;
 
 function numberOnce(req, res, next) {
-    console.log('res', res)
     res.locals = res.locals ?? {};
   res.locals.nonce = uuidV4();
   next();
