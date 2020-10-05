@@ -40,7 +40,7 @@ polka() // You can also use Express
         directives: {
           ...serverHelmetDirectives,
           imgSrc: [...oldImageSrc, `blob:`],
-          connectSrc: dev ? [`'self'`, `localhost:10000`] : [], //enable watches and automatic refresh on dev only
+          connectSrc: dev ? [`'self'`, `localhost:10000`] : [`'self'`], //enable watches and automatic refresh on dev only
           scriptSrc: [
             ...oldScriptSrc,
             (req, res) => `'nonce-${(res as ServerResponse & { locals }).locals.nonce}'`,
@@ -50,7 +50,7 @@ polka() // You can also use Express
       },
     }),
     compression({ threshold: 0 }),
-    sirv(`public`, { dev }),
+    sirv(`public`, { dev, }),
     sapper.middleware(),
   )
   .listen(PORT, (err) => {
