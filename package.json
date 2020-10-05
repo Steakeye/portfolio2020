@@ -15,8 +15,9 @@
     "eslint": "eslint --cache --ext .js,.ts, src",
     "eslint:dump": "eslint --print-config ./.eslintrc.json",
     "eslint:fix": "npm run eslint --- --fix",
-    "fix": "npm run prettier && npm run eslint:fix && npm run stylelint:fix && npm run svelte:check",
-    "format-and-fix": "npm run prettier && npm run eslint --fix",
+    "fix:all": "npm run prettier && npm run eslint:fix && npm run stylelint:fix && npm run svelte:check",
+    "fix:code-and-styles": "npm run prettier && npm run eslint:fix && npm run stylelint:fix",
+    "fix:es-files": "npm run prettier && npm run eslint:fix",
     "prettier": "prettier --write src",
     "prettier:root": "npm run prettier:root:json && npm run prettier:root:js",
     "prettier:root:js": "prettier --write ./*.js",
@@ -34,11 +35,13 @@
     "custom-event": "^1.0.1",
     "destyle.css": "^1.0.15",
     "devtools-detect": "^3.0.1",
+    "helmet": "^4.1.1",
     "phaser": "^3.24.1",
     "polka": "next",
     "ramda": "^0.27.1",
     "sirv": "^1.0.0",
-    "svelte-phaser": "0.0.6"
+    "svelte-seo": "^1.0.1",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -92,13 +95,14 @@
     "stylelint-config-standard": "^20.0.0",
     "svelte": "^3.17.3",
     "svelte-check": "^1.0.0",
+    "svelte-phaser": "0.0.6",
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
     "typescript": "^4.0.3"
   },
   "lint-staged": {
     "src/**/*.(js|ts|json)": [
-      "npm run format-and-fix",
+      "npm run fix:es-files",
       "git add"
     ],
     "src/**/*.(svelte)": [

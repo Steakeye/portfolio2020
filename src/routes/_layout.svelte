@@ -6,7 +6,6 @@
   .content {
     position: relative;
     padding: 2rem;
-    //margin: 0 auto;
     margin-bottom: 2rem;
     font-size: 2em;
 
@@ -32,53 +31,82 @@
 </style>
 
 <script context="module" lang="ts">
+  import SvelteSEO from 'svelte-seo';
+  import { unquoteString } from '../utils/String.ts';
   import MediaQuery from '../components/media-query/MediaQuery.svelte';
-  import { ui } from '../resources/config.json';
-  import content from '../resources/content.json';
+  import type { MediaQueryMap, MediaQueryMatchMap } from '../components/media-query/MediaQueryStore.d';
+  import { ui, appRootURL, metaData } from '../resources/config.json';
+  import { global } from '../resources/content.json';
+  import Nav from '../partials/Nav.svelte';
+  import SteakeyeMetaLinks from './_layout/SteakeyeMetaLinks.svelte';
+  import TwitterMetaData from './_layout/TwitterMetaData.svelte';
 
-  function unquoteMediaQueries(mediaQueryMap: { [key: string]: string }) {
-    const nestedStringTest = /^('|")(.+)\1$/;
+  import steakeyeRoundel from '../assets/images/steakeye-roundel.svg';
+  import steakeyeRoundelPNG from '../assets/images/steakeye-roundel.png';
+
+  function unquoteMediaQueries(mediaQueryMap: MediaQueryMap) {
     const updatedMap = {};
 
     for (let key in mediaQueryMap) {
       const query = mediaQueryMap[key];
 
-      updatedMap[key] = nestedStringTest.test(query) ? JSON.parse(query.replace(nestedStringTest, `"$2"`)) : query;
+      updatedMap[key] = unquoteString(query);
     }
 
     return updatedMap;
   }
-
   const {
     layout: { mediaQueries },
   } = ui;
-  const { title, metaDescription } = content.global;
-  const copyRightMessage = content.global.partials.footer.copyright;
+  const {
+    twitter: { cardType: twitterCardType, userName: twitterAccount },
+  } = metaData;
+  const {
+    title,
+    metaData: {
+      description,
+      openGraph: { imageAlt },
+    },
+    partials: {
+      footer: { copyright },
+    },
+  } = global;
+  const startYear = 2020;
   const year = new Date().getFullYear();
-  const unquotedMediaQueries = unquoteMediaQueries(mediaQueries);
+  const copyRightYears = year > startYear ? `${startYear} - ${year}` : year;
+  const unquotedMediaQueries = unquoteMediaQueries(mediaQueries as MediaQueryMap);
+  const url = unquoteString(appRootURL);
+  const twitterUserName = unquoteString(twitterAccount);
 </script>
 
-<script>
-  import Nav from '../partials/Nav.svelte';
-</script>
-
+<SvelteSEO
+  {title}
+  {description}
+  openGraph="{{ title, description, url, type: 'website', images: [{ url: steakeyeRoundel, width: 512, height: 512, alt: imageAlt }] }}"
+/>
 <svelte:head>
-  <title>{title}</title>
-  <meta name="description" content="{metaDescription}" />
+  <TwitterMetaData
+    {title}
+    {description}
+    card="{twitterCardType}"
+    site="{twitterUserName}"
+    creator="{twitterUserName}"
+    image="{steakeyeRoundelPNG}"
+    {imageAlt}
+  />
+  <SteakeyeMetaLinks />
 </svelte:head>
-
 <MediaQuery mediaQueries="{unquotedMediaQueries}">
   <header>
     <Nav />
   </header>
-
-  <main class:content>
+  <main class="content">
     <slot />
   </main>
   <footer>
     <p class="copyright">
-      {@html copyRightMessage}
-      {year}
+      {@html copyright}
+      {copyRightYears}
     </p>
   </footer>
 </MediaQuery>

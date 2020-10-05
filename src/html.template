@@ -3,25 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-    <!--meta name="theme-color" content="#333333" /-->
 
     %sapper.base%
 
+    <!-- essential base css for whole site -->
     <link rel="stylesheet" href="assets/css/base.css" />
-    <link rel="stylesheet" href="assets/css/steakeye.css" />
     <!-- if there's any problem with links, look at cross origin credentials: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin#Example_Webmanifest_with_credentials -->
     ${faviconLinks}
 
+    <!-- essential css for the current page is inlined -->
     %sapper.styles%
 
     %sapper.head%
   </head>
   <body>
-    <script>
+    <script nonce="%sapper.cspnonce%">
         document.body.classList.add('js-enabled');
     </script>
     <div id="${appRoot}">%sapper.html%</div>
   </body>
+    <!-- remaining css for the site -->
+    <link rel="stylesheet" href="assets/css/steakeye.css" />
     ${ devComment }
     %sapper.scripts%
 </html>

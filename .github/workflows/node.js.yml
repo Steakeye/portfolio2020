@@ -76,7 +76,7 @@ jobs:
     - name: Build app
       run: npm run build --if-present
       env:
-        NODE_ENV: productionlo
+        NODE_ENV: production
     - name: Keep only runtime dependencies
       run: npm prune
       env:
