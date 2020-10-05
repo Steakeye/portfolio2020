@@ -29,6 +29,7 @@
     }
   }
 </style>
+
 <script lang="ts">
   import content from '../resources/content.json';
 

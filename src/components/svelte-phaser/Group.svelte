@@ -29,4 +29,5 @@
     instance.destroy(true);
   });
 </script>
+
 <slot />

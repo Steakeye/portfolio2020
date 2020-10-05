@@ -51,4 +51,5 @@
     };
   });
 </script>
+
 <Rectangle bind:instance name="bat" bind:x {y} {fillColor} {strokeColor} strokeWidth="1" {width} {height} />

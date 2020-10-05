@@ -82,6 +82,7 @@
     }
   }
 </style>
+
 <script context="module" lang="ts">
   import type { Phaser } from 'phaser';
   import getter from 'ramda/src/path';
@@ -120,6 +121,7 @@
     return !!(mediaQueryMatches && mediaQueryMatches.landscape);
   }
 </script>
+
 <script lang="ts">
   import type { SvelteComponent } from 'svelte';
   import { onMount } from 'svelte';
@@ -183,6 +185,7 @@
     playState = gameState(GameState.READY);
   }
 </script>
+
 <section bind:this="{breakoutContainer}" class="breakout-wrapper {className}">
   {#if !mounted}
     <p class="loading-message">Loading...</p>
