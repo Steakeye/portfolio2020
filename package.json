@@ -15,8 +15,9 @@
     "eslint": "eslint --cache --ext .js,.ts, src",
     "eslint:dump": "eslint --print-config ./.eslintrc.json",
     "eslint:fix": "npm run eslint --- --fix",
-    "fix": "npm run prettier && npm run eslint:fix && npm run stylelint:fix && npm run svelte:check",
-    "format-and-fix": "npm run prettier && npm run eslint --fix",
+    "fix:all": "npm run prettier && npm run eslint:fix && npm run stylelint:fix && npm run svelte:check",
+    "fix:code-and-styles": "npm run prettier && npm run eslint:fix && npm run stylelint:fix",
+    "fix:es-files": "npm run prettier && npm run eslint:fix",
     "prettier": "prettier --write src",
     "prettier:root": "npm run prettier:root:json && npm run prettier:root:js",
     "prettier:root:js": "prettier --write ./*.js",
@@ -101,7 +102,7 @@
   },
   "lint-staged": {
     "src/**/*.(js|ts|json)": [
-      "npm run format-and-fix",
+      "npm run fix:es-files",
       "git add"
     ],
     "src/**/*.(svelte)": [
