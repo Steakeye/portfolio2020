@@ -4,9 +4,10 @@
   @use 'src/styles/fonts';
 
   nav {
-    margin-top: layout.$navMarginTopRem;
+    margin-bottom: layout.$navMarginTopRem;
 
     @include layout.js-enabled {
+      margin-top: layout.$navMarginTopRem;
       position: sticky;
       z-index: 5;
     }

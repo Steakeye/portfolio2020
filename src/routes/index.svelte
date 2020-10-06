@@ -75,6 +75,13 @@
     background-color: colour.$brand-pink-dark;
     text-align: left;
 
+    $content-width: 52rem;
+
+    @include layout.for-device(layout.$desktop--small) {
+      max-width: $content-width;
+      margin: auto;
+    }
+
     h3 {
       font-family: Bungee;
       border-bottom: 1px solid colour.$brand-yellow;

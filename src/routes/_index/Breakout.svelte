@@ -11,8 +11,6 @@
   .breakout-wrapper {
     $bottom-margin: layout.$footer-height;
 
-    background-image: linear-gradient(0deg, colour.$brand-black, transparent);
-
     @include layout.js-enabled {
       position: fixed;
       left: 0;
@@ -35,7 +33,7 @@
       }
 
       p {
-        background-color: colour.$brand-black;
+        background-color: rgba(colour.$brand-black, .75);
         padding: .3rem .6rem .1rem;
       }
     }

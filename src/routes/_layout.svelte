@@ -4,6 +4,9 @@
   @use '../styles/layout';
 
   .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     position: relative;
     padding: 2rem;
     margin-bottom: 2rem;

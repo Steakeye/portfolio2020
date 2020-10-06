@@ -30,9 +30,9 @@
     overflow: hidden;
     max-height: 100vh;
 
-    @include layout.for-device(layout.$tablet--portrait) {
+    /*@include layout.for-device(layout.$tablet--portrait) {
       width: 50vw;
-    }
+    }*/
 
     .close-button {
       @include elements.extendIconOnlyButton;
