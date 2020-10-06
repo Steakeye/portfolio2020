@@ -18,7 +18,6 @@ html {
 }
 
 body {
-  position: fixed;
   height: 100%;
   width: 100%;
   margin: 0;
@@ -39,6 +38,10 @@ body {
   color: colour.$brand-white;
   background-color: colour.$brand-pink-dark;
 
+  @include layout.js-enabled {
+    position: fixed;
+  }
+
   &:after {
     content: '';
     background-image: url("/assets/images/game/steakeye-roundel.svg");
@@ -49,7 +52,8 @@ body {
     height: 100vw;
     width: 100vw;
     margin-bottom: 2rem;
-    position: absolute;
+    //position: absolute;
+    position: fixed;
     bottom: 0;
     z-index: -1;
     opacity: .62;
@@ -109,7 +113,9 @@ pre {
   font-family: 'Space Mono', menlo, inconsolata, monospace;
 }
 
-[id=steakeye] {
+$appRootSelector: '[id=steakeye]';
+
+@include layout.js-enabled($appRootSelector) {
   position: fixed;
   overflow-y: auto;
   height: 100%;

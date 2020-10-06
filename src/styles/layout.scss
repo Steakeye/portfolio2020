@@ -1,3 +1,4 @@
+//@use 'sass:meta';
 @use "../resources/config.json" as config;
 
 $layoutConfig: map-get(config.$ui, layout);
@@ -71,9 +72,15 @@ $layoutConfig: map-get(config.$ui, layout);
 }
 
 //JS flag
-@mixin js-enabled {
-  :global(body.js-enabled) & {
-    @content;
+@mixin js-enabled($selector: null) {
+  @if(variable-defined($selector)) {
+    :global(body.js-enabled) #{$selector} {
+      @content;
+    }
+  } @else {
+    :global(body.js-enabled) & {
+      @content;
+    }
   }
 }
 

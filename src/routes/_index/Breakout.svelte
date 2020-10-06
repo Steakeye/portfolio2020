@@ -22,6 +22,20 @@
     padding-bottom: 2rem;
     background-image: linear-gradient(0deg, colour.$brand-black, transparent);
 
+    > noscript {
+      position: fixed;
+      bottom: 2rem;
+      margin: auto 3rem;
+      width: calc(100vw - 6rem);
+      text-align: center;
+
+      p {
+        display: inline-block;
+        background-color: colour.$brand-black;
+        padding: .3rem .6rem .1rem;
+      }
+    }
+
     .loading-message {
       @include layout.extendVisuallyHidden;
 
@@ -30,7 +44,7 @@
         text-align: center;
         width: 100vw;
         position: fixed;
-        bottom: 2rem;
+        bottom: 6rem;
       }
     }
 
