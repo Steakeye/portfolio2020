@@ -41,7 +41,7 @@
   import { unquoteString } from '../utils/String.ts';
   import MediaQuery from '../components/media-query/MediaQuery.svelte';
   import type { MediaQueryMap, MediaQueryMatchMap } from '../components/media-query/MediaQueryStore.d';
-  import { ui, appRootURL, metaData } from '../resources/config.json';
+  import { ui, appRootURL } from '../resources/config.json';
   import { global } from '../resources/content.json';
   import Nav from '../partials/Nav.svelte';
   import SteakeyeMetaLinks from './_layout/SteakeyeMetaLinks.svelte';
@@ -63,6 +63,7 @@
   }
   const {
     layout: { mediaQueries },
+          metaData,
   } = ui;
   const {
     twitter: { cardType: twitterCardType, userName: twitterAccount },
