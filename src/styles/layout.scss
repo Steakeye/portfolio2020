@@ -1,4 +1,4 @@
-//@use 'sass:meta';
+@use 'sass:map' as sassMap;
 @use "../resources/config.json" as config;
 
 $layoutConfig: map-get(config.$ui, layout);
@@ -137,6 +137,12 @@ $print: 'print';
 }
 
 //Dimensions
+$baseUnit: sassMap.get($layoutConfig, baseUnit);
+
 $default-margin: 1rem;
+
+$navLayoutConfig: sassMap.get($layoutConfig, nav);
+$navMarginTop: sassMap.get($navLayoutConfig, marginTop);
+$navMarginTopRem: #{$navMarginTop/$baseUnit}rem;
 
 $footer-height: 2.4rem;

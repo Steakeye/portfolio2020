@@ -11,26 +11,30 @@
   .breakout-wrapper {
     $bottom-margin: layout.$footer-height;
 
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    /* mobile viewport bug fix */
-    max-height: -webkit-fill-available;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
     background-image: linear-gradient(0deg, colour.$brand-black, transparent);
 
-    > noscript {
+    @include layout.js-enabled {
       position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      /* mobile viewport bug fix */
+      max-height: -webkit-fill-available;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    > noscript {
       bottom: 2rem;
-      margin: auto 3rem;
-      width: calc(100vw - 6rem);
       text-align: center;
+      display: block;
+
+      @include layout.js-enabled {
+        position: fixed;
+      }
 
       p {
-        display: inline-block;
         background-color: colour.$brand-black;
         padding: .3rem .6rem .1rem;
       }

@@ -11,7 +11,6 @@
 
   article > header {
     > h1 {
-      @extend %renderOver;
       text-align: center;
       font-family: Bungee Shade;
       font-weight: 500;
@@ -19,6 +18,7 @@
       font-size: 4rem;
 
       @include layout.js-enabled {
+        @extend %renderOver;
         margin: -4rem auto 0 -2rem;
         width: 100vw;
         top: 50vh;
@@ -43,6 +43,7 @@
   }
 
   .promo-message {
+    @extend %renderOver;
     @include colour.extendStandardBoxShadow;
 
     $promoFlagDimensions: 20rem;

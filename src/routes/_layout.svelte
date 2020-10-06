@@ -14,6 +14,12 @@
     }
   }
 
+  header {
+    position: sticky;
+    top: layout.$navMarginTopRem;
+    z-index: 5;
+  }
+
   footer {
     position: fixed;
     bottom: 0;
