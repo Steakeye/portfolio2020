@@ -11,16 +11,32 @@
   .breakout-wrapper {
     $bottom-margin: layout.$footer-height;
 
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    /* mobile viewport bug fix */
-    max-height: -webkit-fill-available;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    background-image: linear-gradient(0deg, colour.$brand-black, transparent);
+    @include layout.js-enabled {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      /* mobile viewport bug fix */
+      max-height: -webkit-fill-available;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    > noscript {
+      bottom: 2rem;
+      text-align: center;
+      display: block;
+
+      @include layout.js-enabled {
+        position: fixed;
+      }
+
+      p {
+        background-color: rgba(colour.$brand-black, 0.75);
+        padding: 0.3rem 0.6rem 0.1rem;
+      }
+    }
 
     .loading-message {
       @include layout.extendVisuallyHidden;
@@ -30,7 +46,7 @@
         text-align: center;
         width: 100vw;
         position: fixed;
-        bottom: 2rem;
+        bottom: 6rem;
       }
     }
 

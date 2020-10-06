@@ -11,32 +11,39 @@
 
   article > header {
     > h1 {
-      @extend %renderOver;
       text-align: center;
-      margin: -4rem auto 0 -2rem;
-      position: fixed;
-      width: 100vw;
-      top: 50vh;
       font-family: Bungee Shade;
       font-weight: 500;
       color: colour.$brand-yellow;
       font-size: 4rem;
+
+      @include layout.js-enabled {
+        @extend %renderOver;
+        margin: -4rem auto 0 -2rem;
+        width: 100vw;
+        top: 50vh;
+        position: fixed;
+      }
     }
 
     > h2 {
       color: colour.$brand-white;
       font-size: 2.5rem;
       font-family: Pacifico;
-      margin: 1em -2rem;
-      position: fixed;
       text-align: center;
-      top: 50vh;
-      padding: 0 4rem;
-      width: 100vw;
+
+      @include layout.js-enabled {
+        margin: 1em -2rem;
+        position: fixed;
+        top: 50vh;
+        padding: 0 4rem;
+        width: 100vw;
+      }
     }
   }
 
   .promo-message {
+    @extend %renderOver;
     @include colour.extendStandardBoxShadow;
 
     $promoFlagDimensions: 20rem;
@@ -67,6 +74,13 @@
     padding: 1rem;
     background-color: colour.$brand-pink-dark;
     text-align: left;
+
+    $content-width: 52rem;
+
+    @include layout.for-device(layout.$tablet--portrait) {
+      max-width: $content-width;
+      margin: auto;
+    }
 
     h3 {
       font-family: Bungee;

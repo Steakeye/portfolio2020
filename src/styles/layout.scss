@@ -1,3 +1,4 @@
+@use 'sass:map' as sassMap;
 @use "../resources/config.json" as config;
 
 $layoutConfig: map-get(config.$ui, layout);
@@ -71,9 +72,15 @@ $layoutConfig: map-get(config.$ui, layout);
 }
 
 //JS flag
-@mixin js-enabled {
-  :global(body.js-enabled) & {
-    @content;
+@mixin js-enabled($selector: null) {
+  @if ($selector != null) {
+    :global(body.js-enabled) #{$selector} {
+      @content;
+    }
+  } @else {
+    :global(body.js-enabled) & {
+      @content;
+    }
   }
 }
 
@@ -130,6 +137,12 @@ $print: 'print';
 }
 
 //Dimensions
+$baseUnit: sassMap.get($layoutConfig, baseUnit);
+
 $default-margin: 1rem;
+
+$navLayoutConfig: sassMap.get($layoutConfig, nav);
+$navMarginTop: sassMap.get($navLayoutConfig, marginTop);
+$navMarginTopRem: #{$navMarginTop/$baseUnit}rem;
 
 $footer-height: 2.4rem;

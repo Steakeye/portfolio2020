@@ -1,13 +1,19 @@
 {
   "appRoot": "steakeye",
   "appRootURL": "'https://steakeye.com'",
-  "metaData": {
-    "twitter": {
-      "cardType": "summery",
-      "userName": "'@steakeye'"
+  "server": {
+    "thirdParty": {
+      "fontSources": ["'https://fonts.gstatic.com'"],
+      "styleSources": ["'https://fonts.googleapis.com'"]
     }
   },
   "ui": {
+    "metaData": {
+      "twitter": {
+        "cardType": "summery",
+        "userName": "'@steakeye'"
+      }
+    },
     "colors": {
       "brandBlack": "#473839",
       "brandWhite": "#ECE0D0",

@@ -1,19 +1,16 @@
 <style lang="scss">
-  @use 'sass:map' as sassMap;
-  @use 'sass:string' as sassString;
-  @use 'sass:color' as sassColor;
   @use 'src/styles/colour';
   @use 'src/styles/layout';
   @use 'src/styles/fonts';
 
-  $navLayoutConfig: sassMap.get(layout.$layoutConfig, nav);
-  $baseUnit: sassMap.get(layout.$layoutConfig, baseUnit);
-  $navMarginTop: sassMap.get($navLayoutConfig, marginTop);
-
   nav {
-    position: sticky;
-    margin-top: #{$navMarginTop/$baseUnit}rem;
-    z-index: 5;
+    margin-bottom: layout.$navMarginTopRem;
+
+    @include layout.js-enabled {
+      margin-top: layout.$navMarginTopRem;
+      position: sticky;
+      z-index: 5;
+    }
 
     ul {
       display: flex;
@@ -22,6 +19,11 @@
 
       li {
         display: block;
+        background-color: colour.$brand-pink-dark;
+
+        @include layout.js-enabled {
+          background-color: transparent;
+        }
 
         a {
           //TODO: Move this map into the config.json
