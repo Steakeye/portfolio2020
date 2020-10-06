@@ -66,7 +66,7 @@
   }
   const {
     layout: { mediaQueries },
-          metaData,
+    metaData,
   } = ui;
   const {
     twitter: { cardType: twitterCardType, userName: twitterAccount },

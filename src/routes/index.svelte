@@ -77,7 +77,7 @@
 
     $content-width: 52rem;
 
-    @include layout.for-device(layout.$desktop--small) {
+    @include layout.for-device(layout.$tablet--portrait) {
       max-width: $content-width;
       margin: auto;
     }

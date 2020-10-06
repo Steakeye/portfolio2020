@@ -6,10 +6,10 @@ import compression from 'compression';
 import helmet from 'helmet';
 import * as sapper from '@sapper/server';
 import { server as serverConfig } from './resources/config.json';
-import {unquoteString} from "./utils/String";
+import { unquoteString } from './utils/String';
 
-//This ensures css inclusion? We're not emitting scss
-//import './styles/global.scss';
+// This ensures css inclusion? We're not emitting scss
+// import './styles/global.scss';
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === `development`;
@@ -28,11 +28,19 @@ const helmetDirectivesDefault = {
   'upgrade-insecure-requests': [],
 };
 
-const { thirdParty: { fontSources, styleSources } } = serverConfig;
+const {
+  thirdParty: { fontSources, styleSources },
+} = serverConfig;
 const fontDirectives = fontSources.map(unquoteString);
 const styleDirectives = styleSources.map(unquoteString);
 const connectSrcDirectives = [`'self'`, ...styleDirectives, ...fontDirectives];
-const { 'font-src': oldFontSrc, 'img-src': oldImageSrc, 'script-src': oldScriptSrc, 'style-src': oldStyleSrc, ...serverHelmetDirectives } = helmetDirectivesDefault;
+const {
+  'font-src': oldFontSrc,
+  'img-src': oldImageSrc,
+  'script-src': oldScriptSrc,
+  'style-src': oldStyleSrc,
+  ...serverHelmetDirectives
+} = helmetDirectivesDefault;
 
 function numberOnce(req, res, next) {
   res.locals = res.locals ?? {};

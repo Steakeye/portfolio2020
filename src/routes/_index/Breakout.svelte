@@ -33,8 +33,8 @@
       }
 
       p {
-        background-color: rgba(colour.$brand-black, .75);
-        padding: .3rem .6rem .1rem;
+        background-color: rgba(colour.$brand-black, 0.75);
+        padding: 0.3rem 0.6rem 0.1rem;
       }
     }
 
