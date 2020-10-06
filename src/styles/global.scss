@@ -115,9 +115,13 @@ pre {
 
 $appRootSelector: '[id=steakeye]';
 
-@include layout.js-enabled($appRootSelector) {
-  position: fixed;
+[id=steakeye] {
   overflow-y: auto;
-  height: 100%;
-  width: 100%;
+
+  @include layout.js-enabled {
+    position: fixed;
+    overflow-y: hidden;
+    height: 100%;
+    width: 100%;
+  }
 }

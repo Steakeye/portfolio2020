@@ -73,7 +73,7 @@ $layoutConfig: map-get(config.$ui, layout);
 
 //JS flag
 @mixin js-enabled($selector: null) {
-  @if(variable-defined($selector)) {
+  @if($selector != null) {
     :global(body.js-enabled) #{$selector} {
       @content;
     }
