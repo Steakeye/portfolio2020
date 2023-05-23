@@ -1,0 +1,148 @@
+@use 'sass:map' as sassMap;
+@use "../resources/config.json" as config;
+
+$layoutConfig: map-get(config.$ui, layout);
+
+%clearfix {
+  &:before,
+  &:after { content: ''; display: table; clear: both; }
+}
+
+//A version that excludes clipping is useful when using visible pseudo elements ':before' & ':after'
+%visuallyHiddenNoClip {
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.visually-hidden-no-clip {
+  @extend %visuallyHiddenNoClip;
+}
+
+@mixin extendVisuallyHiddenNoClip {
+  @extend %visuallyHiddenNoClip;
+}
+
+%visuallyHidden {
+  @extend %visuallyHiddenNoClip;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.visually-hidden {
+  @extend %visuallyHidden;
+}
+
+@mixin extendVisuallyHidden {
+  @extend %visuallyHidden;
+}
+
+%overrideVisuallyHidden {
+  height: initial;
+  width: initial;
+  clip: initial;
+  overflow: initial;
+  clip-path: initial;
+  white-space: initial;
+  position: initial;
+}
+
+%overrideVisuallyHiddenClip {
+  clip: initial;
+  clip-path: initial;
+}
+
+.override-visually-hidden {
+  @extend %overrideVisuallyHidden;
+}
+
+.override-visually-hidden-clip {
+  @extend %overrideVisuallyHiddenClip;
+}
+
+@mixin extendOverrideVisuallyHidden {
+  @extend %overrideVisuallyHidden;
+}
+
+@mixin extendOverrideVisuallyHiddenClip {
+  @extend %overrideVisuallyHiddenClip;
+}
+
+//JS flag
+@mixin js-enabled($selector: null) {
+  @if ($selector != null) {
+    :global(body.js-enabled) #{$selector} {
+      @content;
+    }
+  } @else {
+    :global(body.js-enabled) & {
+      @content;
+    }
+  }
+}
+
+//Media  Queries
+$phone: 'phone';
+$tablet--portrait: 'tablet--portrait';
+$tablet--landscape: 'tablet--landscape';
+$desktop--small: 'desktop--small';
+$desktop: 'desktop';
+$desktop--large: 'desktop--large';
+$retina: 'retina';
+$landscape: 'landscape';
+$print: 'print';
+
+//For more details on other retina options, see: //https://css-tricks.com/snippets/css/retina-display-media-query/
+@mixin for-device($device) {
+  @if $device == $phone {
+    @media (max-width: 599px) {
+      @content;
+    }
+  } @else if $device == $tablet--portrait {
+    @media (min-width: 600px) {
+      @content;
+    }
+  } @else if $device == $desktop--small {
+    @media (min-width: 800px) and (hover: hover) {
+      @content;
+    }
+  } @else if $device == $tablet--landscape {
+    @media (min-width: 900px) and (hover: none) and (orientation: landscape) {
+      @content;
+    }
+  } @else if $device == $desktop {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else if $device == $desktop--large {
+    @media (min-width: 1800px) {
+      @content;
+    }
+  } @else if $device == $retina {
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      @content;
+    }
+  } @else if $device == $landscape {
+    @media (orientation: landscape) {
+      @content;
+    }
+  } @else if $device == $print {
+    @media print {
+      @content;
+    }
+  }
+}
+
+//Dimensions
+$baseUnit: sassMap.get($layoutConfig, baseUnit);
+
+$default-margin: 1rem;
+
+$navLayoutConfig: sassMap.get($layoutConfig, nav);
+$navMarginTop: sassMap.get($navLayoutConfig, marginTop);
+$navMarginTopRem: #{$navMarginTop/$baseUnit}rem;
+
+$footer-height: 2.4rem;
