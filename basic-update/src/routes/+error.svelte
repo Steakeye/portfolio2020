@@ -18,6 +18,8 @@
 
 </script>
 <style lang="scss">
+  @use '../styles/fonts';
+
   h1,
   p {
     margin: 0 auto;
@@ -29,6 +31,15 @@
 
   p {
     margin: 1em auto;
+  }
+
+  a.back:before {
+    @include fonts.coreUIIcon(chevron-left);
+    font-size: 0.8em;
+    margin-right: 0.2em;
+    vertical-align: text-top;
+    text-decoration: none;
+    display: inline-block;
   }
 
   @media (min-width: 480px) {
