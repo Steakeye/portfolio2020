@@ -8,7 +8,6 @@ export default defineConfig({
 			targets: [
 				{
 					src: 'node_modules/@coreui/icons/fonts',
-					//dest: 'public/assets'
 					dest: '/'
 				},
 			]

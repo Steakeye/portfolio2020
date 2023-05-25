@@ -1,4 +1,4 @@
-@import "/resources/config.json";
+@import "$lib/resources/config.json";
 
 $brandColours: map-get($ui, colors);
 

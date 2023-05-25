@@ -1,1 +1,0 @@
-<div>FUCK!! in src!!</div>
