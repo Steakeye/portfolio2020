@@ -12,7 +12,8 @@
         margin-bottom: 2rem;
         font-size: 2em;
 
-        > :global(#{type.$headers}, p) {
+        //> :global(#{type.$headers}, p) {
+        > #{type.$headers}, p {
             color: colour.$brand-white;
         }
     }
@@ -38,4 +39,10 @@
         }
     }
 </style>
-<div>layout.svelte!! in routes!!</div>
+<div class='content'>
+  <p>layout.svelte!! in routes!!</p>
+</div>
+
+<main class="content">
+    <slot />
+</main>
