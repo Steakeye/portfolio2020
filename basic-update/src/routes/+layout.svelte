@@ -13,9 +13,35 @@
         font-size: 2em;
 
         //> :global(#{type.$headers}, p) {
-        > #{type.$headers}, p {
-            color: colour.$brand-white;
+      //https://sass-lang.com/documentation/at-rules/control/each
+      //@each $size in $sizes { }
+        :global(& h1),
+        :global(.content h1),
+        :global(& p) {
+        //> #{type.$headers}, p {
+            color: red;
         }
+    }
+
+    //$contextualisedHeader: #{ @each $size in type.$headers { @return #{$size}} }
+    //$thing: @each $size in type.$headers { @return #{$size}};
+    @function contextualisedHeader($context)
+    {
+      $result: ();
+      @each $size in type.$headers {
+        $result: append($result, $context + ' > ' + #{$size}, 'comma');
+      }
+
+      @return $result
+    }
+
+    $topLevelHeaders: contextualisedHeader('.content');
+    @debug "original values: #{type.$headers}";
+    @debug "contextualisedHeader values: #{$topLevelHeaders}";
+
+    :global(#{$topLevelHeaders}, .content > p) {
+      //> #{type.$headers}, p {
+      color: colour.$brand-white;
     }
 
     header {
