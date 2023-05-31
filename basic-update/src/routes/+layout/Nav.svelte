@@ -32,7 +32,7 @@
             cv: short-text,
             github: github,
             linkedIn: linkedin,
-            twitter: twitter,
+            twitter: twoo, // Seems to be a bug in the font scss, so this is the workaround mapping
             email: envelope-closed,
           );
 
