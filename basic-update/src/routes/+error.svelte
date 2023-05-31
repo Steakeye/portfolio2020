@@ -1,5 +1,5 @@
 <script context="module">
-    import content from '../resources/content.json';
+    import content from '$lib/resources/content.json';
 
     const {
         pages: {
@@ -18,7 +18,7 @@
 
 </script>
 <style lang="scss">
-  @use '../styles/fonts';
+  @use '$lib/styles/fonts';
 
   h1,
   p {

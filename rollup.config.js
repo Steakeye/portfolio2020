@@ -26,16 +26,16 @@ import pkg from './package.json';
 import { appRoot } from './src/resources/config.json';
 import { global as globalStrings } from './src/resources/content.json';
 
-const preProcessConfig = require('./svelte.config').preprocess;
+const preProcessConfig = require(`./svelte.config`).preprocess;
 
 const { devComment } = globalStrings;
 
-const cssFolderPath = 'public/assets/css/';
-const faviconAssetPath = '/favicon/';
+const cssFolderPath = `public/assets/css/`;
+const faviconAssetPath = `/favicon/`;
 const faviconOutputPath = `public${faviconAssetPath}`;
 
 const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
+const dev = mode === `development`;
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 function faviconCallback(error, response) {
@@ -64,12 +64,12 @@ function faviconCallback(error, response) {
   return successResult;
 }
 
-const onWarn = (warning, onWarnFn) => (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message))
-  || (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message))
+const onWarn = (warning, onWarnFn) => (warning.code === `MISSING_EXPORT` && /'preload'/.test(warning.message))
+  || (warning.code === `CIRCULAR_DEPENDENCY` && /[/\\]@sapper[/\\]/.test(warning.message))
   || onWarnFn(warning);
 
 const postCssPluginConfig = (client = true) => postcss({
-  extract: client ? 'base.css' : false,
+  extract: client ? `base.css` : false,
   onExtract: (processedCSSWrapper) => {
     const result = processedCSSWrapper();
     fs.mkdirSync(cssFolderPath, { recursive: true });
@@ -84,31 +84,31 @@ const postCssPluginConfig = (client = true) => postcss({
   sourceMap: dev,
   minimize: !dev,
   modules: true,
-  extensions: ['.css', '.scss'],
+  extensions: [`.css`, `.scss`],
   use: [
-    ['sass', {
+    [`sass`, {
       importer: jsonImporter(),
     }],
   ],
   loaders: [customPostcssSassLoader],
   plugins: [postcssSass({
-    includePaths: ['node_modules', 'src'],
+    includePaths: [`node_modules`, `src`],
     importer: [jsonImporter(), tildeSassImporter],
   })],
 });
 
 const urlImportConfig = (client = true) => importUrl({
   emitFiles: client,
-  sourceDir: path.join(__dirname, 'src'),
-  destDir: 'public',
-  fileName: '[dirname][name][extname]',
+  sourceDir: path.join(__dirname, `src`),
+  destDir: `public`,
+  fileName: `[dirname][name][extname]`,
   limit: 0, // This `0` ensures all assets are imported as modules, no data URIs
 });
 
 const includePathPlugin = includePaths(
   {
     root: __dirname, // TODO, consider changing this to include 'src' folder?
-    //TODO: consider using extensions array to clean up imports? Though being explicit is good and this would introduce
+    // TODO: consider using extensions array to clean up imports? Though being explicit is good and this would introduce
     // ambiguity
   },
 );
@@ -119,16 +119,16 @@ const cssOutputFunc = (css) => {
 
 export default {
   client: {
-    input: config.client.input().replace(/.js$/, '.ts'),
+    input: config.client.input().replace(/.js$/, `.ts`),
     output: {
       ...config.client.output(),
       // `assetFileNames` has to be a function in order to workaround the favicon plugin overriding the path when it's a
       // string
-      assetFileNames: () => '[name]-[hash][extname]',
+      assetFileNames: () => `[name]-[hash][extname]`,
     },
     plugins: [
       cleaner({
-        targets: ['public'],
+        targets: [`public`],
       }),
       includePathPlugin,
       replace({
@@ -150,28 +150,28 @@ export default {
       postCssPluginConfig(),
       resolve({
         browser: true,
-        dedupe: ['svelte'],
+        dedupe: [`svelte`],
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
 
       legacy
         && babel({
-          extensions: ['.js', '.mjs', '.html', '.svelte'],
-          babelHelpers: 'runtime',
-          exclude: ['node_modules/@babel/**'],
+          extensions: [`.js`, `.mjs`, `.html`, `.svelte`],
+          babelHelpers: `runtime`,
+          exclude: [`node_modules/@babel/**`],
           presets: [
             [
-              '@babel/preset-env',
+              `@babel/preset-env`,
               {
-                targets: '> 0.25%, not dead',
+                targets: `> 0.25%, not dead`,
               },
             ],
           ],
           plugins: [
-            '@babel/plugin-syntax-dynamic-import',
+            `@babel/plugin-syntax-dynamic-import`,
             [
-              '@babel/plugin-transform-runtime',
+              `@babel/plugin-transform-runtime`,
               {
                 useESModules: true,
               },
@@ -184,7 +184,7 @@ export default {
           module: true,
         }),
       favicons({
-        source: 'src/assets/images/steakeye-roundel.svg',
+        source: `src/assets/images/steakeye-roundel.svg`,
         configuration: {
           appName: pkg.name,
           appDescription: pkg.description,
@@ -195,23 +195,23 @@ export default {
       }),
       customSvelteHtmlTemplate({
         replacePairs: [{
-          templateKey: 'appRoot',
+          templateKey: `appRoot`,
           content: appRoot,
         }, {
-          templateKey: 'devComment',
+          templateKey: `devComment`,
           content: devComment,
         }, {
-          templateKey: 'faviconLinks',
-          contentPath: ['__favicons_output'],
+          templateKey: `faviconLinks`,
+          contentPath: [`__favicons_output`],
           contentTransformer(links) {
-            return links.join('\n    ');
+            return links.join(`\n    `);
           },
         }],
       }),
       copy({
         targets: [
-          { src: 'static/*', dest: 'public' },
-          { src: 'node_modules/@coreui/icons/fonts', dest: 'public/assets' },
+          { src: `assets/*`, dest: `public` },
+          { src: `node_modules/@coreui/icons/fonts`, dest: `public/assets` },
         ],
       }),
     ],
@@ -221,7 +221,7 @@ export default {
   },
 
   server: {
-    input: config.server.input().server.replace(/.js$/, '.ts'),
+    input: config.server.input().server.replace(/.js$/, `.ts`),
     output: config.server.output(),
     plugins: [
       includePathPlugin,
@@ -232,7 +232,7 @@ export default {
       json(),
       urlImportConfig(false),
       svelte({
-        generate: 'ssr',
+        generate: `ssr`,
         hydratable: true,
         dev,
         preprocess: preProcessConfig,
@@ -240,19 +240,19 @@ export default {
       // This handles baseline css: reset css, globals
       postCssPluginConfig(false),
       resolve({
-        dedupe: ['svelte'],
+        dedupe: [`svelte`],
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
     ],
-    external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
+    external: Object.keys(pkg.dependencies).concat(require(`module`).builtinModules),
 
-    preserveEntrySignatures: 'strict',
+    preserveEntrySignatures: `strict`,
     onwarn: onWarn,
   },
 
   serviceworker: {
-    input: config.serviceworker.input().replace(/.js$/, '.ts'),
+    input: config.serviceworker.input().replace(/.js$/, `.ts`),
     output: config.serviceworker.output(),
     plugins: [
       includePathPlugin,
