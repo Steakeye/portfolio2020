@@ -3,6 +3,8 @@
     @use '$lib/styles/type';
     @use '$lib/styles/layout';
 
+    @import "$lib/styles/global";
+
     .content {
         flex: 1;
         display: flex;

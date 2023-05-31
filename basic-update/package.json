@@ -35,5 +35,8 @@
 		"vite-plugin-static-copy": "^0.15.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"destyle.css": "^4.0.0"
+	}
 }
