@@ -1,9 +1,10 @@
-@use 'destyle.css/destyle.css';
 @use 'colour';
 @use 'fonts';
 @use 'layout';
 @use 'type';
 @use 'elements';
+
+@import 'destyle.css/destyle';
 
 /*
 * Begin global styles
@@ -44,7 +45,7 @@
 
   &:after {
     content: '';
-    background-image: url("/assets/images/game/steakeye-roundel.svg");
+    background-image: url("$lib/assets/images/game/steakeye-roundel.svg");
     background-repeat: no-repeat;
     background-size: contain;
     background-position-y: 50vw;

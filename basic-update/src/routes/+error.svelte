@@ -21,12 +21,13 @@
   @use '$lib/styles/fonts';
 
   h1,
+  h2,
   p {
     margin: 0 auto;
   }
 
   h2 {
-    margin: 0 0 0.5em 0;
+    margin-bottom: 0.5em;
   }
 
   p {
