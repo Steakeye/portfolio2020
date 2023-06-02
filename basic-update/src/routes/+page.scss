@@ -1,0 +1,12 @@
+@use '$lib/styles/colour';
+@use '$lib/styles/layout';
+
+.breakoutWrapper {
+  margin: auto -2rem -2rem;
+
+  @include layout.js-enabled {
+    margin: auto;
+    opacity: .25;
+    background-image: linear-gradient(0deg, colour.$brand-black, transparent);
+  }
+}
