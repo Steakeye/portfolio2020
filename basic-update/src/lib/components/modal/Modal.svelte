@@ -1,8 +1,8 @@
 <style lang="scss">
-  @use 'src/styles/colour';
-  @use 'src/styles/fonts';
-  @use 'src/styles/layout';
-  @use 'src/styles/elements';
+  @use '$lib/styles/colour';
+  @use '$lib/styles/fonts';
+  @use '$lib/styles/layout';
+  @use '$lib/styles/elements';
 
   .modal-background {
     position: fixed;
@@ -53,8 +53,8 @@
 
 <script context="module" lang="ts">
   import { onMount } from 'svelte';
-  import { sleep } from '../../utils/Runtime.ts';
-  import { components } from '../../resources/content.json';
+  import { sleep } from '$lib/utils/Runtime.ts';
+  import { components } from '$lib/resources/content.json';
   import type { ModalActions } from './Modal.d.ts';
   import { ModalsActions } from './ModalAction.ts';
 

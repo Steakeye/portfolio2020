@@ -126,6 +126,10 @@
     } = pages;
 </script>
 
+<script>
+    import Modal from '$lib/components/modal/Modal.svelte';
+</script>
+
 <article>
     <header>
         <h1>{title}</h1>
@@ -136,4 +140,16 @@
             <strong>{promo}</strong>
         </p>
     </aside>
+    <Modal>
+        <section class="content-section" id="about">
+            <h3>{aboutTitle}</h3>
+            {#if Array.isArray(aboutBody)}
+                {#each aboutBody as bodyItem}
+                    <p>{bodyItem}</p>
+                {/each}
+            {:else}
+                <p>{aboutBody}</p>
+            {/if}
+        </section>
+    </Modal>
 </article>
