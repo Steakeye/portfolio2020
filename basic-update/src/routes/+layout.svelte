@@ -30,9 +30,13 @@
     }
 
     header {
-        position: sticky;
+        position: relative;
         top: layout.$navMarginTopRem;
         z-index: 5;
+
+        @include layout.js-enabled {
+            position: sticky;
+        }
     }
 
     footer {

@@ -5,6 +5,7 @@
 
   nav {
     margin-bottom: layout.$navMarginTopRem;
+    position: relative;
 
     @include layout.js-enabled {
       margin-top: layout.$navMarginTopRem;
