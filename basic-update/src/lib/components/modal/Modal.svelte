@@ -65,13 +65,9 @@
   } = components;
 
   function assignModalBackgroundElProps(props, open: boolean, id?: string) {
-    if (id) {
-      props.id = id;
-    }
-
     let hidden = !open;
-    props.hidden = hidden;
-    props['aria-hidden'] = hidden;
+
+    return { ...props, id, hidden, 'aria-hidden': hidden };
   }
 </script>
 
@@ -81,10 +77,10 @@
   export let className = '';
   export let renderBeforeOpen = true;
 
-  const modalBGProps = {};
   let mounted = false;
   let open = false;
   let wrapperEl: HTMLDivElement;
+  let modalBGProps = {};
 
   function openModal() {
     open = true;
@@ -131,7 +127,7 @@
   });
 
   $: {
-    assignModalBackgroundElProps(modalBGProps, open, id);
+    modalBGProps = assignModalBackgroundElProps(modalBGProps, open, id);
   }
 </script>
 
