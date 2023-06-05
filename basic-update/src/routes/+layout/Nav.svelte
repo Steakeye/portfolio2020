@@ -33,7 +33,7 @@
             cv: short-text,
             github: github,
             linkedIn: linkedin,
-            twitter: twoo, // Seems to be a bug in the font scss, so this is the workaround mapping
+            twitter: twitter, // Seems to be a bug in the font scss, so this is the workaround mapping
             email: envelope-closed,
           );
 

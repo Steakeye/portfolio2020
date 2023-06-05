@@ -1,6 +1,6 @@
 @use 'sass:map';
-@use 'coreui-icons/free/free-icons';
-@use 'coreui-icons/brand/brand-icons';
+@use '@coreui/icons/scss/free';
+@use '@coreui/icons/scss/brand';
 
 /*
 Fonts (imported via link elements in the html head):
@@ -40,14 +40,14 @@ $coreui-icon-font-family-prefix: 'CoreUI-Icons-';
 }
 
 @mixin coreUIIcon($iconName) {
-  @if map.has-key(free-icons.$icons, $iconName) {
+  @if map.has-key(free.$icons, $iconName) {
     @extend %coreUIIconFree;
 
-    content: free-icons.unicode(map.get(free-icons.$icons, $iconName));
-  } @else if map.has-key(brand-icons.$icons, $iconName) {
+    content: free.unicode(map.get(free.$icons, $iconName));
+  } @else if map.has-key(brand.$icons, $iconName) {
     @extend %coreUIIconBrand;
 
-    content: free-icons.unicode(map.get(brand-icons.$icons, $iconName));
+    content: brand.unicode(map.get(brand.$icons, $iconName));
   } @else {
     @error "Icon '#{$iconName}' not found.";
   }
