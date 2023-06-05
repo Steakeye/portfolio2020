@@ -57,6 +57,7 @@
     import { type MediaQueryMap, type MediaQueryMatchMap } from '$lib/components/media-query/MediaQueryStore.d';
     import { ui, appRootURL } from '$lib/resources/config.json';
     import { siteWide } from '$lib/resources/content.json';
+    import ThirdPartyFonts from "./+layout/ThirdPartyFonts.svelte";
     import SteakeyeMetaLinks from "./+layout/SteakeyeMetaLinks.svelte";
     import TwitterMetaData from "./+layout/TwitterMetaData.svelte";
     import Nav from "./+layout/Nav.svelte";
@@ -118,6 +119,7 @@
             {imageAlt}
     />
     <SteakeyeMetaLinks />
+    <ThirdPartyFonts />
 </svelte:head>
 <MediaQuery mediaQueries="{unquotedMediaQueries}">
     <header>

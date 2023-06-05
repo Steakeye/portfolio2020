@@ -2,11 +2,8 @@
 @use 'coreui-icons/free/free-icons';
 @use 'coreui-icons/brand/brand-icons';
 
-/* Add fonts */
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Farsan&family=Pacifico&family=Space+Mono:ital@1&display=swap');
-
 /*
-Fonts:
+Fonts (imported via link elements in the html head):
 font-family: 'Bungee Shade', cursive; //Main title
 font-family: 'Pacifico', cursive; // H2
 font-family: 'Bungee', cursive; // H3, H4... headers
