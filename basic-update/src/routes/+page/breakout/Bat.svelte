@@ -22,8 +22,9 @@
   export let xMin = undefined;
   export let xMax = undefined;
 
-  let scene: Phaser.Scene;
-
+  //let scene: Phaser.Scene;
+  const scene: Phaser.Scene = getScene();
+  
   onInputEvent('pointermove', (pointer: PointerEvent) => {
     const pointerX = pointer.x;
 
@@ -39,7 +40,7 @@
   });
 
   onMount(() => {
-    scene = getScene();
+    //scene = getScene();
 
     scene.physics.world.enable(instance, Phaser.Physics.Arcade.DYNAMIC_BODY);
     instance.body.immovable = true;

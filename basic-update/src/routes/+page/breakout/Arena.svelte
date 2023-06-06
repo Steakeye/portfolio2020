@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import CustomEvent from 'custom-event';
+  //import CustomEvent from 'custom-event';
   import eventKeys from '$lib/resources/event-keys.json';
   import config from '$lib/resources/config.json';
   import type { MediaQueryMatchMap } from '$lib/components/media-query/MediaQueryStore.d';

@@ -23,9 +23,10 @@
   export let scale = 1;
   const scaledWidth = scale * width;
   const scaledHeight = scale * height;
+  const scene = getScene();
 
   onMount(() => {
-    const scene = getScene();
+    //const scene = getScene();
 
     scene.physics.world.enable(instance, Phaser.Physics.Arcade.STATIC_BODY);
     instance.body.immovable = true;
