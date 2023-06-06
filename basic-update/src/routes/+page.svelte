@@ -128,6 +128,7 @@
 
 <script>
     import Modal from '$lib/components/modal/Modal.svelte';
+    import Breakout from './+page/Breakout.svelte';
 </script>
 
 <article>
@@ -153,3 +154,4 @@
         </section>
     </Modal>
 </article>
+<Breakout className="{styles.breakoutWrapper}" />

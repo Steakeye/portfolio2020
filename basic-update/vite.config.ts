@@ -5,15 +5,7 @@ import jsonImporter from 'node-sass-json-importer';
 
 export default defineConfig({
 	plugins: [
-		/*viteStaticCopy({
-			targets: [
-				{
-					src: 'node_modules/@coreui/icons/fonts',
-					dest: '/',
-				},
-			],
-		}),*/
-		sveltekit()
+		sveltekit(),
 	],
 	css: {
 		preprocessorOptions: {
