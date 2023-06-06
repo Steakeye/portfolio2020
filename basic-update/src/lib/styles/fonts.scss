@@ -1,6 +1,8 @@
 @use 'sass:map';
-@use '@coreui/icons/scss/free';
-@use '@coreui/icons/scss/brand';
+// @use 'opinionated' with ($black: #333);
+//@use '@coreui/icons/scss/free';
+@use '@coreui/icons/scss/free' with ($coreui-icons-font-path: "@coreui/icons/fonts");
+@use '@coreui/icons/scss/brand' with ($coreui-icons-font-path: "@coreui/icons/fonts");
 
 /*
 Fonts (imported via link elements in the html head):
