@@ -162,7 +162,7 @@
     }
   }
 
-  export let className = '';
+  export let styles = '';
 
   let mounted = false;
   let breakoutContainer: HTMLDivElement;
@@ -202,7 +202,7 @@
   }
 </script>
 
-<section bind:this="{breakoutContainer}" class="breakout-wrapper {className}">
+<section bind:this="{breakoutContainer}" class="breakout-wrapper" style="{styles}">
   {#if !mounted}
     <p class="loading-message">Loading...</p>
     <noscript>

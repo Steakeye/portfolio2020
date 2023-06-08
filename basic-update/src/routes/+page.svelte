@@ -115,7 +115,8 @@
 
 <script context="module">
     import { pages } from '$lib/resources/content.json';
-    import styles from './+page.scss';
+    import styles from './+page.scss?inline';
+    //import styles from './+page.scss';
 
     const {
         index: {
@@ -124,11 +125,20 @@
             content: [{ title: aboutTitle, body: aboutBody }],
         },
     } = pages;
+
+    console.log('page module', 'styles typeof', typeof styles);
+    console.log('page module', 'styles?inline\n', styles);
 </script>
 
 <script>
+    import { onMount } from 'svelte';
     import Modal from '$lib/components/modal/Modal.svelte';
     import Breakout from './+page/Breakout.svelte';
+
+    onMount(() => {
+        console.log(`page onMount`);
+        console.log(`styles`, `\n`, styles);
+    })
 </script>
 
 <article>
@@ -154,4 +164,4 @@
         </section>
     </Modal>
 </article>
-<Breakout className="{styles.breakoutWrapper}" />
+<Breakout styles="{styles.breakoutWrapper}" />
