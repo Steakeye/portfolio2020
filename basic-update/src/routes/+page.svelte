@@ -127,14 +127,8 @@
 </script>
 
 <script>
-    import { onMount } from 'svelte';
     import Modal from '$lib/components/modal/Modal.svelte';
     import Breakout from './+page/Breakout.svelte';
-
-    onMount(() => {
-        console.log(`page onMount`);
-        console.log(`styles`, `\n`, styles);
-    })
 </script>
 
 <article>
