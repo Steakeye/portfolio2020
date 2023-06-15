@@ -115,8 +115,7 @@
 
 <script context="module">
     import { pages } from '$lib/resources/content.json';
-    import styles from './+page.scss?inline';
-    //import styles from './+page.scss';
+    import styles from './+page.module.scss';
 
     const {
         index: {
@@ -125,9 +124,6 @@
             content: [{ title: aboutTitle, body: aboutBody }],
         },
     } = pages;
-
-    console.log('page module', 'styles typeof', typeof styles);
-    console.log('page module', 'styles?inline\n', styles);
 </script>
 
 <script>

@@ -202,7 +202,7 @@
   }
 </script>
 
-<section bind:this="{breakoutContainer}" class="breakout-wrapper" style="{styles}">
+<section bind:this="{breakoutContainer}" class:breakout-wrapper={true} class="{styles}">
   {#if !mounted}
     <p class="loading-message">Loading...</p>
     <noscript>
