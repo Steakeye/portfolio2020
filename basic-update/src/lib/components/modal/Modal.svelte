@@ -114,7 +114,7 @@
 
     if (ModalsActions.has(modalId)) {
       throw new Error(
-        `Modal id is already listed ias a key in the modal Map. Make sure your modal id values are unique.`,
+        `Modal id is already listed as a key in the modal Map. Make sure your modal id values are unique.`,
       );
     }
 
